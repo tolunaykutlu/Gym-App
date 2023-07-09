@@ -1,4 +1,5 @@
-import 'package:change30/view/home_page.dart';
+import 'package:change30/screens/login_page.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,10 +14,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        appBarTheme:
+            const AppBarTheme(backgroundColor: Color(0xffE2E2E2), elevation: 0),
+        textTheme: const TextTheme(titleLarge: TextStyle(color: Colors.white)),
+        scaffoldBackgroundColor: const Color(0xff1C1C1E),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: const LoginPage(),
     );
   }
 }
