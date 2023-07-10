@@ -1,4 +1,4 @@
-import 'package:change30/screens/login_page.dart';
+import 'package:change30/screens/sign_up_page.dart';
 
 import 'package:flutter/material.dart';
 
@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
         appBarTheme:
             const AppBarTheme(backgroundColor: Color(0xffE2E2E2), elevation: 0),
         textTheme: const TextTheme(titleLarge: TextStyle(color: Colors.white)),
-        scaffoldBackgroundColor: const Color(0xff1C1C1E),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        scaffoldBackgroundColor: const Color(0xffE2E2E2),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber.shade700),
       ),
-      home: const LoginPage(),
+      home: const SignUpPage(),
     );
   }
 }
