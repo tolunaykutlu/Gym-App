@@ -1,4 +1,9 @@
+import 'package:change30/screens/sign_up_page.dart';
 import 'package:flutter/material.dart';
+
+import '../components/appbar_menu.dart';
+import '../components/custom_button.dart';
+import '../components/custom_textfield.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,172 +15,170 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController controller = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  bool secretPassword = true;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: const Color(0xffE2E2E2),
       appBar: AppBar(
-        leading: const Icon(
-          Icons.menu,
-          color: Colors.black,
-        ),
+        leading: const AppBarMenuIcon(),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 40, right: 40),
+        padding: const EdgeInsets.only(left: 20, right: 20),
         child: Column(
           children: [
             spaceSmall(),
-            const Center(
-                child: Image(image: AssetImage("images/GymPoint.png"))),
+            iconAndTitle(size, context),
             spaceSmall(),
-            Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "CHANGE ",
-                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        color: Colors.black, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "30",
-                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        color: Colors.amber.shade900,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-            spaceSmall(),
-            spaceSmall(),
-            Text(
-              "Sign In",
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineSmall
-                  ?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            spaceSmall(),
-            CustomTextField(
-              control: controller,
-              hintText: "Phone/E-mail",
-            ),
-            spaceSmall(),
-            CustomTextField(
-              control: passwordController,
-              hintText: "Password",
-              secret: true,
-              sufIcon: IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.lock_open),
-              ),
-            ),
-            spaceSmall(),
-            SizedBox(
-              width: size.width,
-              height: 40,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    shape: BeveledRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    backgroundColor: const Color(0xffF54242)),
-                child: const Text("Sign In"),
-              ),
-            ),
-            spaceSmall(),
-            const Text("Forgot Password?"),
+            buttonSection(size, context),
             spaceLarge(),
-            spaceSmall(),
-            Text(
-              "Sign in With",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
-            ),
-            spaceSmall(),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.apple),
-                Padding(
-                  padding: EdgeInsets.only(left: 15, right: 15),
-                  child: Icon(Icons.facebook),
-                ),
-                Icon(Icons.g_mobiledata)
-              ],
-            ),
-            spaceMedium(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Don't have an Account?"),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "Sign Up",
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                  ),
-                )
-              ],
-            )
+            bottomSection(context),
           ],
         ),
       ),
     );
   }
 
-  SizedBox spaceSmall() {
-    return const SizedBox(
-      height: 15,
+  Column bottomSection(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          "Sign in With",
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge
+              ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        spaceSmall(),
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.apple),
+            Padding(
+              padding: EdgeInsets.only(left: 15, right: 15),
+              child: Icon(Icons.facebook),
+            ),
+            Icon(Icons.g_mobiledata)
+          ],
+        ),
+        spaceSmall(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text("Don't have an Account?"),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const SignUpPage(),
+                ));
+              },
+              child: const Text(
+                "Sign Up",
+                style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+              ),
+            )
+          ],
+        )
+      ],
     );
   }
 
-  SizedBox spaceMedium() {
-    return const SizedBox(
-      height: 25,
+  SizedBox buttonSection(Size size, BuildContext context) {
+    return SizedBox(
+      height: size.height * 0.30,
+      child: Column(
+        children: [
+          Text(
+            "Sign In",
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          spaceSmall(),
+          CustomTextField(
+            control: controller,
+            hintText: "Phone/E-mail",
+          ),
+          spaceSmall(),
+          CustomTextField(
+            control: passwordController,
+            hintText: "Password",
+            secret: secretPassword,
+            sufIcon: Card(
+              color: Colors.white60,
+              child: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      secretPassword = !secretPassword;
+                    });
+                  },
+                  icon: secretPassword
+                      ? const Icon(Icons.lock)
+                      : const Icon(Icons.lock_open)),
+            ),
+          ),
+          spaceSmall(),
+          CustomButton(
+            buttonText: "Sign In",
+            size: size,
+          ),
+          spaceSmall(),
+          const Text("Forgot Password?"),
+        ],
+      ),
     );
   }
 
-  SizedBox spaceLarge() {
-    return const SizedBox(
-      height: 35,
+  SizedBox iconAndTitle(Size size, BuildContext context) {
+    return SizedBox(
+      height: size.height * 0.25,
+      child: Column(
+        children: [
+          const Center(child: Image(image: AssetImage("images/GymPoint.png"))),
+          spaceSmall(),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "CHANGE ",
+                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "30",
+                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                      color: Colors.amber.shade900,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
-class CustomTextField extends StatelessWidget {
-  final TextEditingController control;
-  final String hintText;
-  final bool secret;
-  final Widget? sufIcon;
+SizedBox spaceSmall() {
+  return const SizedBox(
+    height: 15,
+  );
+}
 
-  const CustomTextField({
-    super.key,
-    required this.control,
-    required this.hintText,
-    this.secret = false,
-    this.sufIcon,
-  });
+SizedBox spaceMedium() {
+  return const SizedBox(
+    height: 25,
+  );
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-        controller: control,
-        obscureText: secret,
-        cursorColor: Colors.black,
-        decoration: InputDecoration(
-            suffixIcon: sufIcon,
-            fillColor: Colors.white,
-            filled: true,
-            hintText: hintText,
-            border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(5))));
-  }
+SizedBox spaceLarge() {
+  return const SizedBox(
+    height: 35,
+  );
 }

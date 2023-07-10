@@ -32,11 +32,7 @@ class _OnboardPage1State extends State<OnboardPage1> {
             "onboardpage ",
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          ElevatedButton(
-              onPressed: () {
-                setState(() {});
-              },
-              child: const Text("dark"))
+          ElevatedButton(onPressed: () {}, child: const Text("dark"))
         ],
       ),
     );
