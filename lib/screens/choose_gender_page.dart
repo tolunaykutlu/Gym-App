@@ -1,4 +1,5 @@
 import 'package:change30/components/app_title_widget.dart';
+import 'package:change30/components/custom_button.dart';
 import 'package:change30/screens/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -9,11 +10,14 @@ class ChoosePage extends StatefulWidget {
   State<ChoosePage> createState() => _ChoosePageState();
 }
 
-bool tapped = false;
-
 class _ChoosePageState extends State<ChoosePage> {
+  int isMale = 1;
+
+  int ageController = 18; // 1 isMale & 2 is not Male so its female
+  int weigthController = 60;
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -22,7 +26,7 @@ class _ChoosePageState extends State<ChoosePage> {
           children: [
             const AppTitleWidget(),
             spaceMedium(),
-            genderPick(context),
+            genderPickContainers(context),
             spaceSmall(),
             Text(
               "Select your age",
@@ -32,64 +36,134 @@ class _ChoosePageState extends State<ChoosePage> {
                   ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
             ),
             spaceSmall(),
-            Container(
-              height: 70,
-              decoration: BoxDecoration(
-                color: Colors.white60,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                children: [
-                  const SizedBox(
-                    height: 60,
-                    width: 60,
-                    child: Card(
-                        elevation: 3,
-                        child: Icon(
-                          Icons.date_range_outlined,
-                          size: 45,
-                        )),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 75),
-                    child: Row(
-                      children: [
-                        const Text("20"),
-                        Column(
-                          children: [
-                            SizedBox(
-                              height: 25,
-                              child: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.arrow_drop_up_sharp,
-                                    size: 25,
-                                  )),
-                            ),
-                            SizedBox(
-                              height: 25,
-                              child: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.arrow_drop_down_sharp,
-                                    size: 25,
-                                  )),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+            selectAgeContainer(context),
+            spaceMedium(),
+            Text(
+              "Select your weight",
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall
+                  ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
             ),
+            spaceSmall(),
+            selectWeightContainer(context),
+            spaceMedium(),
+            CustomButton(size: size, buttonText: "Continue")
           ],
         ),
       ),
     );
   }
 
-  Column genderPick(BuildContext context) {
+  Container selectWeightContainer(BuildContext context) {
+    return Container(
+      height: 90,
+      decoration: BoxDecoration(
+          color: Colors.white60, borderRadius: BorderRadius.circular(10)),
+      child: Row(
+        children: [
+          const SizedBox(
+            height: 60,
+            width: 60,
+            child: Card(
+                elevation: 3,
+                child: Icon(
+                  Icons.scale_rounded,
+                  size: 45,
+                )),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(weigthController.toString(),
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        color: Colors.black, fontWeight: FontWeight.bold)),
+                Slider(
+                  activeColor: Colors.amber.shade700,
+                  min: 30,
+                  max: 170,
+                  value: weigthController.toDouble(),
+                  onChanged: (value) {
+                    setState(() {
+                      weigthController = value.toInt();
+                    });
+                  },
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Container selectAgeContainer(BuildContext context) {
+    return Container(
+      height: 70,
+      decoration: BoxDecoration(
+        color: Colors.white60,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        children: [
+          const SizedBox(
+            height: 60,
+            width: 60,
+            child: Card(
+                elevation: 3,
+                child: Icon(
+                  Icons.date_range_outlined,
+                  size: 45,
+                )),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 75),
+            child: Row(
+              children: [
+                Text(
+                  ageController.toString(),
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: IconButton(
+                            iconSize: 25,
+                            onPressed: () {
+                              setState(() {
+                                ageController++;
+                              });
+                            },
+                            icon: const Icon(Icons.arrow_circle_up_sharp)),
+                      ),
+                      IconButton(
+                          hoverColor: Colors.green,
+                          iconSize: 25,
+                          onPressed: () {
+                            setState(() {
+                              ageController--;
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.arrow_circle_down_sharp,
+                          ))
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Column genderPickContainers(BuildContext context) {
     return Column(
       children: [
         Text(
@@ -101,10 +175,13 @@ class _ChoosePageState extends State<ChoosePage> {
         ),
         spaceSmall(),
         GenderWidget(
+          border:
+              isMale == 1 ? Border.all(width: 2, color: Colors.black) : null,
           onTap: () {
-            tapped = !tapped;
+            setState(() {
+              isMale = 1;
+            });
           },
-          onTapped: !tapped,
           genderTitle: "Male",
           icon: const Icon(
             Icons.male_sharp,
@@ -114,12 +191,13 @@ class _ChoosePageState extends State<ChoosePage> {
         ),
         spaceSmall(),
         GenderWidget(
+          border:
+              isMale == 2 ? Border.all(width: 2, color: Colors.black) : null,
           onTap: () {
             setState(() {
-              tapped = !tapped;
+              isMale = 2;
             });
           },
-          onTapped: tapped,
           genderTitle: "Female",
           icon: const Icon(
             Icons.female_sharp,
@@ -136,13 +214,14 @@ class GenderWidget extends StatefulWidget {
   final Widget icon;
   final String genderTitle;
   final void Function()? onTap;
-  final bool onTapped;
+
+  final BoxBorder? border;
   const GenderWidget({
     super.key,
     required this.icon,
     required this.genderTitle,
     this.onTap,
-    required this.onTapped,
+    this.border,
   });
 
   @override
@@ -159,9 +238,7 @@ class _GenderWidgetState extends State<GenderWidget> {
         decoration: BoxDecoration(
             color: Colors.white60,
             borderRadius: BorderRadius.circular(10),
-            border: widget.onTapped
-                ? Border.all(width: 2, color: Colors.black)
-                : null),
+            border: widget.border),
         child: Row(
           children: [
             SizedBox(

@@ -1,3 +1,4 @@
+import 'package:change30/components/app_title_widget.dart';
 import 'package:change30/screens/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
@@ -25,14 +26,18 @@ class _LoginPageState extends State<LoginPage> {
         leading: const AppBarMenuIcon(),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
+        padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            spaceSmall(),
             iconAndTitle(size, context),
             spaceSmall(),
-            buttonSection(size, context),
-            spaceLarge(),
+            if (size.height > 668)
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 30),
+                  child: buttonSection(size, context))
+            else
+              buttonSection(size, context),
+            spaceMedium(),
             bottomSection(context),
           ],
         ),
@@ -87,80 +92,59 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  SizedBox buttonSection(Size size, BuildContext context) {
-    return SizedBox(
-      height: size.height * 0.30,
-      child: Column(
-        children: [
-          Text(
-            "Sign In",
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall
-                ?.copyWith(fontWeight: FontWeight.bold),
+  Column buttonSection(Size size, BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          "Sign In",
+          style: Theme.of(context)
+              .textTheme
+              .headlineSmall
+              ?.copyWith(fontWeight: FontWeight.bold),
+        ),
+        spaceSmall(),
+        CustomTextField(
+          control: controller,
+          hintText: "Phone/E-mail",
+        ),
+        spaceSmall(),
+        CustomTextField(
+          control: passwordController,
+          hintText: "Password",
+          secret: secretPassword,
+          sufIcon: Card(
+            color: Colors.white60,
+            child: IconButton(
+                onPressed: () {
+                  setState(() {
+                    secretPassword = !secretPassword;
+                  });
+                },
+                icon: secretPassword
+                    ? const Icon(Icons.lock)
+                    : const Icon(Icons.lock_open)),
           ),
-          spaceSmall(),
-          CustomTextField(
-            control: controller,
-            hintText: "Phone/E-mail",
-          ),
-          spaceSmall(),
-          CustomTextField(
-            control: passwordController,
-            hintText: "Password",
-            secret: secretPassword,
-            sufIcon: Card(
-              color: Colors.white60,
-              child: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      secretPassword = !secretPassword;
-                    });
-                  },
-                  icon: secretPassword
-                      ? const Icon(Icons.lock)
-                      : const Icon(Icons.lock_open)),
-            ),
-          ),
-          spaceSmall(),
-          CustomButton(
-            buttonText: "Sign In",
-            size: size,
-          ),
-          spaceSmall(),
-          const Text("Forgot Password?"),
-        ],
-      ),
+        ),
+        spaceSmall(),
+        CustomButton(
+          buttonText: "Sign In",
+          size: size,
+        ),
+        spaceSmall(),
+        const Text("Forgot Password?"),
+      ],
     );
   }
 
-  SizedBox iconAndTitle(Size size, BuildContext context) {
-    return SizedBox(
-      height: size.height * 0.25,
-      child: Column(
-        children: [
-          const Center(child: Image(image: AssetImage("images/GymPoint.png"))),
-          spaceSmall(),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "CHANGE ",
-                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "30",
-                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                      color: Colors.amber.shade900,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+  Column iconAndTitle(Size size, BuildContext context) {
+    return Column(
+      children: [
+        const Image(
+          image: AssetImage("images/GymPoint.png"),
+        ),
+        spaceSmall(),
+        const AppTitleWidget(),
+      ],
     );
   }
 }
