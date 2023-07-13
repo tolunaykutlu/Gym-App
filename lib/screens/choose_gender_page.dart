@@ -1,7 +1,9 @@
-import 'package:change30/components/app_title_widget.dart';
-import 'package:change30/components/custom_button.dart';
+import 'package:change30/core/components/app_title_widget.dart';
+import 'package:change30/core/components/custom_button.dart';
+import 'package:change30/core/extension/size_extension.dart';
 import 'package:change30/screens/login_page.dart';
 import 'package:change30/screens/processing_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChoosePage extends StatefulWidget {
@@ -20,7 +22,6 @@ class _ChoosePageState extends State<ChoosePage> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -59,8 +60,26 @@ class _ChoosePageState extends State<ChoosePage> {
                     ));
                   });
                 },
-                size: size,
-                buttonText: "Continue")
+                size: context.deviceSize,
+                buttonText: "Continue"),
+            spaceSmall(),
+            SizedBox(
+              height: 80,
+              width: context.deviceWidth / 3,
+              child: CupertinoPicker.builder(
+                selectionOverlay: Text("CM"),
+                scrollController: FixedExtentScrollController(initialItem: 10),
+                magnification: 1.1,
+                backgroundColor: Colors.white54,
+                useMagnifier: true,
+                childCount: 100,
+                itemBuilder: (context, index) {
+                  return Text((index + 120).toString());
+                },
+                itemExtent: 70,
+                onSelectedItemChanged: (value) {},
+              ),
+            )
           ],
         ),
       ),
@@ -74,7 +93,7 @@ class _ChoosePageState extends State<ChoosePage> {
           color: Colors.white60, borderRadius: BorderRadius.circular(10)),
       child: Row(
         children: [
-          const SizedBox(
+          /* const SizedBox(
             height: 60,
             width: 60,
             child: Card(
@@ -84,7 +103,7 @@ class _ChoosePageState extends State<ChoosePage> {
                   color: Colors.blueAccent,
                   size: 45,
                 )),
-          ),
+          ), */
           Padding(
             padding: const EdgeInsets.only(left: 40),
             child: Column(
