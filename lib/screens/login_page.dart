@@ -1,11 +1,12 @@
-import 'package:change30/components/app_title_widget.dart';
+import 'package:change30/core/components/app_title_widget.dart';
+import 'package:change30/core/extension/size_extension.dart';
 import 'package:change30/screens/choose_gender_page.dart';
 import 'package:change30/screens/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
-import '../components/appbar_menu.dart';
-import '../components/custom_button.dart';
-import '../components/custom_textfield.dart';
+import '../core/components/appbar_menu.dart';
+import '../core/components/custom_button.dart';
+import '../core/components/custom_textfield.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -21,7 +22,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leading: const AppBarMenuIcon(),
@@ -30,14 +30,14 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            iconAndTitle(size, context),
+            iconAndTitle(context.deviceSize, context),
             spaceSmall(),
-            if (size.height > 668)
+            if (context.deviceSize.height > 668)
               Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30),
-                  child: buttonSection(size, context))
+                  child: buttonSection(context.deviceSize, context))
             else
-              buttonSection(size, context),
+              buttonSection(context.deviceSize, context),
             spaceMedium(),
             bottomSection(context),
           ],

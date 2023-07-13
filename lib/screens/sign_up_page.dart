@@ -1,11 +1,12 @@
-import 'package:change30/components/appbar_menu.dart';
+import 'package:change30/core/components/appbar_menu.dart';
 
-import 'package:change30/components/custom_textfield.dart';
+import 'package:change30/core/components/custom_textfield.dart';
+import 'package:change30/core/extension/size_extension.dart';
 import 'package:change30/screens/login_page.dart';
 import 'package:flutter/material.dart';
 
-import '../components/app_title_widget.dart';
-import '../components/custom_button.dart';
+import '../core/components/app_title_widget.dart';
+import '../core/components/custom_button.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -23,7 +24,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leading: const AppBarMenuIcon(),
@@ -32,14 +32,15 @@ class _SignUpPageState extends State<SignUpPage> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           const AppTitleWidget(),
-          if (size.height > 668)
+          if (context.deviceHeight > 668)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 40),
               child: signUpPageTextFields(context),
             )
           else
             signUpPageTextFields(context),
-          CustomButton(onpress: () {}, size: size, buttonText: "Sign Up"),
+          CustomButton(
+              onpress: () {}, size: context.deviceSize, buttonText: "Sign Up"),
           spaceLarge(),
           bottomSection(context)
         ]),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:change30/core/extension/size_extension.dart';
 import 'package:flutter/material.dart';
 
 import 'login_page.dart';
@@ -32,11 +33,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        width: size.width,
-        height: size.height,
+        width: context.deviceWidth,
+        height: context.deviceHeight,
         decoration: const BoxDecoration(
             image: DecorationImage(
                 colorFilter: ColorFilter.linearToSrgbGamma(),
