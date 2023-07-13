@@ -1,6 +1,7 @@
 import 'package:change30/components/app_title_widget.dart';
 import 'package:change30/components/custom_button.dart';
 import 'package:change30/screens/login_page.dart';
+import 'package:change30/screens/processing_page.dart';
 import 'package:flutter/material.dart';
 
 class ChoosePage extends StatefulWidget {
@@ -12,9 +13,11 @@ class ChoosePage extends StatefulWidget {
 
 class _ChoosePageState extends State<ChoosePage> {
   int isMale = 1;
+  String gender = "";
 
   int ageController = 18; // 1 isMale & 2 is not Male so its female
   int weigthController = 60;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -48,7 +51,16 @@ class _ChoosePageState extends State<ChoosePage> {
             spaceSmall(),
             selectWeightContainer(context),
             spaceMedium(),
-            CustomButton(size: size, buttonText: "Continue")
+            CustomButton(
+                onpress: () {
+                  setState(() {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ProcessingAttributesPage(),
+                    ));
+                  });
+                },
+                size: size,
+                buttonText: "Continue")
           ],
         ),
       ),
@@ -69,11 +81,12 @@ class _ChoosePageState extends State<ChoosePage> {
                 elevation: 3,
                 child: Icon(
                   Icons.scale_rounded,
+                  color: Colors.blueAccent,
                   size: 45,
                 )),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 30),
+            padding: const EdgeInsets.only(left: 40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -99,7 +112,9 @@ class _ChoosePageState extends State<ChoosePage> {
     );
   }
 
-  Container selectAgeContainer(BuildContext context) {
+  Container selectAgeContainer(
+    BuildContext context,
+  ) {
     return Container(
       height: 70,
       decoration: BoxDecoration(
@@ -108,54 +123,62 @@ class _ChoosePageState extends State<ChoosePage> {
       ),
       child: Row(
         children: [
-          const SizedBox(
+          SizedBox(
             height: 60,
             width: 60,
             child: Card(
                 elevation: 3,
                 child: Icon(
                   Icons.date_range_outlined,
+                  color: Colors.amber.shade700,
                   size: 45,
                 )),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 75),
-            child: Row(
-              children: [
-                Text(
-                  ageController.toString(),
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: IconButton(
+            padding: const EdgeInsets.only(left: 115),
+            child: SizedBox(
+              child: Row(
+                children: [
+                  Center(
+                    child: Text(
+                      ageController.toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium
+                          ?.copyWith(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: IconButton(
+                              iconSize: 25,
+                              onPressed: () {
+                                setState(() {
+                                  ageController++;
+                                });
+                              },
+                              icon: const Icon(Icons.arrow_circle_up_sharp)),
+                        ),
+                        IconButton(
+                            hoverColor: Colors.green,
                             iconSize: 25,
                             onPressed: () {
                               setState(() {
-                                ageController++;
+                                ageController--;
                               });
                             },
-                            icon: const Icon(Icons.arrow_circle_up_sharp)),
-                      ),
-                      IconButton(
-                          hoverColor: Colors.green,
-                          iconSize: 25,
-                          onPressed: () {
-                            setState(() {
-                              ageController--;
-                            });
-                          },
-                          icon: const Icon(
-                            Icons.arrow_circle_down_sharp,
-                          ))
-                    ],
-                  ),
-                )
-              ],
+                            icon: const Icon(
+                              Icons.arrow_circle_down_sharp,
+                            ))
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ],
@@ -180,6 +203,9 @@ class _ChoosePageState extends State<ChoosePage> {
           onTap: () {
             setState(() {
               isMale = 1;
+              if (isMale == 1) {
+                gender = "Male";
+              }
             });
           },
           genderTitle: "Male",
@@ -196,6 +222,9 @@ class _ChoosePageState extends State<ChoosePage> {
           onTap: () {
             setState(() {
               isMale = 2;
+              if (isMale == 2) {
+                gender = "Female";
+              }
             });
           },
           genderTitle: "Female",

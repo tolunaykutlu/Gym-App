@@ -39,7 +39,7 @@ class _SignUpPageState extends State<SignUpPage> {
             )
           else
             signUpPageTextFields(context),
-          CustomButton(size: size, buttonText: "Sign Up"),
+          CustomButton(onpress: () {}, size: size, buttonText: "Sign Up"),
           spaceLarge(),
           bottomSection(context)
         ]),
@@ -112,26 +112,6 @@ Column bottomSection(BuildContext context) {
         ],
       ),
       spaceSmall(),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text("Don't have an Account?"),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const SignUpPage(),
-              ));
-            },
-            child: const Text(
-              "Sign Up",
-              style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
-            ),
-          )
-        ],
-      )
     ],
   );
 }

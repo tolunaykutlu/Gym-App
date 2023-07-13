@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:change30/screens/home_page.dart';
 import 'package:flutter/material.dart';
+
+import 'login_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -26,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
   //diğer sayfaya giden method
   route() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const MyHomePage()));
+        context, MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 
   @override

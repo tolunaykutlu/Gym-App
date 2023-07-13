@@ -1,4 +1,5 @@
 import 'package:change30/components/app_title_widget.dart';
+import 'package:change30/screens/choose_gender_page.dart';
 import 'package:change30/screens/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
@@ -127,6 +128,12 @@ class _LoginPageState extends State<LoginPage> {
         ),
         spaceSmall(),
         CustomButton(
+          onpress: () {
+            setState(() {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const ChoosePage()));
+            });
+          },
           buttonText: "Sign In",
           size: size,
         ),
