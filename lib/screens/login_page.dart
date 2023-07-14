@@ -1,4 +1,5 @@
 import 'package:change30/core/components/app_title_widget.dart';
+import 'package:change30/core/components/sign_in_with_widget.dart';
 import 'package:change30/core/extension/size_extension.dart';
 import 'package:change30/screens/choose_gender_page.dart';
 import 'package:change30/screens/sign_up_page.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../core/components/appbar_menu.dart';
 import '../core/components/custom_button.dart';
 import '../core/components/custom_textfield.dart';
+import '../core/constants/app_contants.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -31,14 +33,14 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: [
             iconAndTitle(context.deviceSize, context),
-            spaceSmall(),
+            spaceSmallH15(),
             if (context.deviceSize.height > 668)
               Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 30),
+                  padding: const EdgeInsets.symmetric(vertical: 20),
                   child: buttonSection(context.deviceSize, context))
             else
               buttonSection(context.deviceSize, context),
-            spaceMedium(),
+            spaceMediumH25(),
             bottomSection(context),
           ],
         ),
@@ -49,30 +51,18 @@ class _LoginPageState extends State<LoginPage> {
   Column bottomSection(BuildContext context) {
     return Column(
       children: [
-        Text(
-          "Sign in With",
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge
-              ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        spaceSmall(),
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.apple),
-            Padding(
-              padding: EdgeInsets.only(left: 15, right: 15),
-              child: Icon(Icons.facebook),
-            ),
-            Icon(Icons.g_mobiledata)
-          ],
-        ),
-        spaceSmall(),
+        const SignInWithWidget(),
+        spaceSmallH15(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Don't have an Account?"),
+            Text(
+              AppContants.donthaveAccText,
+              style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.shade700),
+            ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
@@ -80,8 +70,9 @@ class _LoginPageState extends State<LoginPage> {
                 ));
               },
               child: const Text(
-                "Sign Up",
+                AppContants.signUpText,
                 style: TextStyle(
+                    fontSize: 15,
                     decoration: TextDecoration.underline,
                     color: Colors.black,
                     fontWeight: FontWeight.bold),
@@ -96,22 +87,15 @@ class _LoginPageState extends State<LoginPage> {
   Column buttonSection(Size size, BuildContext context) {
     return Column(
       children: [
-        Text(
-          "Sign In",
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall
-              ?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        spaceSmall(),
+        spaceSmallH15(),
         CustomTextField(
           control: controller,
-          hintText: "Phone/E-mail",
+          hintText: AppContants.phoneAndEmailText,
         ),
-        spaceSmall(),
+        spaceSmallH15(),
         CustomTextField(
           control: passwordController,
-          hintText: "Password",
+          hintText: AppContants.passwordText,
           secret: secretPassword,
           sufIcon: Card(
             color: Colors.white60,
@@ -126,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                     : const Icon(Icons.lock_open)),
           ),
         ),
-        spaceSmall(),
+        spaceSmallH15(),
         CustomButton(
           onpress: () {
             setState(() {
@@ -134,11 +118,17 @@ class _LoginPageState extends State<LoginPage> {
                   MaterialPageRoute(builder: (context) => const ChoosePage()));
             });
           },
-          buttonText: "Sign In",
+          buttonText: AppContants.signInText,
           size: size,
         ),
-        spaceSmall(),
-        const Text("Forgot Password?"),
+        spaceSmallH15(),
+        GestureDetector(
+          onTap: () {},
+          child: const Text(
+            AppContants.forgotPwText,
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          ),
+        ),
       ],
     );
   }
@@ -149,27 +139,9 @@ class _LoginPageState extends State<LoginPage> {
         const Image(
           image: AssetImage("images/GymPoint.png"),
         ),
-        spaceSmall(),
+        spaceSmallH15(),
         const AppTitleWidget(),
       ],
     );
   }
-}
-
-SizedBox spaceSmall() {
-  return const SizedBox(
-    height: 15,
-  );
-}
-
-SizedBox spaceMedium() {
-  return const SizedBox(
-    height: 25,
-  );
-}
-
-SizedBox spaceLarge() {
-  return const SizedBox(
-    height: 35,
-  );
 }

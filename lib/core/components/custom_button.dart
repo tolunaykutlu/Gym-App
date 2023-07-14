@@ -1,3 +1,4 @@
+import 'package:change30/core/constants/app_contants.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
@@ -21,8 +22,8 @@ class CustomButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            backgroundColor: const Color(0xffF54242)),
-        child: Text(buttonText),
+            backgroundColor: AppContants.primaryColor),
+        child: Text(buttonText, style: smallTitleTextStyle()),
       ),
     );
   }

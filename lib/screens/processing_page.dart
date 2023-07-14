@@ -25,6 +25,9 @@ class _ProcessingAttributesPageState extends State<ProcessingAttributesPage> {
     Timer.periodic(oneSec, (timer) {
       setState(() {
         progressValue += 0.1;
+        /* if (progressValue.toStringAsFixed(1) == '0.3') {
+          oneSec = const Duration(milliseconds: 20);
+        } */
 
         if (progressValue.toStringAsFixed(1) == '1.0') {
           timer.cancel();

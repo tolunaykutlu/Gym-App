@@ -1,0 +1,37 @@
+import 'package:change30/core/constants/app_contants.dart';
+
+import 'package:flutter/material.dart';
+
+class SignInWithWidget extends StatelessWidget {
+  const SignInWithWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          AppContants.signInWithText,
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge
+              ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        spaceMediumH25(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            InkWell(onTap: () {}, child: const Icon(Icons.apple)),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: InkWell(onTap: () {}, child: const Icon(Icons.facebook)),
+            ),
+            InkWell(onTap: () {}, child: const Icon(Icons.g_mobiledata))
+          ],
+        ),
+        spaceSmallH15(),
+      ],
+    );
+  }
+}

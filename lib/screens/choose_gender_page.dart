@@ -1,10 +1,13 @@
 import 'package:change30/core/components/app_title_widget.dart';
 import 'package:change30/core/components/custom_button.dart';
+import 'package:change30/core/constants/app_contants.dart';
 import 'package:change30/core/extension/size_extension.dart';
-import 'package:change30/screens/login_page.dart';
+
 import 'package:change30/screens/processing_page.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+
+List<double> height = List.generate(200, (index) => (index + 150) * 1);
 
 class ChoosePage extends StatefulWidget {
   const ChoosePage({super.key});
@@ -16,7 +19,7 @@ class ChoosePage extends StatefulWidget {
 class _ChoosePageState extends State<ChoosePage> {
   int isMale = 1;
   String gender = "";
-
+  int heightController = 179;
   int ageController = 18; // 1 isMale & 2 is not Male so its female
   int weigthController = 60;
 
@@ -29,29 +32,42 @@ class _ChoosePageState extends State<ChoosePage> {
         child: Column(
           children: [
             const AppTitleWidget(),
-            spaceMedium(),
+            spaceSmallH15(),
             genderPickContainers(context),
-            spaceSmall(),
+            spaceSmallH15(),
             Text(
-              "Select your age",
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineSmall
-                  ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+              AppContants.selectAgeTitle,
+              style: smallTitleTextStyle(),
             ),
-            spaceSmall(),
+            spaceSmallH15(),
             selectAgeContainer(context),
-            spaceMedium(),
-            Text(
-              "Select your weight",
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineSmall
-                  ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+            spaceMediumH25(),
+            Text(AppContants.selectWeigthTitle, style: smallTitleTextStyle()),
+            spaceSmallH15(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                selectWeightAndHeightCon(
+                    context, weigthController, "KG", 30, 170, (p0) {
+                  setState(() {
+                    weigthController = p0.toInt();
+                  });
+                }),
+                selectWeightAndHeightCon(
+                  context,
+                  heightController,
+                  "CM",
+                  150,
+                  230,
+                  (p0) {
+                    setState(() {
+                      heightController = p0.toInt();
+                    });
+                  },
+                ),
+              ],
             ),
-            spaceSmall(),
-            selectWeightContainer(context),
-            spaceMedium(),
+            spaceMediumH25(),
             CustomButton(
                 onpress: () {
                   setState(() {
@@ -61,37 +77,23 @@ class _ChoosePageState extends State<ChoosePage> {
                   });
                 },
                 size: context.deviceSize,
-                buttonText: "Continue"),
-            spaceSmall(),
-            SizedBox(
-              height: 80,
-              width: context.deviceWidth / 3,
-              child: CupertinoPicker.builder(
-                selectionOverlay: Text("CM"),
-                scrollController: FixedExtentScrollController(initialItem: 10),
-                magnification: 1.1,
-                backgroundColor: Colors.white54,
-                useMagnifier: true,
-                childCount: 100,
-                itemBuilder: (context, index) {
-                  return Text((index + 120).toString());
-                },
-                itemExtent: 70,
-                onSelectedItemChanged: (value) {},
-              ),
-            )
+                buttonText: AppContants.btnContinue),
+            spaceSmallH15(),
           ],
         ),
       ),
     );
   }
 
-  Container selectWeightContainer(BuildContext context) {
+  Container selectWeightAndHeightCon(BuildContext context, int controller,
+      String s, double minimum, double maximum, Function(double)? func) {
     return Container(
+      width: 170,
       height: 90,
       decoration: BoxDecoration(
           color: Colors.white60, borderRadius: BorderRadius.circular(10)),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           /* const SizedBox(
             height: 60,
@@ -104,27 +106,34 @@ class _ChoosePageState extends State<ChoosePage> {
                   size: 45,
                 )),
           ), */
-          Padding(
-            padding: const EdgeInsets.only(left: 40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(weigthController.toString(),
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        color: Colors.black, fontWeight: FontWeight.bold)),
-                Slider(
-                  activeColor: Colors.amber.shade700,
-                  min: 30,
-                  max: 170,
-                  value: weigthController.toDouble(),
-                  onChanged: (value) {
-                    setState(() {
-                      weigthController = value.toInt();
-                    });
-                  },
-                )
-              ],
-            ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  Text(controller.toString(),
+                      style: bigtitleTextStyle(Colors.black, fsize: 30)),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: Text(
+                      s,
+                      style: bigtitleTextStyle(AppContants.primaryColor,
+                          fsize: 30),
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                width: 130,
+                child: Slider(
+                  activeColor: AppContants.primaryColor,
+                  min: minimum,
+                  max: maximum,
+                  value: controller.toDouble(),
+                  onChanged: func,
+                ),
+              )
+            ],
           )
         ],
       ),
@@ -159,14 +168,8 @@ class _ChoosePageState extends State<ChoosePage> {
               child: Row(
                 children: [
                   Center(
-                    child: Text(
-                      ageController.toString(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium
-                          ?.copyWith(
-                              color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
+                    child: Text(ageController.toString(),
+                        style: bigtitleTextStyle(Colors.black, fsize: 30)),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
@@ -208,45 +211,41 @@ class _ChoosePageState extends State<ChoosePage> {
   Column genderPickContainers(BuildContext context) {
     return Column(
       children: [
-        Text(
-          "Choose your Gender",
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall
-              ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        spaceSmall(),
+        Text(AppContants.chooseGender, style: smallTitleTextStyle()),
+        spaceSmallH15(),
         GenderWidget(
-          border:
-              isMale == 1 ? Border.all(width: 2, color: Colors.black) : null,
+          border: isMale == 1
+              ? Border.all(width: 2, color: AppContants.primaryColor)
+              : null,
           onTap: () {
             setState(() {
               isMale = 1;
               if (isMale == 1) {
-                gender = "Male";
+                gender = AppContants.male;
               }
             });
           },
-          genderTitle: "Male",
+          genderTitle: AppContants.male,
           icon: const Icon(
             Icons.male_sharp,
             size: 45,
             color: Colors.blue,
           ),
         ),
-        spaceSmall(),
+        spaceSmallH15(),
         GenderWidget(
-          border:
-              isMale == 2 ? Border.all(width: 2, color: Colors.black) : null,
+          border: isMale == 2
+              ? Border.all(width: 2, color: AppContants.primaryColor)
+              : null,
           onTap: () {
             setState(() {
               isMale = 2;
               if (isMale == 2) {
-                gender = "Female";
+                gender = AppContants.female;
               }
             });
           },
-          genderTitle: "Female",
+          genderTitle: AppContants.female,
           icon: const Icon(
             Icons.female_sharp,
             size: 45,
@@ -296,7 +295,10 @@ class _GenderWidgetState extends State<GenderWidget> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15),
-              child: Text(widget.genderTitle),
+              child: Text(
+                widget.genderTitle,
+                style: bigtitleTextStyle(Colors.black, fsize: 15),
+              ),
             )
           ],
         ),
