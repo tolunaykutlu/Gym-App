@@ -19,14 +19,16 @@ class AppContants {
   static const Color primaryColor = Color(0xffF54242);
 }
 
-TextStyle smallTitleTextStyle() {
+TextStyle smallTitleTextStyle({
+  fsize = 20,
+  color = Colors.black,
+}) {
   //textStyle for only small titles like choose your bla bla
   return GoogleFonts.permanentMarker(
-      fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold);
+      fontSize: fsize, color: color, fontWeight: FontWeight.bold);
 }
 
 TextStyle bigtitleTextStyle(Color c, {double fsize = 30}) {
-  //textStyle for only small titles like choose your bla bla
   return GoogleFonts.orbitron(
       fontSize: fsize, color: c, fontWeight: FontWeight.bold);
 }

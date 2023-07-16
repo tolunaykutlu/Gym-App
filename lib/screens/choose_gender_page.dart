@@ -1,30 +1,33 @@
+import 'dart:developer';
+
 import 'package:change30/core/components/app_title_widget.dart';
 import 'package:change30/core/components/custom_button.dart';
 import 'package:change30/core/constants/app_contants.dart';
 import 'package:change30/core/extension/size_extension.dart';
-
-import 'package:change30/screens/processing_page.dart';
+import 'package:change30/data/get_user_data.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-List<double> height = List.generate(200, (index) => (index + 150) * 1);
+import 'calculation_page.dart';
 
-class ChoosePage extends StatefulWidget {
+String gender = "";
+int heightController = 179;
+int ageController = 18;
+int weigthController = 60;
+bool isMale = true;
+
+class ChoosePage extends ConsumerStatefulWidget {
   const ChoosePage({super.key});
 
   @override
-  State<ChoosePage> createState() => _ChoosePageState();
+  ConsumerState<ChoosePage> createState() => _ChoosePageState();
 }
 
-class _ChoosePageState extends State<ChoosePage> {
-  int isMale = 1;
-  String gender = "";
-  int heightController = 179;
-  int ageController = 18; // 1 isMale & 2 is not Male so its female
-  int weigthController = 60;
-
+class _ChoosePageState extends ConsumerState<ChoosePage> {
   @override
   Widget build(BuildContext context) {
+    var userDataProvider = ref.read(userProvider);
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -48,20 +51,21 @@ class _ChoosePageState extends State<ChoosePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 selectWeightAndHeightCon(
-                    context, weigthController, "KG", 30, 170, (p0) {
+                    context, userDataProvider.weigthController, "KG", 30, 170,
+                    (p0) {
                   setState(() {
-                    weigthController = p0.toInt();
+                    userDataProvider.weigthController = p0.toInt();
                   });
                 }),
                 selectWeightAndHeightCon(
                   context,
-                  heightController,
+                  userDataProvider.heightController,
                   "CM",
                   150,
                   230,
                   (p0) {
                     setState(() {
-                      heightController = p0.toInt();
+                      userDataProvider.heightController = p0.toInt();
                     });
                   },
                 ),
@@ -71,14 +75,21 @@ class _ChoosePageState extends State<ChoosePage> {
             CustomButton(
                 onpress: () {
                   setState(() {
+                    userDataProvider.addUserData();
+                    inspect(userDataProvider.userData);
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ProcessingAttributesPage(),
+                      builder: (context) => const CalculationPage(),
                     ));
                   });
                 },
                 size: context.deviceSize,
                 buttonText: AppContants.btnContinue),
             spaceSmallH15(),
+            ElevatedButton(
+                onPressed: () {
+                  userDataProvider.addUserData();
+                },
+                child: const Text("EKLE"))
           ],
         ),
       ),
@@ -95,30 +106,19 @@ class _ChoosePageState extends State<ChoosePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          /* const SizedBox(
-            height: 60,
-            width: 60,
-            child: Card(
-                elevation: 3,
-                child: Icon(
-                  Icons.scale_rounded,
-                  color: Colors.blueAccent,
-                  size: 45,
-                )),
-          ), */
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 children: [
                   Text(controller.toString(),
-                      style: bigtitleTextStyle(Colors.black, fsize: 30)),
+                      style: bigtitleTextStyle(Colors.black, fsize: 25)),
                   Padding(
                     padding: const EdgeInsets.only(left: 5),
                     child: Text(
                       s,
                       style: bigtitleTextStyle(AppContants.primaryColor,
-                          fsize: 30),
+                          fsize: 25),
                     ),
                   )
                 ],
@@ -163,16 +163,23 @@ class _ChoosePageState extends State<ChoosePage> {
                 )),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 115),
+            padding: const EdgeInsets.only(left: 100),
             child: SizedBox(
               child: Row(
                 children: [
-                  Center(
-                    child: Text(ageController.toString(),
-                        style: bigtitleTextStyle(Colors.black, fsize: 30)),
-                  ),
+                  SizedBox(
+                      height: 40,
+                      width: 50,
+                      child: ref.read(userProvider).ageController > 0 &&
+                              ref.read(userProvider).ageController < 70
+                          ? Text(
+                              ref.read(userProvider).ageController.toString(),
+                              style: bigtitleTextStyle(Colors.black, fsize: 25))
+                          : Text("${ref.read(userProvider).ageController = 18}",
+                              style:
+                                  bigtitleTextStyle(Colors.black, fsize: 25))),
                   Padding(
-                    padding: const EdgeInsets.only(left: 10),
+                    padding: const EdgeInsets.only(left: 4),
                     child: Column(
                       children: [
                         Expanded(
@@ -180,7 +187,7 @@ class _ChoosePageState extends State<ChoosePage> {
                               iconSize: 25,
                               onPressed: () {
                                 setState(() {
-                                  ageController++;
+                                  ref.read(userProvider).ageController++;
                                 });
                               },
                               icon: const Icon(Icons.arrow_circle_up_sharp)),
@@ -190,7 +197,7 @@ class _ChoosePageState extends State<ChoosePage> {
                             iconSize: 25,
                             onPressed: () {
                               setState(() {
-                                ageController--;
+                                ref.read(userProvider).ageController--;
                               });
                             },
                             icon: const Icon(
@@ -214,13 +221,13 @@ class _ChoosePageState extends State<ChoosePage> {
         Text(AppContants.chooseGender, style: smallTitleTextStyle()),
         spaceSmallH15(),
         GenderWidget(
-          border: isMale == 1
+          border: ref.read(userProvider).isMale == true
               ? Border.all(width: 2, color: AppContants.primaryColor)
               : null,
           onTap: () {
             setState(() {
-              isMale = 1;
-              if (isMale == 1) {
+              ref.read(userProvider).isMale = true;
+              if (ref.read(userProvider).isMale == true) {
                 gender = AppContants.male;
               }
             });
@@ -234,13 +241,13 @@ class _ChoosePageState extends State<ChoosePage> {
         ),
         spaceSmallH15(),
         GenderWidget(
-          border: isMale == 2
+          border: ref.read(userProvider).isMale == false
               ? Border.all(width: 2, color: AppContants.primaryColor)
               : null,
           onTap: () {
             setState(() {
-              isMale = 2;
-              if (isMale == 2) {
+              ref.read(userProvider).isMale = false;
+              if (ref.read(userProvider).isMale == false) {
                 gender = AppContants.female;
               }
             });

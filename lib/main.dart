@@ -2,9 +2,10 @@ import 'package:change30/core/constants/app_contants.dart';
 import 'package:change30/screens/login_page.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -15,8 +16,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        appBarTheme:
-            const AppBarTheme(backgroundColor: Color(0xffE2E2E2), elevation: 0),
+        appBarTheme: const AppBarTheme(
+            backgroundColor: Color(0xffE2E2E2),
+            elevation: 0,
+            foregroundColor: Colors.black),
         textTheme: const TextTheme(titleLarge: TextStyle(color: Colors.white)),
         scaffoldBackgroundColor: const Color(0xffE2E2E2),
         colorScheme: ColorScheme.fromSeed(seedColor: AppContants.primaryColor),
