@@ -5,10 +5,11 @@ import 'package:change30/core/components/custom_button.dart';
 import 'package:change30/core/constants/app_contants.dart';
 import 'package:change30/core/extension/size_extension.dart';
 import 'package:change30/core/data/get_user_data.dart';
-import 'package:change30/features/Views/challenge_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'calculation_page.dart';
 
 class ChoosePage extends ConsumerStatefulWidget {
   const ChoosePage({super.key});
@@ -73,7 +74,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
 
                     inspect(userDataProvider.userData);
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ChallengePage(),
+                      builder: (context) => const CalculationPage(),
                     ));
                   });
                 },
@@ -91,8 +92,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
       width: 170,
       height: 90,
       decoration: BoxDecoration(
-          color: AppConstants.secondaryColor,
-          borderRadius: BorderRadius.circular(10)),
+          color: Colors.white60, borderRadius: BorderRadius.circular(10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -136,7 +136,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
     return Container(
       height: 70,
       decoration: BoxDecoration(
-        color: AppConstants.secondaryColor,
+        color: Colors.white60,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -280,7 +280,7 @@ class _GenderWidgetState extends State<GenderWidget> {
       child: Container(
         height: 70,
         decoration: BoxDecoration(
-            color: AppConstants.secondaryColor,
+            color: Colors.white60,
             borderRadius: BorderRadius.circular(10),
             border: widget.border),
         child: Row(
