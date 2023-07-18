@@ -1,4 +1,6 @@
+import 'package:change30/core/constants/app_contants.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController control;
@@ -17,13 +19,13 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-        style: const TextStyle(fontWeight: FontWeight.bold),
+        style: GoogleFonts.orbitron(fontWeight: FontWeight.bold),
         controller: control,
         obscureText: secret,
         cursorColor: Colors.black,
         decoration: InputDecoration(
             suffixIcon: sufIcon,
-            fillColor: Colors.white,
+            fillColor: AppConstants.secondaryColor,
             filled: true,
             hintText: hintText,
             border: OutlineInputBorder(

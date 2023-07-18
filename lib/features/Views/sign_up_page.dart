@@ -3,10 +3,10 @@ import 'package:change30/core/extension/size_extension.dart';
 
 import 'package:flutter/material.dart';
 
-import '../core/components/app_title_widget.dart';
-import '../core/components/custom_button.dart';
-import '../core/components/sign_in_with_widget.dart';
-import '../core/constants/app_contants.dart';
+import '../../core/components/app_title_widget.dart';
+import '../../core/components/custom_button.dart';
+import '../../core/components/sign_in_with_widget.dart';
+import '../../core/constants/app_contants.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});

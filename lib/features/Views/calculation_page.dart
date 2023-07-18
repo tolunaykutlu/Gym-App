@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:change30/core/constants/app_contants.dart';
 import 'package:change30/core/extension/size_extension.dart';
-import 'package:change30/data/get_user_data.dart';
+import 'package:change30/core/data/get_user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,7 +17,7 @@ class CalculationPage extends ConsumerWidget {
       double result;
       double bmiStatuse = 0;
       result = userDataProvider.weigthController /
-          (pow(2, userDataProvider.heightController));
+          (pow(2, (userDataProvider.heightController / 100)));
 
       if (result <= 18.4) {
         bmiStatuse = 1; //underweight
@@ -44,7 +44,7 @@ class CalculationPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                userDataProvider.userName,
+                userDataProvider.weigthController.toString(),
                 style: smallTitleTextStyle(fsize: 30),
               ),
               Text(
@@ -54,17 +54,17 @@ class CalculationPage extends ConsumerWidget {
               if (calculateUserBMI() == 1)
                 const BmiResultContainer(
                   color: Colors.yellow,
-                  text: "Underweight",
+                  text: "Need to gain some muscle",
                 ),
               if (calculateUserBMI() == 2)
                 const BmiResultContainer(
                   color: Colors.green,
-                  text: "Normal",
+                  text: "Normal. Keep going. Eat well, exercise",
                 ),
               if (calculateUserBMI() == 3)
                 const BmiResultContainer(
                   color: Colors.orange,
-                  text: "Obese",
+                  text: "Need to lose some weight",
                 ),
               if (calculateUserBMI() == 4)
                 const BmiResultContainer(
@@ -91,9 +91,14 @@ class BmiResultContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 150,
+      width: context.deviceWidth,
       decoration:
           BoxDecoration(borderRadius: BorderRadius.circular(20), color: color),
-      child: Text(text),
+      child: Center(
+          child: Text(
+        text,
+        style: smallTitleTextStyle(fsize: 20, color: Colors.black),
+      )),
     );
   }
 }

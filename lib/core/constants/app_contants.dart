@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AppContants {
+class AppConstants {
   static const String appTitle = "STAY HARD";
   static const String selectWeigthTitle = "Select your weight / height";
   static const String btnContinue = "Continue";
@@ -17,6 +17,7 @@ class AppContants {
   static const String forgotPwText = "Forgot Password?";
   static const String donthaveAccText = "Don't have an Account?";
   static const Color primaryColor = Color(0xffF54242);
+  static const Color secondaryColor = Color(0x99FFFFFF);
 }
 
 TextStyle smallTitleTextStyle({
@@ -24,7 +25,7 @@ TextStyle smallTitleTextStyle({
   color = Colors.black,
 }) {
   //textStyle for only small titles like choose your bla bla
-  return GoogleFonts.permanentMarker(
+  return GoogleFonts.orbitron(
       fontSize: fsize, color: color, fontWeight: FontWeight.bold);
 }
 

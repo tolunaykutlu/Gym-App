@@ -1,5 +1,5 @@
 import 'package:change30/core/constants/app_contants.dart';
-import 'package:change30/screens/login_page.dart';
+import 'package:change30/features/Views/login_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
             foregroundColor: Colors.black),
         textTheme: const TextTheme(titleLarge: TextStyle(color: Colors.white)),
         scaffoldBackgroundColor: const Color(0xffE2E2E2),
-        colorScheme: ColorScheme.fromSeed(seedColor: AppContants.primaryColor),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppConstants.primaryColor),
       ),
       home: const LoginPage(),
     );

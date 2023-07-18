@@ -4,18 +4,11 @@ import 'package:change30/core/components/app_title_widget.dart';
 import 'package:change30/core/components/custom_button.dart';
 import 'package:change30/core/constants/app_contants.dart';
 import 'package:change30/core/extension/size_extension.dart';
-import 'package:change30/data/get_user_data.dart';
+import 'package:change30/core/data/get_user_data.dart';
+import 'package:change30/features/Views/challenge_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'calculation_page.dart';
-
-String gender = "";
-int heightController = 179;
-int ageController = 18;
-int weigthController = 60;
-bool isMale = true;
 
 class ChoosePage extends ConsumerStatefulWidget {
   const ChoosePage({super.key});
@@ -27,7 +20,8 @@ class ChoosePage extends ConsumerStatefulWidget {
 class _ChoosePageState extends ConsumerState<ChoosePage> {
   @override
   Widget build(BuildContext context) {
-    var userDataProvider = ref.read(userProvider);
+    var userDataProvider = ref.watch(userProvider);
+
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -39,13 +33,13 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
             genderPickContainers(context),
             spaceSmallH15(),
             Text(
-              AppContants.selectAgeTitle,
+              AppConstants.selectAgeTitle,
               style: smallTitleTextStyle(),
             ),
             spaceSmallH15(),
             selectAgeContainer(context),
             spaceMediumH25(),
-            Text(AppContants.selectWeigthTitle, style: smallTitleTextStyle()),
+            Text(AppConstants.selectWeigthTitle, style: smallTitleTextStyle()),
             spaceSmallH15(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -75,21 +69,16 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
             CustomButton(
                 onpress: () {
                   setState(() {
-                    userDataProvider.addUserData();
+                    ref.read(userProvider).addUserData();
+
                     inspect(userDataProvider.userData);
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const CalculationPage(),
+                      builder: (context) => const ChallengePage(),
                     ));
                   });
                 },
                 size: context.deviceSize,
-                buttonText: AppContants.btnContinue),
-            spaceSmallH15(),
-            ElevatedButton(
-                onPressed: () {
-                  userDataProvider.addUserData();
-                },
-                child: const Text("EKLE"))
+                buttonText: AppConstants.btnContinue),
           ],
         ),
       ),
@@ -102,7 +91,8 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
       width: 170,
       height: 90,
       decoration: BoxDecoration(
-          color: Colors.white60, borderRadius: BorderRadius.circular(10)),
+          color: AppConstants.secondaryColor,
+          borderRadius: BorderRadius.circular(10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -117,7 +107,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
                     padding: const EdgeInsets.only(left: 5),
                     child: Text(
                       s,
-                      style: bigtitleTextStyle(AppContants.primaryColor,
+                      style: bigtitleTextStyle(AppConstants.primaryColor,
                           fsize: 25),
                     ),
                   )
@@ -126,7 +116,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
               SizedBox(
                 width: 130,
                 child: Slider(
-                  activeColor: AppContants.primaryColor,
+                  activeColor: AppConstants.primaryColor,
                   min: minimum,
                   max: maximum,
                   value: controller.toDouble(),
@@ -146,7 +136,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
     return Container(
       height: 70,
       decoration: BoxDecoration(
-        color: Colors.white60,
+        color: AppConstants.secondaryColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -218,21 +208,21 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
   Column genderPickContainers(BuildContext context) {
     return Column(
       children: [
-        Text(AppContants.chooseGender, style: smallTitleTextStyle()),
+        Text(AppConstants.chooseGender, style: smallTitleTextStyle()),
         spaceSmallH15(),
         GenderWidget(
           border: ref.read(userProvider).isMale == true
-              ? Border.all(width: 2, color: AppContants.primaryColor)
+              ? Border.all(width: 2, color: AppConstants.primaryColor)
               : null,
           onTap: () {
             setState(() {
               ref.read(userProvider).isMale = true;
               if (ref.read(userProvider).isMale == true) {
-                gender = AppContants.male;
+                ref.read(userProvider).gender = AppConstants.male;
               }
             });
           },
-          genderTitle: AppContants.male,
+          genderTitle: AppConstants.male,
           icon: const Icon(
             Icons.male_sharp,
             size: 45,
@@ -242,17 +232,17 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
         spaceSmallH15(),
         GenderWidget(
           border: ref.read(userProvider).isMale == false
-              ? Border.all(width: 2, color: AppContants.primaryColor)
+              ? Border.all(width: 2, color: AppConstants.primaryColor)
               : null,
           onTap: () {
             setState(() {
               ref.read(userProvider).isMale = false;
               if (ref.read(userProvider).isMale == false) {
-                gender = AppContants.female;
+                ref.read(userProvider).gender = AppConstants.female;
               }
             });
           },
-          genderTitle: AppContants.female,
+          genderTitle: AppConstants.female,
           icon: const Icon(
             Icons.female_sharp,
             size: 45,
@@ -290,7 +280,7 @@ class _GenderWidgetState extends State<GenderWidget> {
       child: Container(
         height: 70,
         decoration: BoxDecoration(
-            color: Colors.white60,
+            color: AppConstants.secondaryColor,
             borderRadius: BorderRadius.circular(10),
             border: widget.border),
         child: Row(

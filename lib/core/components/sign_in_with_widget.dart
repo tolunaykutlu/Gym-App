@@ -12,7 +12,7 @@ class SignInWithWidget extends StatelessWidget {
     return Column(
       children: [
         Text(
-          AppContants.signInWithText,
+          AppConstants.signInWithText,
           style: Theme.of(context)
               .textTheme
               .titleLarge
@@ -22,12 +22,29 @@ class SignInWithWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            InkWell(onTap: () {}, child: const Icon(Icons.apple)),
+            InkWell(
+                onTap: () {},
+                child: const Icon(
+                  Icons.apple,
+                  size: 40,
+                )),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: InkWell(onTap: () {}, child: const Icon(Icons.facebook)),
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: InkWell(
+                  onTap: () {},
+                  child: const Icon(
+                    Icons.facebook,
+                    size: 40,
+                    color: Colors.blue,
+                  )),
             ),
-            InkWell(onTap: () {}, child: const Icon(Icons.g_mobiledata))
+            InkWell(
+                onTap: () {},
+                child: const Icon(
+                  Icons.g_mobiledata,
+                  size: 40,
+                  color: Colors.redAccent,
+                ))
           ],
         ),
         spaceSmallH15(),

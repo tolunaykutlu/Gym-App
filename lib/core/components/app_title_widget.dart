@@ -22,7 +22,7 @@ class AppTitleWidget extends StatelessWidget {
           child: Text("HARD",
               style: /* Theme.of(context).textTheme.headlineMedium?.copyWith(
                 color: Colors.amber.shade900, fontWeight: FontWeight.bold) */
-                  bigtitleTextStyle(AppContants.primaryColor)),
+                  bigtitleTextStyle(AppConstants.primaryColor)),
         ),
       ],
     );

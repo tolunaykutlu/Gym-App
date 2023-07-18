@@ -1,14 +1,14 @@
 import 'package:change30/core/components/app_title_widget.dart';
 import 'package:change30/core/components/sign_in_with_widget.dart';
 import 'package:change30/core/extension/size_extension.dart';
-import 'package:change30/screens/choose_gender_page.dart';
-import 'package:change30/screens/sign_up_page.dart';
+import 'package:change30/features/Views/choose_gender_page.dart';
+import 'package:change30/features/Views/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
-import '../core/components/appbar_menu.dart';
-import '../core/components/custom_button.dart';
-import '../core/components/custom_textfield.dart';
-import '../core/constants/app_contants.dart';
+import '../../core/components/appbar_menu.dart';
+import '../../core/components/custom_button.dart';
+import '../../core/components/custom_textfield.dart';
+import '../../core/constants/app_contants.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              AppContants.donthaveAccText,
+              AppConstants.donthaveAccText,
               style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                 ));
               },
               child: const Text(
-                AppContants.signUpText,
+                AppConstants.signUpText,
                 style: TextStyle(
                     fontSize: 15,
                     decoration: TextDecoration.underline,
@@ -90,12 +90,12 @@ class _LoginPageState extends State<LoginPage> {
         spaceSmallH15(),
         CustomTextField(
           control: controller,
-          hintText: AppContants.phoneAndEmailText,
+          hintText: AppConstants.phoneAndEmailText,
         ),
         spaceSmallH15(),
         CustomTextField(
           control: passwordController,
-          hintText: AppContants.passwordText,
+          hintText: AppConstants.passwordText,
           secret: secretPassword,
           sufIcon: Card(
             color: Colors.white60,
@@ -118,14 +118,14 @@ class _LoginPageState extends State<LoginPage> {
                   MaterialPageRoute(builder: (context) => const ChoosePage()));
             });
           },
-          buttonText: AppContants.signInText,
+          buttonText: AppConstants.signInText,
           size: size,
         ),
         spaceSmallH15(),
         GestureDetector(
           onTap: () {},
           child: const Text(
-            AppContants.forgotPwText,
+            AppConstants.forgotPwText,
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           ),
         ),
