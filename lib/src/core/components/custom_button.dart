@@ -1,4 +1,4 @@
-import 'package:change30/core/constants/app_contants.dart';
+import 'package:change30/src/core/constants/app_contants.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {

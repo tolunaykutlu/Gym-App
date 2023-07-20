@@ -1,15 +1,11 @@
-import 'dart:developer';
-
-import 'package:change30/core/components/app_title_widget.dart';
-import 'package:change30/core/components/custom_button.dart';
-import 'package:change30/core/constants/app_contants.dart';
-import 'package:change30/core/extension/size_extension.dart';
-import 'package:change30/core/data/get_user_data.dart';
+import 'package:change30/src/core/components/app_title_widget.dart';
+import 'package:change30/src/core/components/custom_button.dart';
+import 'package:change30/src/core/constants/app_contants.dart';
+import 'package:change30/src/core/extension/size_extension.dart';
+import 'package:change30/src/features/Controllers/get_user_data.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'calculation_page.dart';
 
 class ChoosePage extends ConsumerStatefulWidget {
   const ChoosePage({super.key});
@@ -24,11 +20,11 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
     var userDataProvider = ref.watch(userProvider);
 
     return Scaffold(
-      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
+            spaceLargeH35(),
             const AppTitleWidget(),
             spaceSmallH15(),
             genderPickContainers(context),
@@ -72,10 +68,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
                   setState(() {
                     ref.read(userProvider).addUserData();
 
-                    inspect(userDataProvider.userData);
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const CalculationPage(),
-                    ));
+                    Navigator.pushNamed(context, '/challengePage');
                   });
                 },
                 size: context.deviceSize,
@@ -210,7 +203,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
       children: [
         Text(AppConstants.chooseGender, style: smallTitleTextStyle()),
         spaceSmallH15(),
-        GenderWidget(
+        GenderSelectionWidget(
           border: ref.read(userProvider).isMale == true
               ? Border.all(width: 2, color: AppConstants.primaryColor)
               : null,
@@ -230,7 +223,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
           ),
         ),
         spaceSmallH15(),
-        GenderWidget(
+        GenderSelectionWidget(
           border: ref.read(userProvider).isMale == false
               ? Border.all(width: 2, color: AppConstants.primaryColor)
               : null,
@@ -254,13 +247,13 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
   }
 }
 
-class GenderWidget extends StatefulWidget {
+class GenderSelectionWidget extends StatefulWidget {
   final Widget icon;
   final String genderTitle;
   final void Function()? onTap;
 
   final BoxBorder? border;
-  const GenderWidget({
+  const GenderSelectionWidget({
     super.key,
     required this.icon,
     required this.genderTitle,
@@ -269,10 +262,10 @@ class GenderWidget extends StatefulWidget {
   });
 
   @override
-  State<GenderWidget> createState() => _GenderWidgetState();
+  State<GenderSelectionWidget> createState() => _GenderSelectionWidgetState();
 }
 
-class _GenderWidgetState extends State<GenderWidget> {
+class _GenderSelectionWidgetState extends State<GenderSelectionWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

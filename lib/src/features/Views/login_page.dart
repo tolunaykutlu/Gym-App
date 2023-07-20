@@ -1,8 +1,8 @@
-import 'package:change30/core/components/app_title_widget.dart';
-import 'package:change30/core/components/sign_in_with_widget.dart';
-import 'package:change30/core/extension/size_extension.dart';
-import 'package:change30/features/Views/choose_gender_page.dart';
-import 'package:change30/features/Views/sign_up_page.dart';
+import 'package:change30/src/core/components/app_title_widget.dart';
+import 'package:change30/src/core/components/sign_in_with_widget.dart';
+import 'package:change30/src/core/extension/size_extension.dart';
+
+import 'package:change30/src/features/Views/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/components/appbar_menu.dart';
@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
         leading: const AppBarMenuIcon(),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
             iconAndTitle(context.deviceSize, context),
@@ -114,8 +114,7 @@ class _LoginPageState extends State<LoginPage> {
         CustomButton(
           onpress: () {
             setState(() {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const ChoosePage()));
+              Navigator.pushNamed(context, '/choosePage');
             });
           },
           buttonText: AppConstants.signInText,

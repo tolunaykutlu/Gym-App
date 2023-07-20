@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppConstants {
+  const AppConstants._();
   static const String appTitle = "STAY HARD";
   static const String selectWeigthTitle = "Select your weight / height";
   static const String btnContinue = "Continue";
@@ -24,7 +25,7 @@ TextStyle smallTitleTextStyle({
   fsize = 20,
   color = Colors.black,
 }) {
-  //textStyle for only small titles like choose your bla bla
+  //textStyle for only small titles like choose your age
   return GoogleFonts.orbitron(
       fontSize: fsize, color: color, fontWeight: FontWeight.bold);
 }

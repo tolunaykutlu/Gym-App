@@ -1,5 +1,5 @@
-import 'package:change30/core/components/custom_textfield.dart';
-import 'package:change30/core/extension/size_extension.dart';
+import 'package:change30/src/core/components/custom_textfield.dart';
+import 'package:change30/src/core/extension/size_extension.dart';
 
 import 'package:flutter/material.dart';
 
@@ -29,7 +29,7 @@ class _SignUpPageState extends State<SignUpPage> {
         foregroundColor: Colors.black,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           const AppTitleWidget(),
           if (context.deviceHeight > 668)
@@ -56,7 +56,10 @@ class _SignUpPageState extends State<SignUpPage> {
     return Column(
       children: [
         spaceSmallH15(),
-        CustomTextField(control: nameCtrl, hintText: "Full Name"),
+        CustomTextField(
+          control: nameCtrl,
+          hintText: "Full Name",
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: CustomTextField(control: emailCtrl, hintText: "Email"),
@@ -64,11 +67,16 @@ class _SignUpPageState extends State<SignUpPage> {
         CustomTextField(control: phoneCtrl, hintText: "Phone"),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
-          child: CustomTextField(control: passwordCtrl, hintText: "Password"),
+          child: CustomTextField(
+            control: passwordCtrl,
+            hintText: "Password",
+          ),
         ),
         Row(
           children: [
             Checkbox.adaptive(
+              activeColor: AppConstants.primaryColor,
+              checkColor: Colors.black,
               value: isChecked,
               onChanged: (value) {
                 setState(() {

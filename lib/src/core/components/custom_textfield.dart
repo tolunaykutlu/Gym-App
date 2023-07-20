@@ -1,4 +1,4 @@
-import 'package:change30/core/constants/app_contants.dart';
+import 'package:change30/src/core/constants/app_contants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final bool secret;
   final Widget? sufIcon;
+  final String? errorText;
 
   const CustomTextField({
     super.key,
@@ -14,6 +15,7 @@ class CustomTextField extends StatelessWidget {
     required this.hintText,
     this.secret = false,
     this.sufIcon,
+    this.errorText,
   });
 
   @override
@@ -24,6 +26,7 @@ class CustomTextField extends StatelessWidget {
         obscureText: secret,
         cursorColor: Colors.black,
         decoration: InputDecoration(
+            errorText: errorText,
             suffixIcon: sufIcon,
             fillColor: AppConstants.secondaryColor,
             filled: true,

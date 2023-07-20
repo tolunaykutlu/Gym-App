@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:change30/core/extension/size_extension.dart';
+import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:flutter/material.dart';
 
 import 'login_page.dart';
