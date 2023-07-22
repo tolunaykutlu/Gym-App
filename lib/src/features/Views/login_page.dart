@@ -23,6 +23,13 @@ class _LoginPageState extends State<LoginPage> {
   bool secretPassword = true;
 
   @override
+  void dispose() {
+    controller.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

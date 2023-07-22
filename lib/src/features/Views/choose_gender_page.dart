@@ -42,7 +42,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 selectWeightAndHeightCon(
-                    context, userDataProvider.weigthController, "KG", 30, 170,
+                    context, userDataProvider.weigthController, "KG", 50, 200,
                     (p0) {
                   setState(() {
                     userDataProvider.weigthController = p0.toInt();
