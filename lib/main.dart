@@ -1,6 +1,6 @@
 import 'package:change30/src/core/constants/app_contants.dart';
 import 'package:change30/src/features/Views/calculation_page.dart';
-import 'package:change30/src/features/Views/challenge_page.dart';
+import 'package:change30/src/features/Views/level_page.dart';
 import 'package:change30/src/features/Views/choose_gender_page.dart';
 import 'package:change30/src/features/Views/login_page.dart';
 import 'package:change30/src/features/Views/selected_challenge.dart';
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
             elevation: 0,
             foregroundColor: Colors.black),
         textTheme: const TextTheme(titleLarge: TextStyle(color: Colors.white)),
-        scaffoldBackgroundColor: const Color(0xffE2E2E2),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 226, 226, 226),
         colorScheme: ColorScheme.fromSeed(seedColor: AppConstants.primaryColor),
       ),
       initialRoute: '/',
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const LoginPage(),
         '/choosePage': (context) => const ChoosePage(),
         '/signUpPage': (context) => const SignUpPage(),
-        '/challengePage': (context) => const ChallengePage(),
+        '/challengePage': (context) => const LevelSelectionPage(),
         '/calculationPage': (context) => const CalculationPage(),
         '/selectedChallenge': (context) => const SelectedChallenge()
       },

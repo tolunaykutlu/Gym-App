@@ -85,7 +85,8 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
       width: 170,
       height: 90,
       decoration: BoxDecoration(
-          color: Colors.white60, borderRadius: BorderRadius.circular(10)),
+          color: AppConstants.secondaryColor,
+          borderRadius: BorderRadius.circular(10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -129,7 +130,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
     return Container(
       height: 70,
       decoration: BoxDecoration(
-        color: Colors.white60,
+        color: AppConstants.secondaryColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -273,7 +274,7 @@ class _GenderSelectionWidgetState extends State<GenderSelectionWidget> {
       child: Container(
         height: 70,
         decoration: BoxDecoration(
-            color: Colors.white60,
+            color: AppConstants.secondaryColor,
             borderRadius: BorderRadius.circular(10),
             border: widget.border),
         child: Row(

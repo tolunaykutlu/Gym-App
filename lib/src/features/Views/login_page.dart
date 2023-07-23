@@ -5,7 +5,6 @@ import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:change30/src/features/Views/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/components/appbar_menu.dart';
 import '../../core/components/custom_button.dart';
 import '../../core/components/custom_textfield.dart';
 import '../../core/constants/app_contants.dart';
@@ -31,25 +30,25 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const AppBarMenuIcon(),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          children: [
-            iconAndTitle(context.deviceSize, context),
-            spaceSmallH15(),
-            if (context.deviceSize.height > 668)
-              Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: buttonSection(context.deviceSize, context))
-            else
-              buttonSection(context.deviceSize, context),
-            spaceMediumH25(),
-            bottomSection(context),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              iconAndTitle(context.deviceSize, context),
+              spaceSmallH15(),
+              if (context.deviceSize.height > 668)
+                Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: buttonSection(context.deviceSize, context))
+              else
+                buttonSection(context.deviceSize, context),
+              spaceMediumH25(),
+              bottomSection(context),
+            ],
+          ),
         ),
       ),
     );
@@ -142,9 +141,10 @@ class _LoginPageState extends State<LoginPage> {
   Column iconAndTitle(Size size, BuildContext context) {
     return Column(
       children: [
-        const Image(
-          image: AssetImage("images/GymPoint.png"),
-        ),
+        /* Image.asset(
+          "images/GymPoint.png",
+          fit: BoxFit.cover,
+        ), */
         spaceSmallH15(),
         const AppTitleWidget(),
       ],

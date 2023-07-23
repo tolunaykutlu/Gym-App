@@ -6,8 +6,8 @@ import 'package:change30/src/features/Controllers/get_exercises.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ChallengePage extends ConsumerWidget {
-  const ChallengePage({super.key});
+class LevelSelectionPage extends ConsumerWidget {
+  const LevelSelectionPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -75,15 +75,34 @@ class LevelSelectionWidget extends StatefulWidget {
 
 class _LevelSelectionWidgetState extends State<LevelSelectionWidget> {
   bool isClicked = false;
+
+  /*  Future goNewPageDelayed() async {
+    await Future.delayed(const Duration(milliseconds: 1500), () {
+      Navigator.pushNamed(context, '/selectedChallenge');
+    });
+  } */
+
+  goNextPage() {
+    Navigator.pushNamed(context, '/selectedChallenge');
+  }
+
+  /* goTo(String path) {
+    Navigator.pushNamed(context, path);
+  } */
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, '/selectedChallenge');
+      onTap: () async {
+        setState(() {
+          goNextPage();
+        });
+
+        //Navigator.pushNamed(context, '/selectedChallenge');
       },
       child: Container(
         decoration: BoxDecoration(
-            color: AppConstants.secondaryColor,
+            color: isClicked ? AppConstants.secondaryColor : Colors.white70,
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: Colors.black, width: 2)),
         child: Center(
