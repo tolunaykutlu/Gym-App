@@ -5,11 +5,15 @@ import 'package:change30/src/features/Views/choose_gender_page.dart';
 import 'package:change30/src/features/Views/login_page.dart';
 import 'package:change30/src/features/Views/selected_challenge.dart';
 import 'package:change30/src/features/Views/sign_up_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
+main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(const ProviderScope(child: MyApp()));
 }
 

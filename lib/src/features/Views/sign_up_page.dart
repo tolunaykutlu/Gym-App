@@ -2,38 +2,46 @@ import 'package:change30/src/core/components/custom_textfield.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/components/app_title_widget.dart';
 import '../../core/components/custom_button.dart';
 import '../../core/components/sign_in_with_widget.dart';
 import '../../core/constants/app_contants.dart';
+import '../riverpods/auth_riverpod.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  ConsumerState<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  final TextEditingController nameCtrl = TextEditingController();
-  final TextEditingController emailCtrl = TextEditingController();
-  final TextEditingController phoneCtrl = TextEditingController();
-  final TextEditingController passwordCtrl = TextEditingController();
+class _SignUpPageState extends ConsumerState<SignUpPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _nameCtrl = TextEditingController();
+  final _emailCtrl = TextEditingController();
+  final _phoneCtrl = TextEditingController();
+  final _passwordCtrl = TextEditingController();
+
   bool isChecked = false;
 
-  @override
+  /* @override
   void dispose() {
     nameCtrl.dispose();
     emailCtrl.dispose();
     phoneCtrl.dispose();
     passwordCtrl.dispose();
     super.dispose();
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
+    final authNotifier = ref.watch(authProvider);
+    final _autoValidate = AutovalidateMode.disabled;
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         foregroundColor: Colors.black,
       ),
@@ -50,7 +58,8 @@ class _SignUpPageState extends State<SignUpPage> {
             signUpPageTextFields(context),
           CustomButton(
               onpress: () {
-                Navigator.of(context).pop();
+                /* authNotifier.signUpUserWithFirebase(
+                    emailCtrl.text, passwordCtrl.text, nameCtrl.text); */
               },
               size: context.deviceSize,
               buttonText: "Sign Up"),
@@ -65,19 +74,23 @@ class _SignUpPageState extends State<SignUpPage> {
     return Column(
       children: [
         spaceSmallH15(),
-        CustomTextField(
-          control: nameCtrl,
-          hintText: "Full Name",
+        Form(
+          key: _formKey,
+          child: CustomTextFormField(
+            errorText: _nameCtrl.text.length > 4 ? null : "girini",
+            control: _nameCtrl,
+            hintText: "Full Name",
+          ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
-          child: CustomTextField(control: emailCtrl, hintText: "Email"),
+          child: CustomTextFormField(control: _emailCtrl, hintText: "Email"),
         ),
-        CustomTextField(control: phoneCtrl, hintText: "Phone"),
+        CustomTextFormField(control: _phoneCtrl, hintText: "Phone"),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
-          child: CustomTextField(
-            control: passwordCtrl,
+          child: CustomTextFormField(
+            control: _passwordCtrl,
             hintText: "Password",
           ),
         ),

@@ -3,22 +3,24 @@ import 'package:change30/src/core/components/sign_in_with_widget.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 
 import 'package:change30/src/features/Views/sign_up_page.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/components/custom_button.dart';
 import '../../core/components/custom_textfield.dart';
 import '../../core/constants/app_contants.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final TextEditingController controller = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class _LoginPageState extends ConsumerState<LoginPage> {
+  final controller = TextEditingController();
+  final passwordController = TextEditingController();
   bool secretPassword = true;
 
   @override
@@ -94,12 +96,12 @@ class _LoginPageState extends State<LoginPage> {
     return Column(
       children: [
         spaceSmallH15(),
-        CustomTextField(
+        CustomTextFormField(
           control: controller,
           hintText: AppConstants.phoneAndEmailText,
         ),
         spaceSmallH15(),
-        CustomTextField(
+        CustomTextFormField(
           control: passwordController,
           hintText: AppConstants.passwordText,
           secret: secretPassword,
