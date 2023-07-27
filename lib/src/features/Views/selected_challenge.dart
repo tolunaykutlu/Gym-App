@@ -1,4 +1,4 @@
-import 'package:change30/src/features/Controllers/get_exercises.dart';
+import 'package:change30/src/features/Controllers/exercise_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../firebase/firebase_auth.dart';
 
 class AuthProvider extends ChangeNotifier {
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   UserCredential? _userCredential;
   final Map<String, dynamic> _userData = {};
@@ -19,20 +19,21 @@ class AuthProvider extends ChangeNotifier {
 
   Future<UserCredential> loginUserWithFirebase(
       String email, String password) async {
-    setLoader(true);
+    //setLoader(true);
     try {
-      _userCredential = await fauth.loginUserWithFirebase(email, password);
-      setLoader(false);
-      return _userCredential!;
+      final _userCredential =
+          await fauth.loginUserWithFirebase(email, password);
+      //setLoader(false);
+      return _userCredential;
     } catch (e) {
-      setLoader(false);
+      //setLoader(false);
       return Future.error(e);
     }
   }
 
   Future<UserCredential> signUpUserWithFirebase(
       String email, String password, String name) async {
-    setLoader(true);
+    //setLoader(true);
     _userCredential = await fauth.signUpWithFirebase(email, password, name);
     final data = {
       'email': email,
@@ -59,10 +60,10 @@ class AuthProvider extends ChangeNotifier {
     return value;
   }
 
-  setLoader(bool loader) {
+  /* setLoader(bool loader) {
     _isLoading = loader;
     notifyListeners();
-  }
+  } */
 }
 
 final authProvider = ChangeNotifierProvider((ref) {

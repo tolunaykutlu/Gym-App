@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/components/app_title_widget.dart';
 import '../../core/components/custom_button.dart';
-import '../../core/components/sign_in_with_widget.dart';
 import '../../core/constants/app_contants.dart';
 import '../riverpods/auth_riverpod.dart';
 
@@ -26,19 +25,18 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
   bool isChecked = false;
 
-  /* @override
+  @override
   void dispose() {
-    nameCtrl.dispose();
-    emailCtrl.dispose();
-    phoneCtrl.dispose();
-    passwordCtrl.dispose();
+    _nameCtrl.dispose();
+    _emailCtrl.dispose();
+    _phoneCtrl.dispose();
+    _passwordCtrl.dispose();
     super.dispose();
-  } */
+  }
 
   @override
   Widget build(BuildContext context) {
     final authNotifier = ref.watch(authProvider);
-    final _autoValidate = AutovalidateMode.disabled;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -58,13 +56,16 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
             signUpPageTextFields(context),
           CustomButton(
               onpress: () {
-                /* authNotifier.signUpUserWithFirebase(
-                    emailCtrl.text, passwordCtrl.text, nameCtrl.text); */
+                authNotifier
+                    .signUpUserWithFirebase(
+                        _emailCtrl.text, _passwordCtrl.text, _nameCtrl.text)
+                    .then((value) => const Dialog(
+                          //TODO: kayıt başarılı diye ekrana yazdırmak
+                          child: AlertDialog(content: Text("Kayıt başarılı")),
+                        ));
               },
               size: context.deviceSize,
               buttonText: "Sign Up"),
-          spaceLargeH35(),
-          const SignInWithWidget()
         ]),
       ),
     );
@@ -77,7 +78,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
         Form(
           key: _formKey,
           child: CustomTextFormField(
-            errorText: _nameCtrl.text.length > 4 ? null : "girini",
             control: _nameCtrl,
             hintText: "Full Name",
           ),

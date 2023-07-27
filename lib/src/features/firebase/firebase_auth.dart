@@ -27,9 +27,9 @@ class FirebaseAuthClass extends BaseFirebaseService {
 
   @override
   Future<UserCredential> signUpWithFirebase(
-      String email, String password, String name) {
-    final userCredential =
-        auth.createUserWithEmailAndPassword(email: email, password: password);
+      String email, String password, String name) async {
+    final userCredential = await auth.createUserWithEmailAndPassword(
+        email: email, password: password);
     return userCredential;
   }
 }

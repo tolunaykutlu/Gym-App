@@ -3,6 +3,7 @@ import 'package:change30/src/core/components/sign_in_with_widget.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 
 import 'package:change30/src/features/Views/sign_up_page.dart';
+import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,14 +20,14 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
-  final controller = TextEditingController();
-  final passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool secretPassword = true;
 
   @override
   void dispose() {
-    controller.dispose();
-    passwordController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -97,12 +98,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       children: [
         spaceSmallH15(),
         CustomTextFormField(
-          control: controller,
+          control: _emailController,
           hintText: AppConstants.phoneAndEmailText,
         ),
         spaceSmallH15(),
         CustomTextFormField(
-          control: passwordController,
+          control: _passwordController,
           hintText: AppConstants.passwordText,
           secret: secretPassword,
           sufIcon: Card(
@@ -122,7 +123,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         CustomButton(
           onpress: () {
             setState(() {
-              Navigator.pushNamed(context, '/choosePage');
+              ref
+                  .read(authProvider)
+                  .loginUserWithFirebase(
+                      _emailController.text, _passwordController.text)
+                  .then((value) => Navigator.pushNamed(context, '/choosePage'));
             });
           },
           buttonText: AppConstants.signInText,
