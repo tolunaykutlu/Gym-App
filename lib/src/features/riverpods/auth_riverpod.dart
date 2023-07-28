@@ -6,14 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../firebase/firebase_auth.dart';
 
 class AuthProvider extends ChangeNotifier {
-  final bool _isLoading = false;
-
   UserCredential? _userCredential;
   final Map<String, dynamic> _userData = {};
   FirebaseAuthClass fauth = FirebaseAuthClass();
   FirestoreService fstore = FirestoreService();
 
-  bool get isLoading => _isLoading;
   UserCredential? get userCredential => _userCredential;
   Map<String, dynamic> get userData => _userData;
 
@@ -21,14 +18,19 @@ class AuthProvider extends ChangeNotifier {
       String email, String password) async {
     //setLoader(true);
     try {
-      final _userCredential =
-          await fauth.loginUserWithFirebase(email, password);
+      final userCredential = await fauth.loginUserWithFirebase(email, password);
       //setLoader(false);
-      return _userCredential;
+      return userCredential;
     } catch (e) {
       //setLoader(false);
       return Future.error(e);
     }
+  }
+
+  //current userin ıdsinin olduğu dökümana bi kaç bilgi daha ekle
+  Future<void> addUserSpec(Map<String, dynamic> data) {
+    var userId = fauth.auth.currentUser!.uid;
+    return fstore.addDataToFirestore(data, "users", userId);
   }
 
   Future<UserCredential> signUpUserWithFirebase(

@@ -1,5 +1,5 @@
-import 'package:change30/src/core/components/app_title_widget.dart';
-import 'package:change30/src/core/components/sign_in_with_widget.dart';
+import 'package:change30/src/core/components/widgets/app_title_widget.dart';
+import 'package:change30/src/core/components/widgets/sign_in_with_widget.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 
 import 'package:change30/src/features/Views/sign_up_page.dart';
@@ -8,8 +8,8 @@ import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/components/custom_button.dart';
-import '../../core/components/custom_textfield.dart';
+import '../../core/components/widgets/custom_button.dart';
+import '../../core/components/widgets/custom_textfield.dart';
 import '../../core/constants/app_contants.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -37,7 +37,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 60),
           child: Column(
             children: [
               iconAndTitle(context.deviceSize, context),
@@ -123,11 +123,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         CustomButton(
           onpress: () {
             setState(() {
+              final snackBar = snackbar();
               ref
                   .read(authProvider)
                   .loginUserWithFirebase(
                       _emailController.text, _passwordController.text)
-                  .then((value) => Navigator.pushNamed(context, '/choosePage'));
+                  .then((value) {
+                value.user!.uid.isEmpty
+                    ? snackBar
+                    : Navigator.pushNamed(context, '/choosePage');
+              });
             });
           },
           buttonText: AppConstants.signInText,
@@ -135,13 +140,30 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         ),
         spaceSmallH15(),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            setState(() {
+              //SİGN OUT
+              ref.read(authProvider).fauth.signOutuser(context);
+            });
+          },
           child: const Text(
             AppConstants.forgotPwText,
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           ),
         ),
       ],
+    );
+  }
+
+  SnackBar snackbar() {
+    return SnackBar(
+      content: const Text('Yay! A SnackBar!'),
+      action: SnackBarAction(
+        label: 'Undo',
+        onPressed: () {
+          // Some code to undo the change.
+        },
+      ),
     );
   }
 

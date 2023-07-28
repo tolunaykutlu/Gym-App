@@ -37,10 +37,7 @@ class FirestoreService extends BaseFirestoreService {
   @override
   Future getUserDataFromFirestore(String collectionName, String docName) async {
     try {
-      final userData = await _firestoreInstance
-          .collection(collectionName)
-          .doc(docName)
-          .get();
+      await _firestoreInstance.collection(collectionName).doc(docName).get();
     } catch (e) {
       throw Exception(e.toString());
     }

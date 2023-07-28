@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color.fromARGB(255, 226, 226, 226),
         colorScheme: ColorScheme.fromSeed(seedColor: AppConstants.primaryColor),
       ),
-      initialRoute: "/",
+      initialRoute: "/loginPage",
       routes: {
         '/': (context) => const SplashScreen(),
         '/loginPage': (context) => const LoginPage(),

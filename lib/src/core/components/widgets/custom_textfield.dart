@@ -39,7 +39,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         obscureText: widget.secret,
         cursorColor: Colors.black,
         decoration: InputDecoration(
-            errorStyle: Theme.of(context).textTheme.titleMedium,
+            errorStyle: Theme.of(context)
+                .textTheme
+                .titleMedium
+                ?.copyWith(color: Colors.red),
             errorText: widget.errorText,
             suffixIcon: widget.sufIcon,
             fillColor: AppConstants.secondaryColor,

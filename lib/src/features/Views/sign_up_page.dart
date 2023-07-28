@@ -1,11 +1,11 @@
-import 'package:change30/src/core/components/custom_textfield.dart';
+import 'package:change30/src/core/components/widgets/custom_textfield.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/components/app_title_widget.dart';
-import '../../core/components/custom_button.dart';
+import '../../core/components/widgets/app_title_widget.dart';
+import '../../core/components/widgets/custom_button.dart';
 import '../../core/constants/app_contants.dart';
 import '../riverpods/auth_riverpod.dart';
 
@@ -59,9 +59,14 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 authNotifier
                     .signUpUserWithFirebase(
                         _emailCtrl.text, _passwordCtrl.text, _nameCtrl.text)
-                    .then((value) => const Dialog(
-                          //TODO: kayıt başarılı diye ekrana yazdırmak
-                          child: AlertDialog(content: Text("Kayıt başarılı")),
+                    .then((value) => showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const AlertDialog(
+                              actions: [],
+                              content: Text("sign up succes"),
+                            );
+                          },
                         ));
               },
               size: context.deviceSize,
@@ -74,7 +79,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   Column signUpPageTextFields(BuildContext context) {
     return Column(
       children: [
-        spaceSmallH15(),
         Form(
           key: _formKey,
           child: CustomTextFormField(
@@ -90,6 +94,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: CustomTextFormField(
+            errorText: _passwordCtrl.text.length < 6
+                ? "Password length must be over 6"
+                : "",
             control: _passwordCtrl,
             hintText: "Password",
           ),
