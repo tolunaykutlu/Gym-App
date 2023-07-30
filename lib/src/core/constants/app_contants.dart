@@ -13,7 +13,7 @@ abstract class AppConstants {
   static const String signInWithText = "Sign in With";
   static const String signInText = "Sign In";
   static const String signUpText = "Sign Up";
-  static const String phoneAndEmailText = "Phone/E-mail";
+  static const String phoneAndEmailText = "Example@example.com";
   static const String passwordText = "Password";
   static const String forgotPwText = "Forgot Password?";
   static const String donthaveAccText = "Don't have an Account?";

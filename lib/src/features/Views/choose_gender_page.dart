@@ -3,11 +3,11 @@ import 'package:change30/src/core/components/widgets/custom_button.dart';
 import 'package:change30/src/core/constants/app_contants.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:change30/src/features/Controllers/user_controller.dart';
+import 'package:change30/src/features/models/user_model.dart';
+import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../riverpods/auth_riverpod.dart';
 
 class ChoosePage extends ConsumerStatefulWidget {
   const ChoosePage({super.key});
@@ -20,13 +20,22 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
   @override
   Widget build(BuildContext context) {
     var userDataProvider = ref.watch(userProvider);
+    var uid = ref.watch(authProvider).fauth.auth.currentUser!.uid;
 
     Map<String, dynamic> data = {
-      "boy": userDataProvider.heightController,
-      "kilo": userDataProvider.weigthController,
-      "cinsiyet": userDataProvider.gender,
-      "yas": userDataProvider.ageController
+      "name": userDataProvider.userName,
+      "email": userDataProvider.email,
+      "height": userDataProvider.heightController,
+      "weight": userDataProvider.weigthController,
+      "gender": userDataProvider.gender,
+      "age": userDataProvider.ageController,
+      "BmiScore": userDataProvider.bmiScore,
+      "userId": uid
     };
+    var userInfo = UserModel.fromMap(data);
+    /* void addDataToUserModel() {
+      userDataProvider.addUserData(UserModel.fromMap(data));
+    } */
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -79,10 +88,16 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
             CustomButton(
                 onpress: () {
                   setState(() {
-                    ref.read(userProvider).addUserData();
-                    //ref.read(authProvider).fstore.updateDataToFirestore(data, "users", )
+                    ref.read(userProvider).calculateUserBMI();
 
-                    //Navigator.pushNamed(context, '/challengePage');
+                    ref
+                        .read(authProvider)
+                        .fstore
+                        .addDataToFirestore(userInfo.toMap(), 'users', uid)
+                        .then((value) {
+                      return Future.delayed(const Duration(seconds: 2),
+                          () => Navigator.pushNamed(context, '/challengePage'));
+                    });
                   });
                 },
                 size: context.deviceSize,
@@ -124,7 +139,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
                       height: 40,
                       width: 50,
                       child: ref.read(userProvider).ageController > 0 &&
-                              ref.read(userProvider).ageController < 70
+                              ref.read(userProvider).ageController < 85
                           ? Text(
                               ref.read(userProvider).ageController.toString(),
                               style: bigtitleTextStyle(Colors.black, fsize: 25))
@@ -198,9 +213,8 @@ class _GenderPickContainersState extends State<GenderPickContainers> {
           onTap: () {
             setState(() {
               widget.ref.read(userProvider).isMale = true;
-              if (widget.ref.read(userProvider).isMale == true) {
-                widget.ref.read(userProvider).gender = AppConstants.male;
-              }
+
+              widget.ref.read(userProvider).gender = AppConstants.male;
             });
           },
           genderTitle: AppConstants.male,
@@ -218,9 +232,8 @@ class _GenderPickContainersState extends State<GenderPickContainers> {
           onTap: () {
             setState(() {
               widget.ref.read(userProvider).isMale = false;
-              if (widget.ref.read(userProvider).isMale == false) {
-                widget.ref.read(userProvider).gender = AppConstants.female;
-              }
+
+              widget.ref.read(userProvider).gender = AppConstants.female;
             });
           },
           genderTitle: AppConstants.female,

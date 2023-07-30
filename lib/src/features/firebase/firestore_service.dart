@@ -42,4 +42,10 @@ class FirestoreService extends BaseFirestoreService {
       throw Exception(e.toString());
     }
   }
+
+  @override
+  Future getUserUuid(String uUid) async {
+    var id = _firestoreInstance.collection(uUid).id;
+    return id;
+  }
 }

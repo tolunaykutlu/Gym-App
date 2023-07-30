@@ -7,6 +7,7 @@ import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kartal/kartal.dart';
 
 import '../../core/components/widgets/custom_button.dart';
 import '../../core/components/widgets/custom_textfield.dart';
@@ -98,8 +99,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       children: [
         spaceSmallH15(),
         CustomTextFormField(
+          onChanged: (p0) {},
           control: _emailController,
           hintText: AppConstants.phoneAndEmailText,
+          validator: (p0) =>
+              p0.ext.isValidEmail ? null : "E-mail type is wrong",
         ),
         spaceSmallH15(),
         CustomTextFormField(
@@ -121,17 +125,27 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         ),
         spaceSmallH15(),
         CustomButton(
-          onpress: () {
+          onpress: () async {
             setState(() {
-              final snackBar = snackbar();
               ref
                   .read(authProvider)
                   .loginUserWithFirebase(
-                      _emailController.text, _passwordController.text)
-                  .then((value) {
-                value.user!.uid.isEmpty
-                    ? snackBar
-                    : Navigator.pushNamed(context, '/choosePage');
+                      _emailController.text, _passwordController.text, context)
+                  .then((value) => Navigator.pushNamed(context, '/choosePage'))
+                  .catchError((error, stackTrace) {
+                return showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      content: Text(
+                        error.toString(),
+                        style: smallTitleTextStyle(fsize: 15),
+                      ),
+                    );
+                  },
+                );
               });
             });
           },
@@ -141,10 +155,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         spaceSmallH15(),
         GestureDetector(
           onTap: () {
-            setState(() {
-              //SİGN OUT
-              ref.read(authProvider).fauth.signOutuser(context);
-            });
+            setState(() {});
           },
           child: const Text(
             AppConstants.forgotPwText,
@@ -152,18 +163,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           ),
         ),
       ],
-    );
-  }
-
-  SnackBar snackbar() {
-    return SnackBar(
-      content: const Text('Yay! A SnackBar!'),
-      action: SnackBarAction(
-        label: 'Undo',
-        onPressed: () {
-          // Some code to undo the change.
-        },
-      ),
     );
   }
 

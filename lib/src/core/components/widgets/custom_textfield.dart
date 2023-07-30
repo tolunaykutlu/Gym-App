@@ -10,7 +10,6 @@ class CustomTextFormField extends StatefulWidget {
   final String? errorText;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
-  final AutovalidateMode autovalidateMode;
 
   const CustomTextFormField({
     super.key,
@@ -21,7 +20,6 @@ class CustomTextFormField extends StatefulWidget {
     this.errorText,
     this.validator,
     this.onChanged,
-    this.autovalidateMode = AutovalidateMode.disabled,
   });
 
   @override
@@ -32,7 +30,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-        autovalidateMode: widget.autovalidateMode,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: widget.validator,
         style: GoogleFonts.orbitron(fontWeight: FontWeight.bold),
         controller: widget.control,
@@ -42,7 +40,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             errorStyle: Theme.of(context)
                 .textTheme
                 .titleMedium
-                ?.copyWith(color: Colors.red),
+                ?.copyWith(color: AppConstants.primaryColor),
             errorText: widget.errorText,
             suffixIcon: widget.sufIcon,
             fillColor: AppConstants.secondaryColor,

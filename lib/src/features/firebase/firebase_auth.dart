@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:change30/src/features/firebase/abstracts/base_firebase_service.dart';
+import 'package:change30/src/features/firebase/firebase_exceptions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class FirebaseAuthClass extends BaseFirebaseService {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -19,14 +19,20 @@ class FirebaseAuthClass extends BaseFirebaseService {
 // signIn method with email and pw
   @override
   Future<UserCredential> loginUserWithFirebase(String email, String password) {
-    final userCredentials =
-        auth.signInWithEmailAndPassword(email: email, password: password);
-    return userCredentials;
+    try {
+      final userCredentials =
+          auth.signInWithEmailAndPassword(email: email, password: password);
+      return userCredentials;
+    } on FirebaseAuthException catch (e) {
+      throw CustomAuthException(e.code, e.message!);
+    } catch (e) {
+      throw CustomException(errorMessage: "Unknown Error");
+    }
   }
 
   //Sign out method
   @override
-  void signOutuser(BuildContext context) {
+  void signOutuser() {
     auth.signOut();
   }
 
@@ -39,7 +45,7 @@ class FirebaseAuthClass extends BaseFirebaseService {
     return userCredential;
   }
 
-//bunu ben user içerdemi diye yazdım ama anlayamadım
+// user içerdemi diye yazdım
   @override
   bool isUserActive() {
     bool isActive = false;

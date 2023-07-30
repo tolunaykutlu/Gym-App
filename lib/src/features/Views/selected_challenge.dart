@@ -1,3 +1,4 @@
+import 'package:change30/src/core/constants/app_contants.dart';
 import 'package:change30/src/features/Controllers/exercise_controller.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,12 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
     return Scaffold(
       appBar: AppBar(),
       body: Column(
-        children: [Text("${exercisePro.exerciseList[0].name} x 10 ")],
+        children: [
+          Center(
+              child: Text("${exercisePro.exerciseList[0].name} x 10 ",
+                  style: bigtitleTextStyle(AppConstants.primaryColor)))
+          //TODO: seçilen zorluğa göre antreman programı verilecek
+        ],
       ),
     );
   }

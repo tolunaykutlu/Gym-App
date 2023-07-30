@@ -1,7 +1,9 @@
 import 'package:change30/src/core/components/widgets/app_title_widget.dart';
 import 'package:change30/src/core/constants/app_contants.dart';
+
 import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:change30/src/features/Controllers/exercise_controller.dart';
+import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,6 +49,7 @@ class LevelSelectionPage extends ConsumerWidget {
                       crossAxisCount: 2),
                   itemBuilder: (context, index) {
                     return LevelSelectionWidget(
+                      ref: ref,
                       exProvider: exProvider,
                       index: index,
                     );
@@ -64,10 +67,12 @@ class LevelSelectionWidget extends StatefulWidget {
     super.key,
     required this.exProvider,
     required this.index,
+    required this.ref,
   });
 
   final ExerciseController exProvider;
   final int index;
+  final WidgetRef ref;
 
   @override
   State<LevelSelectionWidget> createState() => _LevelSelectionWidgetState();
@@ -82,23 +87,15 @@ class _LevelSelectionWidgetState extends State<LevelSelectionWidget> {
     });
   } */
 
-  goNextPage() {
-    Navigator.pushNamed(context, '/selectedChallenge');
-  }
-
-  /* goTo(String path) {
-    Navigator.pushNamed(context, path);
-  } */
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
         setState(() {
-          goNextPage();
-        });
+          widget.ref.read(authProvider).fauth.signOutuser();
 
-        //Navigator.pushNamed(context, '/selectedChallenge');
+          Navigator.pushNamed(context, '/selectedChallenge');
+        });
       },
       child: Container(
         decoration: BoxDecoration(

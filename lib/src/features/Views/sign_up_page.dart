@@ -1,8 +1,10 @@
 import 'package:change30/src/core/components/widgets/custom_textfield.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
+import 'package:change30/src/features/Controllers/user_controller.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kartal/kartal.dart';
 
 import '../../core/components/widgets/app_title_widget.dart';
 import '../../core/components/widgets/custom_button.dart';
@@ -20,7 +22,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   final _nameCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
-  final _phoneCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
 
   bool isChecked = false;
@@ -29,7 +30,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   void dispose() {
     _nameCtrl.dispose();
     _emailCtrl.dispose();
-    _phoneCtrl.dispose();
+
     _passwordCtrl.dispose();
     super.dispose();
   }
@@ -56,6 +57,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
             signUpPageTextFields(context),
           CustomButton(
               onpress: () {
+                ref.read(userProvider).userName = _nameCtrl.text;
+                ref.read(userProvider).email = _emailCtrl.text;
                 authNotifier
                     .signUpUserWithFirebase(
                         _emailCtrl.text, _passwordCtrl.text, _nameCtrl.text)
@@ -65,6 +68,15 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             return const AlertDialog(
                               actions: [],
                               content: Text("sign up succes"),
+                            );
+                          },
+                        ))
+                    .onError((error, stackTrace) => showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const AlertDialog(
+                              actions: [],
+                              content: Text("Hatalı giriş"),
                             );
                           },
                         ));
@@ -88,18 +100,20 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
-          child: CustomTextFormField(control: _emailCtrl, hintText: "Email"),
-        ),
-        CustomTextFormField(control: _phoneCtrl, hintText: "Phone"),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
           child: CustomTextFormField(
-            errorText: _passwordCtrl.text.length < 6
-                ? "Password length must be over 6"
-                : "",
-            control: _passwordCtrl,
-            hintText: "Password",
+            control: _emailCtrl,
+            hintText: "Email",
+            validator: (p0) {
+              return p0.ext.isValidEmail ? null : "E-mail type is wrong";
+            },
           ),
+        ),
+        CustomTextFormField(
+          validator: (p0) => p0.ext.isValidPassword
+              ? null
+              : "Password must be at least 6 character",
+          control: _passwordCtrl,
+          hintText: "Password",
         ),
         Row(
           children: [

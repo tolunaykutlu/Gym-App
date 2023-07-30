@@ -5,7 +5,8 @@ import 'package:change30/src/features/Views/choose_gender_page.dart';
 import 'package:change30/src/features/Views/login_page.dart';
 import 'package:change30/src/features/Views/selected_challenge.dart';
 import 'package:change30/src/features/Views/sign_up_page.dart';
-import 'package:change30/src/features/Views/splash_screen.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
@@ -37,9 +38,11 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color.fromARGB(255, 226, 226, 226),
         colorScheme: ColorScheme.fromSeed(seedColor: AppConstants.primaryColor),
       ),
-      initialRoute: "/loginPage",
+      initialRoute: "/",
       routes: {
-        '/': (context) => const SplashScreen(),
+        '/': (context) => FirebaseAuth.instance.currentUser != null
+            ? const LevelSelectionPage()
+            : const LoginPage(),
         '/loginPage': (context) => const LoginPage(),
         '/choosePage': (context) => const ChoosePage(),
         '/signUpPage': (context) => const SignUpPage(),

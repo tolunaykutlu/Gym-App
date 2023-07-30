@@ -15,39 +15,32 @@ class AuthProvider extends ChangeNotifier {
   Map<String, dynamic> get userData => _userData;
 
   Future<UserCredential> loginUserWithFirebase(
-      String email, String password) async {
+      String email, String password, BuildContext context) async {
     //setLoader(true);
     try {
       final userCredential = await fauth.loginUserWithFirebase(email, password);
       //setLoader(false);
       return userCredential;
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       //setLoader(false);
+      // exceptionlara göre olayları düzenlicez
+      if (e.message == "The email address is badly formatted.") {}
       return Future.error(e);
     }
   }
 
   //current userin ıdsinin olduğu dökümana bi kaç bilgi daha ekle
-  Future<void> addUserSpec(Map<String, dynamic> data) {
+  /* Future<void> addUserSpec(Map<String, dynamic> data) {
     var userId = fauth.auth.currentUser!.uid;
     return fstore.addDataToFirestore(data, "users", userId);
-  }
+  } */
 
   Future<UserCredential> signUpUserWithFirebase(
       String email, String password, String name) async {
     //setLoader(true);
     _userCredential = await fauth.signUpWithFirebase(email, password, name);
-    final data = {
-      'email': email,
-      'password': password,
-      'uid': _userCredential!.user!.uid,
-      'datetime': DateTime.now().toString(),
-      'name': name
-    };
-    String uid = _userCredential!.user!.uid;
-    await addUserToDatabase(data, 'users', uid);
 
-    return _userCredential!; //TODO: burda bi sıkıntı var ona bakıcaz
+    return _userCredential!;
   }
 
   Future<bool> addUserToDatabase(
