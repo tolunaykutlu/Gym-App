@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../firebase/firestore_service.dart';
+import '../firebase/firebase_services/firestore_service.dart';
 
 class WriteData extends ChangeNotifier {
   UserCredential? _userCredential;
