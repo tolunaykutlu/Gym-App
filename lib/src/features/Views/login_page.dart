@@ -99,6 +99,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       children: [
         spaceSmallH15(),
         CustomTextFormField(
+          autoFocus: true,
           onChanged: (p0) {},
           control: _emailController,
           hintText: AppConstants.phoneAndEmailText,
@@ -127,26 +128,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         CustomButton(
           onpress: () async {
             setState(() {
-              ref
-                  .read(authProvider)
-                  .loginUserWithFirebase(
-                      _emailController.text, _passwordController.text, context)
-                  .then((value) => Navigator.pushNamed(context, '/choosePage'))
-                  .catchError((error, stackTrace) {
-                return showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      content: Text(
-                        error.toString(),
-                        style: smallTitleTextStyle(fsize: 15),
-                      ),
-                    );
-                  },
-                );
-              });
+              loginFunction();
             });
           },
           buttonText: AppConstants.signInText,
@@ -164,6 +146,29 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         ),
       ],
     );
+  }
+
+  void loginFunction() {
+    ref
+        .read(authProvider)
+        .loginUserWithFirebase(
+            _emailController.text, _passwordController.text, context)
+        .then((value) => Navigator.pushNamed(context, '/choosePage'))
+        .catchError((error, stackTrace) {
+      return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            content: Text(
+              error.toString(),
+              style: smallTitleTextStyle(fsize: 15),
+            ),
+          );
+        },
+      );
+    });
   }
 
   Column iconAndTitle(Size size, BuildContext context) {

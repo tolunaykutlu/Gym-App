@@ -13,6 +13,7 @@ class UserDataController extends ChangeNotifier {
   String userName = "";
   String gender = "";
   String email = "";
+  String password = "";
   int heightController = 179;
   int ageController = 18;
   int weigthController = 60;

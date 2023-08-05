@@ -56,30 +56,45 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
           else
             signUpPageTextFields(context),
           CustomButton(
-              onpress: () {
+              onpress: () async {
                 ref.read(userProvider).userName = _nameCtrl.text;
                 ref.read(userProvider).email = _emailCtrl.text;
-                authNotifier
-                    .signUpUserWithFirebase(
-                        _emailCtrl.text, _passwordCtrl.text, _nameCtrl.text)
-                    .then((value) => showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const AlertDialog(
-                              actions: [],
-                              content: Text("sign up succes"),
-                            );
-                          },
-                        ))
-                    .onError((error, stackTrace) => showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const AlertDialog(
-                              actions: [],
-                              content: Text("Hatalı giriş"),
-                            );
-                          },
-                        ));
+                ref.read(userProvider).password = _passwordCtrl.text;
+
+                if (_nameCtrl.text.isEmpty ||
+                    _emailCtrl.text.isEmpty ||
+                    _passwordCtrl.text.isEmpty) {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const AlertDialog(
+                        actions: [],
+                        content: Text("Kutucukları doldurunuz."),
+                      );
+                    },
+                  );
+                } else {
+                  await authNotifier
+                      .signUpUserWithFirebase(
+                          _emailCtrl.text, _passwordCtrl.text, _nameCtrl.text)
+                      .then((value) => showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Text(value.user!.uid),
+                              );
+                            },
+                          ))
+                      .onError((error, stackTrace) => showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const AlertDialog(
+                                actions: [],
+                                content: Text("Hatal giriş"),
+                              );
+                            },
+                          ));
+                }
               },
               size: context.deviceSize,
               buttonText: "Sign Up"),
@@ -95,7 +110,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
           key: _formKey,
           child: CustomTextFormField(
             control: _nameCtrl,
-            hintText: "Full Name",
+            hintText: "User name",
           ),
         ),
         Padding(
@@ -116,10 +131,11 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
           hintText: "Password",
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Checkbox.adaptive(
               activeColor: AppConstants.primaryColor,
-              checkColor: Colors.black,
+              checkColor: Colors.white,
               value: isChecked,
               onChanged: (value) {
                 setState(() {

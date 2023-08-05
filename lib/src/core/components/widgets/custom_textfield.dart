@@ -10,6 +10,7 @@ class CustomTextFormField extends StatefulWidget {
   final String? errorText;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
+  final bool autoFocus;
 
   const CustomTextFormField({
     super.key,
@@ -20,6 +21,7 @@ class CustomTextFormField extends StatefulWidget {
     this.errorText,
     this.validator,
     this.onChanged,
+    this.autoFocus = false,
   });
 
   @override
@@ -30,6 +32,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+        autofocus: widget.autoFocus,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: widget.validator,
         style: GoogleFonts.orbitron(fontWeight: FontWeight.bold),

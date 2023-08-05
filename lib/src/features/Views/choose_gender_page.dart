@@ -25,9 +25,10 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
     Map<String, dynamic> data = {
       "name": userDataProvider.userName,
       "email": userDataProvider.email,
+      "password": userDataProvider.password,
       "height": userDataProvider.heightController,
       "weight": userDataProvider.weigthController,
-      "gender": userDataProvider.gender,
+      "gender": userDataProvider.isMale ? "Male" : userDataProvider.gender,
       "age": userDataProvider.ageController,
       "BmiScore": userDataProvider.bmiScore,
       "userId": uid
@@ -35,7 +36,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
     var userInfo = UserModel.fromMap(data);
     /* void addDataToUserModel() {
       userDataProvider.addUserData(UserModel.fromMap(data));
-    } */
+    }  */
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
