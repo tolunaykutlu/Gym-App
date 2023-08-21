@@ -1,13 +1,15 @@
-import 'package:change30/src/core/components/app_title_widget.dart';
+import 'package:change30/src/core/components/widgets/app_title_widget.dart';
 import 'package:change30/src/core/constants/app_contants.dart';
+
 import 'package:change30/src/core/extension/size_extension.dart';
-import 'package:change30/src/features/Controllers/get_exercises.dart';
+import 'package:change30/src/features/Controllers/exercise_controller.dart';
+import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ChallengePage extends ConsumerWidget {
-  const ChallengePage({super.key});
+class LevelSelectionPage extends ConsumerWidget {
+  const LevelSelectionPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -47,6 +49,7 @@ class ChallengePage extends ConsumerWidget {
                       crossAxisCount: 2),
                   itemBuilder: (context, index) {
                     return LevelSelectionWidget(
+                      ref: ref,
                       exProvider: exProvider,
                       index: index,
                     );
@@ -64,10 +67,12 @@ class LevelSelectionWidget extends StatefulWidget {
     super.key,
     required this.exProvider,
     required this.index,
+    required this.ref,
   });
 
   final ExerciseController exProvider;
   final int index;
+  final WidgetRef ref;
 
   @override
   State<LevelSelectionWidget> createState() => _LevelSelectionWidgetState();
@@ -75,15 +80,26 @@ class LevelSelectionWidget extends StatefulWidget {
 
 class _LevelSelectionWidgetState extends State<LevelSelectionWidget> {
   bool isClicked = false;
+
+  /*  Future goNewPageDelayed() async {
+    await Future.delayed(const Duration(milliseconds: 1500), () {
+      Navigator.pushNamed(context, '/selectedChallenge');
+    });
+  } */
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, '/selectedChallenge');
+      onTap: () async {
+        setState(() {
+          widget.ref.read(authProvider).fauth.signOutuser();
+
+          Navigator.pushNamed(context, '/selectedChallenge');
+        });
       },
       child: Container(
         decoration: BoxDecoration(
-            color: AppConstants.secondaryColor,
+            color: isClicked ? AppConstants.secondaryColor : Colors.white70,
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: Colors.black, width: 2)),
         child: Center(

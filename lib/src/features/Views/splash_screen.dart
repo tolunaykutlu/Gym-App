@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:change30/src/core/components/widgets/app_title_widget.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
+
 import 'package:flutter/material.dart';
 
 import 'login_page.dart';
@@ -34,14 +36,15 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: context.deviceWidth,
         height: context.deviceHeight,
-        decoration: const BoxDecoration(
+        /* decoration: const BoxDecoration(
             image: DecorationImage(
                 colorFilter: ColorFilter.linearToSrgbGamma(),
                 image: AssetImage("images/SplashScreen.png"),
-                fit: BoxFit.cover)),
+                fit: BoxFit.cover)), */
+        child: const AppTitleWidget(),
       ),
     );
   }

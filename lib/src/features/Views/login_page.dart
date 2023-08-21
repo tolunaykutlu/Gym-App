@@ -1,55 +1,58 @@
-import 'package:change30/src/core/components/app_title_widget.dart';
-import 'package:change30/src/core/components/sign_in_with_widget.dart';
+import 'package:change30/src/core/components/widgets/app_title_widget.dart';
+import 'package:change30/src/core/components/widgets/sign_in_with_widget.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 
 import 'package:change30/src/features/Views/sign_up_page.dart';
-import 'package:flutter/material.dart';
+import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 
-import '../../core/components/appbar_menu.dart';
-import '../../core/components/custom_button.dart';
-import '../../core/components/custom_textfield.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kartal/kartal.dart';
+
+import '../../core/components/widgets/custom_button.dart';
+import '../../core/components/widgets/custom_textfield.dart';
 import '../../core/constants/app_contants.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final TextEditingController controller = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class _LoginPageState extends ConsumerState<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool secretPassword = true;
 
   @override
   void dispose() {
-    controller.dispose();
-    passwordController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const AppBarMenuIcon(),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          children: [
-            iconAndTitle(context.deviceSize, context),
-            spaceSmallH15(),
-            if (context.deviceSize.height > 668)
-              Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: buttonSection(context.deviceSize, context))
-            else
-              buttonSection(context.deviceSize, context),
-            spaceMediumH25(),
-            bottomSection(context),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 60),
+          child: Column(
+            children: [
+              iconAndTitle(context.deviceSize, context),
+              spaceSmallH15(),
+              if (context.deviceSize.height > 668)
+                Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: buttonSection(context.deviceSize, context))
+              else
+                buttonSection(context.deviceSize, context),
+              spaceMediumH25(),
+              bottomSection(context),
+            ],
+          ),
         ),
       ),
     );
@@ -95,13 +98,17 @@ class _LoginPageState extends State<LoginPage> {
     return Column(
       children: [
         spaceSmallH15(),
-        CustomTextField(
-          control: controller,
+        CustomTextFormField(
+          autoFocus: true,
+          onChanged: (p0) {},
+          control: _emailController,
           hintText: AppConstants.phoneAndEmailText,
+          validator: (p0) =>
+              p0.ext.isValidEmail ? null : "E-mail type is wrong",
         ),
         spaceSmallH15(),
-        CustomTextField(
-          control: passwordController,
+        CustomTextFormField(
+          control: _passwordController,
           hintText: AppConstants.passwordText,
           secret: secretPassword,
           sufIcon: Card(
@@ -119,9 +126,9 @@ class _LoginPageState extends State<LoginPage> {
         ),
         spaceSmallH15(),
         CustomButton(
-          onpress: () {
+          onpress: () async {
             setState(() {
-              Navigator.pushNamed(context, '/choosePage');
+              loginFunction();
             });
           },
           buttonText: AppConstants.signInText,
@@ -129,7 +136,9 @@ class _LoginPageState extends State<LoginPage> {
         ),
         spaceSmallH15(),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            setState(() {});
+          },
           child: const Text(
             AppConstants.forgotPwText,
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -139,12 +148,36 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  void loginFunction() {
+    ref
+        .read(authProvider)
+        .loginUserWithFirebase(
+            _emailController.text, _passwordController.text, context)
+        .then((value) => Navigator.pushNamed(context, '/choosePage'))
+        .catchError((error, stackTrace) {
+      return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            content: Text(
+              error.toString(),
+              style: smallTitleTextStyle(fsize: 15),
+            ),
+          );
+        },
+      );
+    });
+  }
+
   Column iconAndTitle(Size size, BuildContext context) {
     return Column(
       children: [
-        const Image(
-          image: AssetImage("images/GymPoint.png"),
-        ),
+        /* Image.asset(
+          "images/GymPoint.png",
+          fit: BoxFit.cover,
+        ), */
         spaceSmallH15(),
         const AppTitleWidget(),
       ],
