@@ -40,9 +40,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: "/",
       routes: {
-        '/': (context) => FirebaseAuth.instance.currentUser != null
-            ? const LevelSelectionPage()
-            : const LoginPage(),
+        '/': (context) => // FirebaseAuth.instance.currentUser != null
+            // ? const LevelSelectionPage()
+            const LoginPage(),
         '/loginPage': (context) => const LoginPage(),
         '/choosePage': (context) => const ChoosePage(),
         '/signUpPage': (context) => const SignUpPage(),
