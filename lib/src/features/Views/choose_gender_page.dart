@@ -20,20 +20,17 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
   @override
   Widget build(BuildContext context) {
     var userDataProvider = ref.watch(userProvider);
-    var uid = ref.watch(authProvider).fauth.auth.currentUser!.uid;
+    var uid = ref.watch(authProvider).fstore.getUserUuid();
 
     Map<String, dynamic> data = {
-      "name": userDataProvider.userName,
-      "email": userDataProvider.email,
-      "password": userDataProvider.password,
       "height": userDataProvider.heightController,
       "weight": userDataProvider.weigthController,
       "gender": userDataProvider.isMale ? "Male" : userDataProvider.gender,
       "age": userDataProvider.ageController,
-      "BmiScore": userDataProvider.bmiScore,
-      "userId": uid
+      "userId": uid,
+      "giris": 1,
     };
-    var userInfo = UserModel.fromMap(data);
+    //var userInfo = UserModel.fromMap(data);
     /* void addDataToUserModel() {
       userDataProvider.addUserData(UserModel.fromMap(data));
     }  */
@@ -94,12 +91,16 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
                     ref
                         .read(authProvider)
                         .fstore
-                        .addDataToFirestore(userInfo.toMap(), 'users', uid)
+                        .updateDataToFirestore(data, 'users', uid)
                         .then((value) {
                       return Future.delayed(const Duration(seconds: 2),
                           () => Navigator.pushNamed(context, '/challengePage'));
                     });
                   });
+                  ref
+                      .read(authProvider)
+                      .fstore
+                      .updateDataToFirestore(data, 'users', uid);
                 },
                 size: context.deviceSize,
                 buttonText: AppConstants.btnContinue),
