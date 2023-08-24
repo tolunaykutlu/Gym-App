@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:change30/src/core/components/widgets/app_title_widget.dart';
 import 'package:change30/src/core/components/widgets/sign_in_with_widget.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 
 import 'package:change30/src/features/Views/sign_up_page.dart';
+import 'package:change30/src/features/firebase/firebase_exceptions.dart';
 import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 
 import 'package:flutter/material.dart';
@@ -162,7 +165,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             content: Text(
-              error.toString(),
+              error,
               style: smallTitleTextStyle(fsize: 15),
             ),
           );

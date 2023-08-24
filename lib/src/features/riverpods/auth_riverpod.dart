@@ -24,8 +24,8 @@ class AuthProvider extends ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       //setLoader(false);
       // exceptionlara göre olayları düzenlicez
-      if (e.message == "The email address is badly formatted.") {}
-      return Future.error(e);
+
+      return Future.error(e.code);
     }
   }
 
