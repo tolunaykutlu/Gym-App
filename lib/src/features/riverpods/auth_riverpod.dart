@@ -1,6 +1,5 @@
 import 'package:change30/src/features/firebase/firebase_services/firestore_service.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,14 +23,12 @@ class AuthProvider extends ChangeNotifier {
       return userCredential;
     } on FirebaseAuthException catch (e) {
       // exceptionlara göre olayları düzenlicez
-      if (e.message == "The email address is badly formatted.") {}
+
       return Future.error(e);
     }
   }
 
-  
-
-  Future<void> addUser(String name, String gender, String age) {
+  /*  Future<void> addUser(String name, String gender, String age) {
     // Call the user's CollectionReference to add a new user
     CollectionReference collectionRef =
         FirebaseFirestore.instance.collection('egzersiz');
@@ -41,13 +38,8 @@ class AuthProvider extends ChangeNotifier {
         .add({'full_name': name, 'gender': gender, 'age': age, 'date': date})
         .then((value) => value)
         .catchError((error) => error); //print("Failed to add user: $error"));
-  }
-
-  //current userin ıdsinin olduğu dökümana bi kaç bilgi daha ekle
-  /* Future<void> addUserSpec(Map<String, dynamic> data) {
-    var userId = fauth.auth.currentUser!.uid;
-    return fstore.addDataToFirestore(data, "users", userId);
   } */
+
   String userId() {
     //içerdeki userin id sini almak için
     String id = fstore.getUserUuid();
@@ -55,7 +47,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<UserCredential> signUpUserWithFirebase(
-      String email, String password, String name) async {
+      String email, String password, String name, BuildContext context) async {
     _userCredential = await fauth.signUpWithFirebase(email, password, name);
 
     return _userCredential!;

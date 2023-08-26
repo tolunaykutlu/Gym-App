@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:change30/src/core/components/widgets/app_title_widget.dart';
 import 'package:change30/src/core/components/widgets/sign_in_with_widget.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
@@ -99,6 +101,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       children: [
         spaceSmallH15(),
         CustomTextFormField(
+          labeltext: "Email",
           autoFocus: true,
           onChanged: (p0) {},
           control: _emailController,
@@ -108,6 +111,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         ),
         spaceSmallH15(),
         CustomTextFormField(
+          labeltext: "Password",
           control: _passwordController,
           hintText: AppConstants.passwordText,
           secret: secretPassword,

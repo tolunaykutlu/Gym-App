@@ -4,6 +4,7 @@ import 'package:change30/src/core/constants/app_contants.dart';
 
 import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:change30/src/features/Controllers/exercise_controller.dart';
+import 'package:change30/src/features/Views/login_page.dart';
 import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -62,6 +63,11 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
           ElevatedButton(
               onPressed: () {
                 ref.refresh(authProvider).fauth.signOutuser();
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ));
               },
               child: const Text("Çıkış"))
         ],
@@ -78,7 +84,6 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
     });
     return counter;
   }
-  
 
   SizedBox oneTimeRead(CollectionReference<Object?> collection) {
     return SizedBox(

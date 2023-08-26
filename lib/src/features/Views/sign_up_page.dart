@@ -75,8 +75,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   );
                 } else {
                   await authNotifier
-                      .signUpUserWithFirebase(
-                          _emailCtrl.text, _passwordCtrl.text, _nameCtrl.text)
+                      .signUpUserWithFirebase(_emailCtrl.text,
+                          _passwordCtrl.text, _nameCtrl.text, context)
                       .then((value) => showDialog(
                             context: context,
                             builder: (context) {
@@ -84,8 +84,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                 content: Text(value.user!.uid),
                               );
                             },
-                          ))
-                      .onError((error, stackTrace) => showDialog(
+                          ));
+                  /* .onError((error, stackTrace) => showDialog(
                             context: context,
                             builder: (context) {
                               return const AlertDialog(
@@ -93,7 +93,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                 content: Text("Hatal giriş"),
                               );
                             },
-                          ));
+                          )); */
                 }
               },
               size: context.deviceSize,

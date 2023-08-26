@@ -22,11 +22,11 @@ class FirebaseAuthClass extends BaseFirebaseService {
   @override
   Future<UserCredential> loginUserWithFirebase(String email, String password) {
     try {
-      final userCredentials =
-          firestoreAuth.signInWithEmailAndPassword(email: email, password: password);
+      final userCredentials = firestoreAuth.signInWithEmailAndPassword(
+          email: email, password: password);
       return userCredentials;
     } on FirebaseAuthException catch (e) {
-      throw CustomAuthException(e.code, e.message!);
+      throw e.code;
     } catch (e) {
       throw CustomException(errorMessage: "Unknown Error");
     }
@@ -45,6 +45,7 @@ class FirebaseAuthClass extends BaseFirebaseService {
     final data = {'name': name, 'e-mail': email, 'password': password};
     final userCredential = await firestoreAuth.createUserWithEmailAndPassword(
         email: email, password: password);
+
     //ilk kayıtda kişinin adı email ve şifresini firebase aktarıyoruz
     var id = FirebaseAuth.instance.currentUser!.uid.toString();
     firestoreService.addDataToFirestore(data, "users", id);

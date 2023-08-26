@@ -3,7 +3,7 @@ import 'package:change30/src/core/components/widgets/custom_button.dart';
 import 'package:change30/src/core/constants/app_contants.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:change30/src/features/Controllers/user_controller.dart';
-import 'package:change30/src/features/models/user_model.dart';
+
 import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 
 import 'package:flutter/material.dart';
@@ -86,8 +86,6 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
             CustomButton(
                 onpress: () {
                   setState(() {
-                    ref.read(userProvider).calculateUserBMI();
-
                     ref
                         .read(authProvider)
                         .fstore
@@ -97,10 +95,6 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
                           () => Navigator.pushNamed(context, '/challengePage'));
                     });
                   });
-                  ref
-                      .read(authProvider)
-                      .fstore
-                      .updateDataToFirestore(data, 'users', uid);
                 },
                 size: context.deviceSize,
                 buttonText: AppConstants.btnContinue),

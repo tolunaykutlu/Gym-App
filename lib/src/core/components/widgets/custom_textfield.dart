@@ -11,6 +11,7 @@ class CustomTextFormField extends StatefulWidget {
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final bool autoFocus;
+  final String? labeltext;
 
   const CustomTextFormField({
     super.key,
@@ -22,6 +23,7 @@ class CustomTextFormField extends StatefulWidget {
     this.validator,
     this.onChanged,
     this.autoFocus = false,
+    this.labeltext,
   });
 
   @override
@@ -40,6 +42,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         obscureText: widget.secret,
         cursorColor: Colors.black,
         decoration: InputDecoration(
+            labelText: widget.labeltext,
             errorStyle: Theme.of(context)
                 .textTheme
                 .titleMedium
