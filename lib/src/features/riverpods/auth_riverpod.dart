@@ -24,8 +24,29 @@ class AuthProvider extends ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       //setLoader(false);
       // exceptionlara göre olayları düzenlicez
-
-      return Future.error(e.code);
+      String errorName = e.code;
+      if (errorName == "user-not-found") {
+        return await showDialog(
+            context: context,
+            builder: (context) {
+              return const AlertDialog(
+                actions: [],
+                content: Text("Kullanıcı adı veya şifre yanlış"),
+              );
+            });
+      }
+      if (errorName == "wrong-password") {
+        return await showDialog(
+            context: context,
+            builder: (context) {
+              return const AlertDialog(
+                actions: [],
+                content: Text("Yanlış şifre"),
+              );
+            });
+      } else {
+        return Future.error(e);
+      }
     }
   }
 
@@ -36,9 +57,26 @@ class AuthProvider extends ChangeNotifier {
   } */
 
   Future<UserCredential> signUpUserWithFirebase(
-      String email, String password, String name) async {
+      String email, String password, String name, BuildContext context) async {
+    //context ekledkk hataları ayıkladık
     //setLoader(true);
-    _userCredential = await fauth.signUpWithFirebase(email, password, name);
+    try {
+      _userCredential = await fauth.signUpWithFirebase(email, password, name);
+    } on FirebaseAuthException catch (e) {
+      String errorName = e.code;
+      if (errorName == "email-already-in-use") {
+        return await showDialog(
+            context: context,
+            builder: (context) {
+              return const AlertDialog(
+                actions: [],
+                content: Text("E-mail kullanımda"),
+              );
+            });
+      } else {
+        return Future.error(e);
+      }
+    }
 
     return _userCredential!;
   }
