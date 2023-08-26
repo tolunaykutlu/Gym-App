@@ -1,3 +1,4 @@
+import 'package:change30/src/features/firebase/firebase_options.dart';
 import 'package:change30/src/core/constants/app_contants.dart';
 import 'package:change30/src/features/Views/calculation_page.dart';
 import 'package:change30/src/features/Views/level_page.dart';
@@ -15,7 +16,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const ProviderScope(child: MyApp()));
 }

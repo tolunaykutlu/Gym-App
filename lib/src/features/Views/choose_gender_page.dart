@@ -38,72 +38,77 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
       userDataProvider.addUserData(UserModel.fromMap(data));
     }  */
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            spaceLargeH35(),
-            const AppTitleWidget(),
-            spaceSmallH15(),
-            GenderPickContainers(ref: ref, context: context),
-            spaceSmallH15(),
-            Text(
-              AppConstants.selectAgeTitle,
-              style: smallTitleTextStyle(),
-            ),
-            spaceSmallH15(),
-            selectAgeContainer(context),
-            spaceMediumH25(),
-            Text(AppConstants.selectWeigthTitle, style: smallTitleTextStyle()),
-            spaceSmallH15(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                WeightAndAgeSlider(
-                    context: context,
-                    controller: userDataProvider.weigthController,
-                    s: "KG",
-                    minimum: 50,
-                    maximum: 200,
-                    func: (p0) {
-                      setState(() {
-                        userDataProvider.weigthController = p0.toInt();
-                      });
-                    }),
-                WeightAndAgeSlider(
-                    context: context,
-                    controller: userDataProvider.heightController,
-                    s: "CM",
-                    minimum: 150,
-                    maximum: 230,
-                    func: (p0) {
-                      setState(() {
-                        userDataProvider.heightController = p0.toInt();
-                      });
-                    }),
-              ],
-            ),
-            spaceMediumH25(),
-            CustomButton(
-                onpress: () {
-                  setState(() {
-                    ref.read(userProvider).calculateUserBMI();
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              spaceLargeH35(),
+              const AppTitleWidget(),
+              spaceSmallH15(),
+              GenderPickContainers(ref: ref, context: context),
+              spaceSmallH15(),
+              Text(
+                AppConstants.selectAgeTitle,
+                style: smallTitleTextStyle(),
+              ),
+              spaceSmallH15(),
+              selectAgeContainer(context),
+              spaceMediumH25(),
+              Text(AppConstants.selectWeigthTitle,
+                  style: smallTitleTextStyle()),
+              spaceSmallH15(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  WeightAndAgeSlider(
+                      context: context,
+                      controller: userDataProvider.weigthController,
+                      s: "KG",
+                      minimum: 50,
+                      maximum: 200,
+                      func: (p0) {
+                        setState(() {
+                          userDataProvider.weigthController = p0.toInt();
+                        });
+                      }),
+                  WeightAndAgeSlider(
+                      context: context,
+                      controller: userDataProvider.heightController,
+                      s: "CM",
+                      minimum: 150,
+                      maximum: 230,
+                      func: (p0) {
+                        setState(() {
+                          userDataProvider.heightController = p0.toInt();
+                        });
+                      }),
+                ],
+              ),
+              spaceMediumH25(),
+              CustomButton(
+                  onpress: () {
+                    setState(() {
+                      ref.read(userProvider).calculateUserBMI();
 
-                    ref
-                        .read(authProvider)
-                        .fstore
-                        .addDataToFirestore(userInfo.toMap(), 'users', uid)
-                        .then((value) {
-                      return Future.delayed(const Duration(seconds: 2),
-                          () => Navigator.pushNamed(context, '/challengePage'));
+                      ref
+                          .read(authProvider)
+                          .fstore
+                          .addDataToFirestore(userInfo.toMap(), 'users', uid)
+                          .then((value) {
+                        return Future.delayed(
+                            const Duration(seconds: 2),
+                            () =>
+                                Navigator.pushNamed(context, '/challengePage'));
+                      });
                     });
-                  });
-                },
-                size: context.deviceSize,
-                buttonText: AppConstants.btnContinue),
-          ],
+                  },
+                  size: context.deviceSize,
+                  buttonText: AppConstants.btnContinue),
+            ],
+          ),
         ),
       ),
     );
