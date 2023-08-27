@@ -3,7 +3,7 @@ import 'package:change30/src/core/components/widgets/custom_button.dart';
 import 'package:change30/src/core/constants/app_contants.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:change30/src/features/Controllers/user_controller.dart';
-import 'package:change30/src/features/models/user_model.dart';
+
 import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 
 import 'package:flutter/material.dart';
@@ -20,23 +20,21 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
   @override
   Widget build(BuildContext context) {
     var userDataProvider = ref.watch(userProvider);
-    var uid = ref.watch(authProvider).fauth.auth.currentUser!.uid;
+    var uid = ref.watch(authProvider).fstore.getUserUuid();
 
     Map<String, dynamic> data = {
-      "name": userDataProvider.userName,
-      "email": userDataProvider.email,
-      "password": userDataProvider.password,
       "height": userDataProvider.heightController,
       "weight": userDataProvider.weigthController,
       "gender": userDataProvider.isMale ? "Male" : userDataProvider.gender,
       "age": userDataProvider.ageController,
-      "BmiScore": userDataProvider.bmiScore,
-      "userId": uid
+      "userId": uid,
+      "giris": 1,
     };
-    var userInfo = UserModel.fromMap(data);
+    //var userInfo = UserModel.fromMap(data);
     /* void addDataToUserModel() {
       userDataProvider.addUserData(UserModel.fromMap(data));
     }  */
+
 
     return SafeArea(
       child: Scaffold(
@@ -103,6 +101,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
                             () =>
                                 Navigator.pushNamed(context, '/challengePage'));
                       });
+
                     });
                   },
                   size: context.deviceSize,

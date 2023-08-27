@@ -10,6 +10,9 @@ class UserModel {
   int? weight;
   int? height;
 
+  int? giris;
+
+
   String userId;
   UserModel({
     this.name,
@@ -19,6 +22,9 @@ class UserModel {
     this.age,
     this.weight,
     this.height,
+
+    this.giris,
+
     required this.userId,
   });
 // new fields are going to be added.
@@ -31,6 +37,9 @@ class UserModel {
     int? age,
     int? weight,
     int? height,
+
+    int? giris,
+
     String? userId,
   }) {
     return UserModel(
@@ -41,6 +50,9 @@ class UserModel {
       age: age ?? this.age,
       weight: weight ?? this.weight,
       height: height ?? this.height,
+
+      giris: giris ?? this.giris,
+
       userId: userId ?? this.userId,
     );
   }
@@ -54,6 +66,9 @@ class UserModel {
       'age': age,
       'weight': weight,
       'height': height,
+
+      'giris': giris,
+
       'userId': userId,
     };
   }
@@ -67,6 +82,9 @@ class UserModel {
       age: map['age'] != null ? map['age'] as int : null,
       weight: map['weight'] != null ? map['weight'] as int : null,
       height: map['height'] != null ? map['height'] as int : null,
+
+      giris: map['giris'] != null ? map['giris'] as int : null,
+
       userId: map['userId'] as String,
     );
   }
@@ -78,7 +96,11 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(name: $name, gender: $gender, email: $email, password: $password, age: $age, weight: $weight, height: $height,  userId: $userId)';
+
+    return 'UserModel(name: $name, gender: $gender, email: $email, password: $password, age: $age, weight: $weight, height: $height, giris: $giris, userId: $userId)';
+
+    
+
   }
 
   @override
@@ -92,6 +114,9 @@ class UserModel {
         other.age == age &&
         other.weight == weight &&
         other.height == height &&
+
+        other.giris == giris &&
+
         other.userId == userId;
   }
 
@@ -104,6 +129,9 @@ class UserModel {
         age.hashCode ^
         weight.hashCode ^
         height.hashCode ^
+
+        giris.hashCode ^
+
         userId.hashCode;
   }
 }

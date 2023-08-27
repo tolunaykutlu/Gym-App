@@ -80,11 +80,20 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       .then((value) => showDialog(
                             context: context,
                             builder: (context) {
+                              return AlertDialog(
+                                content: Text(value.user!.uid),
+                              );
+                            },
+                          ));
+                  /* .onError((error, stackTrace) => showDialog(
+                            context: context,
+                            builder: (context) {
+
                               return const AlertDialog(
                                 content: Text("Kayıt Başarılı"),
                               );
                             },
-                          ));
+                          )); */
                 }
               },
               size: context.deviceSize,

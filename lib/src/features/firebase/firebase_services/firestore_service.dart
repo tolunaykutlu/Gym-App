@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:change30/src/features/firebase/abstracts/base_firestore_service.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreService extends BaseFirestoreService {
   final _firestoreInstance = FirebaseFirestore.instance;
@@ -44,8 +45,15 @@ class FirestoreService extends BaseFirestoreService {
   }
 
   @override
-  Future getUserUuid(String uUid) async {
-    var id = _firestoreInstance.collection(uUid).id;
-    return id;
+  String getUserUuid() {
+    final String id;
+    var firebaseAth = FirebaseAuth.instance.currentUser;
+
+    if (firebaseAth!.uid.isNotEmpty) {
+      id = FirebaseAuth.instance.currentUser!.uid;
+      return id;
+    } else {
+      return "";
+    }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:change30/src/features/firebase/firebase_services/firestore_service.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,14 +17,13 @@ class AuthProvider extends ChangeNotifier {
 
   Future<UserCredential> loginUserWithFirebase(
       String email, String password, BuildContext context) async {
-    //setLoader(true);
     try {
       final userCredential = await fauth.loginUserWithFirebase(email, password);
-      //setLoader(false);
+
       return userCredential;
     } on FirebaseAuthException catch (e) {
-      //setLoader(false);
       // exceptionlara göre olayları düzenlicez
+
       String errorName = e.code;
       if (errorName == "user-not-found") {
         return await showDialog(
@@ -47,17 +47,33 @@ class AuthProvider extends ChangeNotifier {
       } else {
         return Future.error(e);
       }
+
     }
   }
 
-  //current userin ıdsinin olduğu dökümana bi kaç bilgi daha ekle
-  /* Future<void> addUserSpec(Map<String, dynamic> data) {
-    var userId = fauth.auth.currentUser!.uid;
-    return fstore.addDataToFirestore(data, "users", userId);
+  /*  Future<void> addUser(String name, String gender, String age) {
+    // Call the user's CollectionReference to add a new user
+    CollectionReference collectionRef =
+        FirebaseFirestore.instance.collection('egzersiz');
+
+    DateTime date = DateTime.now();
+    return collectionRef
+        .add({'full_name': name, 'gender': gender, 'age': age, 'date': date})
+        .then((value) => value)
+        .catchError((error) => error); //print("Failed to add user: $error"));
   } */
+
+  String userId() {
+    //içerdeki userin id sini almak için
+    String id = fstore.getUserUuid();
+    return id;
+  }
 
   Future<UserCredential> signUpUserWithFirebase(
       String email, String password, String name, BuildContext context) async {
+
+    _userCredential = await fauth.signUpWithFirebase(email, password, name);
+=======
     //context ekledkk hataları ayıkladık
     //setLoader(true);
     try {
@@ -78,9 +94,19 @@ class AuthProvider extends ChangeNotifier {
       }
     }
 
+
     return _userCredential!;
   }
 
+  //data getirme
+  /* Future<UserModel> getUserData(String useruId) async {
+    var data = await fstore.getUserDataFromFirestore("users", useruId);
+    var userData = UserModel.fromMap(data);
+    
+
+    return userData;
+  }
+ */
   Future<bool> addUserToDatabase(
       Map<String, dynamic> data, String collectionName, String docName) async {
     var value = false;
@@ -92,13 +118,8 @@ class AuthProvider extends ChangeNotifier {
     });
     return value;
   }
-
-  /* setLoader(bool loader) {
-    _isLoading = loader;
-    notifyListeners();
-  } */
 }
 
-final authProvider = ChangeNotifierProvider((ref) {
+final authProvider = Provider((ref) {
   return AuthProvider();
 });
