@@ -88,9 +88,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   /* .onError((error, stackTrace) => showDialog(
                             context: context,
                             builder: (context) {
+
                               return const AlertDialog(
-                                actions: [],
-                                content: Text("Hatal giriş"),
+                                content: Text("Kayıt Başarılı"),
                               );
                             },
                           )); */

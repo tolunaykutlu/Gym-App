@@ -5,6 +5,7 @@ import 'package:change30/src/core/components/widgets/sign_in_with_widget.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 
 import 'package:change30/src/features/Views/sign_up_page.dart';
+
 import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 
 import 'package:flutter/material.dart';
@@ -157,22 +158,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         .read(authProvider)
         .loginUserWithFirebase(
             _emailController.text, _passwordController.text, context)
-        .then((value) => Navigator.pushNamed(context, '/choosePage'))
-        .catchError((error, stackTrace) {
-      return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            content: Text(
-              error.toString(),
-              style: smallTitleTextStyle(fsize: 15),
-            ),
-          );
-        },
-      );
-    });
+        .then((value) => Navigator.pushNamed(context, '/choosePage'));
   }
 
   Column iconAndTitle(Size size, BuildContext context) {
