@@ -46,12 +46,10 @@ class FirestoreService extends BaseFirestoreService {
 
   @override
   String getUserUuid() {
-    final String id;
-    var firebaseAth = FirebaseAuth.instance.currentUser;
+    String userId = FirebaseAuth.instance.currentUser!.uid;
 
-    if (firebaseAth!.uid.isNotEmpty) {
-      id = FirebaseAuth.instance.currentUser!.uid;
-      return id;
+    if (userId.isNotEmpty) {
+      return userId;
     } else {
       return "";
     }

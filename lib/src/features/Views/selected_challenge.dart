@@ -20,11 +20,11 @@ class SelectedChallenge extends ConsumerStatefulWidget {
 }
 
 class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
-  @override
+  /* @override
   void initState() {
     super.initState();
     startTimer();
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +35,11 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
 
     final CollectionReference egzersiz =
         FirebaseFirestore.instance.collection('egzersizler');
-    /*  final Stream<QuerySnapshot> usersStream =
+    final Stream<QuerySnapshot> usersStream =
         FirebaseFirestore.instance.collection('egzersiz').snapshots();
-    
-    final CollectionReference users =
-        FirebaseFirestore.instance.collection('users'); */
+
+    //final CollectionReference users =
+    FirebaseFirestore.instance.collection('users');
 
     String userId = userProvider.fstore.getUserUuid();
 
@@ -52,6 +52,7 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
                   style: bigtitleTextStyle(AppConstants.primaryColor))),
           Text("this user id is $userId"),
           SizedBox(height: 200, child: oneTimeRead(egzersiz)),
+
           /* spaceMediumH25(),
           streamingUser(context, usersStream),
           spaceMediumH25(),
@@ -59,10 +60,12 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
           spaceMediumH25(),
           oneTimeRead2(users, userId),
           spaceMediumH25(), */
-          Text(startTimer().toString()),
+          //oneTimeRead2(users, userId),
+          /*  Text(startTimer().toString()), */
+          SizedBox(height: 200, child: egzersizRead(egzersiz)),
           ElevatedButton(
               onPressed: () {
-                ref.refresh(authProvider).fauth.signOutuser();
+                ref.read(authProvider).fauth.signOutuser();
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
@@ -75,7 +78,7 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
     );
   }
 
-  int startTimer() {
+  /* int startTimer() {
     int counter = 1;
     Timer.periodic(const Duration(seconds: 1000), (timer) {
       setState(() {
@@ -84,7 +87,7 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
     });
     return counter;
   }
-
+ */
   SizedBox oneTimeRead(CollectionReference<Object?> collection) {
     return SizedBox(
       child: FutureBuilder<DocumentSnapshot>(
@@ -107,6 +110,40 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(data["egzersiz1"]["$index"].toString(),
+                      style: bigtitleTextStyle(AppConstants.primaryColor)),
+                );
+              },
+            ); //Text("Full Name: ${data['pushup']} ${data['squat']}");
+          }
+
+          return const Text("loading");
+        },
+      ),
+    );
+  }
+
+  SizedBox egzersizRead(CollectionReference<Object?> collection) {
+    return SizedBox(
+      child: FutureBuilder<DocumentSnapshot>(
+        future: collection.doc('egzersiz').get(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return const Text("Something went wrong");
+          }
+
+          if (snapshot.hasData && !snapshot.data!.exists) {
+            return const Text("Document does not exist");
+          }
+
+          if (snapshot.connectionState == ConnectionState.done) {
+            Map<String, dynamic> data =
+                snapshot.data!.data() as Map<String, dynamic>;
+            return ListView.builder(
+              itemCount: 3,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(data["egzersiz2"]["$index"].toString(),
                       style: bigtitleTextStyle(AppConstants.primaryColor)),
                 );
               },

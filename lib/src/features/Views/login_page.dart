@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:change30/src/core/components/helpers/auth_error_dialog.dart';
 import 'package:change30/src/core/components/widgets/app_title_widget.dart';
 import 'package:change30/src/core/components/widgets/sign_in_with_widget.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
@@ -133,7 +132,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         CustomButton(
           onpress: () async {
             setState(() {
-              loginFunction();
+              if (_emailController.text.isEmpty ||
+                  _passwordController.text.isEmpty) {
+                displayMessage(context, "Empty E-mail or password");
+              } else {
+                loginFunction();
+              }
             });
           },
           buttonText: AppConstants.signInText,
@@ -154,11 +158,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   void loginFunction() {
-    ref
-        .read(authProvider)
-        .loginUserWithFirebase(
-            _emailController.text, _passwordController.text, context)
-        .then((value) => Navigator.pushNamed(context, '/choosePage'));
+    ref.read(authProvider).loginUserWithFirebase(
+        _emailController.text, _passwordController.text, context);
   }
 
   Column iconAndTitle(Size size, BuildContext context) {

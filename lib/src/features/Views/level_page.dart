@@ -4,8 +4,6 @@ import 'package:change30/src/core/constants/app_contants.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:change30/src/features/Controllers/exercise_controller.dart';
 
-import 'package:change30/src/features/riverpods/auth_riverpod.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

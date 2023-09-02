@@ -9,6 +9,8 @@ import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../models/user_model.dart';
+
 class ChoosePage extends ConsumerStatefulWidget {
   const ChoosePage({super.key});
 
@@ -30,11 +32,10 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
       "userId": uid,
       "giris": 1,
     };
-    //var userInfo = UserModel.fromMap(data);
+    var userInfo = UserModel.fromMap(data);
     /* void addDataToUserModel() {
       userDataProvider.addUserData(UserModel.fromMap(data));
     }  */
-
 
     return SafeArea(
       child: Scaffold(
@@ -89,19 +90,16 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
               CustomButton(
                   onpress: () {
                     setState(() {
-                      ref.read(userProvider).calculateUserBMI();
-
                       ref
                           .read(authProvider)
                           .fstore
                           .addDataToFirestore(userInfo.toMap(), 'users', uid)
                           .then((value) {
                         return Future.delayed(
-                            const Duration(seconds: 2),
+                            const Duration(seconds: 1),
                             () =>
                                 Navigator.pushNamed(context, '/challengePage'));
                       });
-
                     });
                   },
                   size: context.deviceSize,

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/components/helpers/toast_msg.dart';
 import '../firebase/firebase_services/firebase_auth.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -15,7 +16,7 @@ class AuthProvider extends ChangeNotifier {
   UserCredential? get userCredential => _userCredential;
   Map<String, dynamic> get userData => _userData;
 
-  Future<UserCredential> loginUserWithFirebase(
+  Future loginUserWithFirebase(
       String email, String password, BuildContext context) async {
     try {
       final userCredential = await fauth.loginUserWithFirebase(email, password);
@@ -23,32 +24,26 @@ class AuthProvider extends ChangeNotifier {
       return userCredential;
     } on FirebaseAuthException catch (e) {
       // exceptionlara göre olayları düzenlicez
-
-      String errorName = e.code;
-      if (errorName == "user-not-found") {
-        return await showDialog(
-            context: context,
-            builder: (context) {
-              return const AlertDialog(
-                actions: [],
-                content: Text("Kullanıcı adı veya şifre yanlış"),
-              );
-            });
+      if (e.code == 'user-not-found') {
+        displayMessage(context, "böyle bi kullanıcı yok");
       }
-      if (errorName == "wrong-password") {
-        return await showDialog(
-            context: context,
-            builder: (context) {
-              return const AlertDialog(
-                actions: [],
-                content: Text("Yanlış şifre"),
-              );
-            });
-      } else {
-        return Future.error(e);
+      if (e.code == "invalid-email") {
+        displayMessage(context, "email hatalı");
       }
-
+      if (e.code == "wrong-password") {
+        displayMessage(context, "Şifre yanlış");
+      } else {}
     }
+  }
+
+  displayMessage(BuildContext context, String message) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text(message),
+          );
+        });
   }
 
   /*  Future<void> addUser(String name, String gender, String age) {
@@ -71,29 +66,24 @@ class AuthProvider extends ChangeNotifier {
 
   Future<UserCredential> signUpUserWithFirebase(
       String email, String password, String name, BuildContext context) async {
-
     _userCredential = await fauth.signUpWithFirebase(email, password, name);
-=======
+
     //context ekledkk hataları ayıkladık
     //setLoader(true);
     try {
       _userCredential = await fauth.signUpWithFirebase(email, password, name);
     } on FirebaseAuthException catch (e) {
+      //TODO: beş hareket olacak başta videolar gösterilecek
       String errorName = e.code;
       if (errorName == "email-already-in-use") {
-        return await showDialog(
-            context: context,
-            builder: (context) {
-              return const AlertDialog(
-                actions: [],
-                content: Text("E-mail kullanımda"),
-              );
-            });
+        return toastMessage("Email kullanımda");
+      }
+      if (errorName == "weak-password") {
+        return toastMessage("Şifre en az 6 karakter olmalı");
       } else {
         return Future.error(e);
       }
     }
-
 
     return _userCredential!;
   }
