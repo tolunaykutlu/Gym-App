@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 class Exercises {
-  String name;
-  String? description;
-  String? difficulty;
+  final String name;
+  final String? description;
+  final String? difficulty;
 
   Exercises({
     required this.name,

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/components/helpers/auth_error_dialog.dart';
 import '../../core/components/helpers/toast_msg.dart';
 import '../firebase/firebase_services/firebase_auth.dart';
 
@@ -36,17 +37,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  displayMessage(BuildContext context, String message) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: Text(message),
-          );
-        });
-  }
-
-  /*  Future<void> addUser(String name, String gender, String age) {
+  /* /*  Future<void> addUser(String name, String gender, String age) {
     // Call the user's CollectionReference to add a new user
     CollectionReference collectionRef =
         FirebaseFirestore.instance.collection('egzersiz');
@@ -57,11 +48,16 @@ class AuthProvider extends ChangeNotifier {
         .then((value) => value)
         .catchError((error) => error); //print("Failed to add user: $error"));
   } */
-
-  String userId() {
+ */
+  /* String userId() {
     //içerdeki userin id sini almak için
     String id = fstore.getUserUuid();
     return id;
+  } */
+
+  Future getData(String collectionName, String docName) async {
+    var data = await fstore.getDataFromFirebase(collectionName, docName);
+    return data;
   }
 
   Future<UserCredential> signUpUserWithFirebase(
@@ -73,7 +69,6 @@ class AuthProvider extends ChangeNotifier {
     try {
       _userCredential = await fauth.signUpWithFirebase(email, password, name);
     } on FirebaseAuthException catch (e) {
-      //TODO: beş hareket olacak başta videolar gösterilecek
       String errorName = e.code;
       if (errorName == "email-already-in-use") {
         return toastMessage("Email kullanımda");
@@ -88,15 +83,6 @@ class AuthProvider extends ChangeNotifier {
     return _userCredential!;
   }
 
-  //data getirme
-  /* Future<UserModel> getUserData(String useruId) async {
-    var data = await fstore.getUserDataFromFirestore("users", useruId);
-    var userData = UserModel.fromMap(data);
-    
-
-    return userData;
-  }
- */
   Future<bool> addUserToDatabase(
       Map<String, dynamic> data, String collectionName, String docName) async {
     var value = false;

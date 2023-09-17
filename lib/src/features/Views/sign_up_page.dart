@@ -1,11 +1,10 @@
 import 'package:change30/src/core/components/widgets/custom_textfield.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:change30/src/features/Controllers/user_controller.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kartal/kartal.dart';
-
+import '../../core/components/helpers/database_helper.dart';
 import '../../core/components/widgets/app_title_widget.dart';
 import '../../core/components/widgets/custom_button.dart';
 import '../../core/constants/app_contants.dart';
@@ -19,6 +18,8 @@ class SignUpPage extends ConsumerStatefulWidget {
 }
 
 class _SignUpPageState extends ConsumerState<SignUpPage> {
+  final DatabaseServiceHelper databaseServiceHelper =
+      DatabaseServiceHelper.instance;
   final _formKey = GlobalKey<FormState>();
   final _nameCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
@@ -30,7 +31,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   void dispose() {
     _nameCtrl.dispose();
     _emailCtrl.dispose();
-
     _passwordCtrl.dispose();
     super.dispose();
   }
@@ -38,6 +38,10 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     final authNotifier = ref.watch(authProvider);
+    final Map<String, dynamic> tableRow = {
+      "columnName": _nameCtrl.text,
+      "columnTime": 22,
+    };
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -61,6 +65,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 ref.read(userProvider).email = _emailCtrl.text;
                 ref.read(userProvider).password = _passwordCtrl.text;
 
+                databaseServiceHelper.insert(tableRow);
+
                 if (_nameCtrl.text.isEmpty ||
                     _emailCtrl.text.isEmpty ||
                     _passwordCtrl.text.isEmpty) {
@@ -69,7 +75,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     builder: (context) {
                       return const AlertDialog(
                         actions: [],
-                        content: Text("Kutucukları doldurunuz."),
+                        content: Text("Fill The necessary boxes"),
                       );
                     },
                   );
@@ -85,15 +91,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                               );
                             },
                           ));
-                  /* .onError((error, stackTrace) => showDialog(
-                            context: context,
-                            builder: (context) {
-
-                              return const AlertDialog(
-                                content: Text("Kayıt Başarılı"),
-                              );
-                            },
-                          )); */
                 }
               },
               size: context.deviceSize,

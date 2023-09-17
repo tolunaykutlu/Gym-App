@@ -43,14 +43,17 @@ class FirebaseAuthClass extends BaseFirebaseService {
   Future<UserCredential> signUpWithFirebase(
       String email, String password, String name) async {
     //final data = {'name': name, 'e-mail': email, 'password': password};
-    final userCredential = await firestoreAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
-//TODO: login gibi burayıda yapcaz
+    try {
+      final userCredential = await firestoreAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      throw e.code;
+    }
+
     //ilk kayıtda kişinin adı email ve şifresini firebase aktarıyoruz
     // var id = FirebaseAuth.instance.currentUser!.uid.toString();
     // firestoreService.addDataToFirestore(data, "users", id);
-
-    return userCredential;
   }
 
 // user içerdemi diye kontrol

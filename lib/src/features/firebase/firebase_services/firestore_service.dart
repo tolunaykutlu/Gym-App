@@ -36,22 +36,42 @@ class FirestoreService extends BaseFirestoreService {
   }
 
   @override
-  Future getUserDataFromFirestore(String collectionName, String docName) async {
-    try {
-      await _firestoreInstance.collection(collectionName).doc(docName).get();
-    } catch (e) {
-      throw Exception(e.toString());
+  String getUserUuid() {
+    String? userId;
+    if (FirebaseAuth.instance.currentUser != null) {
+      userId = FirebaseAuth.instance.currentUser!.uid;
+      return userId;
+    } else {
+      return "";
     }
   }
 
   @override
-  String getUserUuid() {
-    String userId = FirebaseAuth.instance.currentUser!.uid;
+  Future getDataFromFirebase(String collectionName, String docName) async {
+    try {
+      var userDocument = await FirebaseFirestore.instance
+          .collection(collectionName)
+          .doc(docName)
+          .get();
 
-    if (userId.isNotEmpty) {
-      return userId;
-    } else {
-      return "";
+      if (userDocument.exists) {
+        var userData = userDocument;
+        return userData;
+      } else {
+        return '';
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future addUserToLeaderboard(String? username, int score) async {
+    {
+      await FirebaseFirestore.instance.collection('leaderboard').add({
+        'username': username ?? "gizlii kalsin",
+        'score': score,
+      });
     }
   }
 }

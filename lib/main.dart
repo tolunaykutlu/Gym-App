@@ -1,3 +1,4 @@
+import 'package:change30/src/features/Views/leader_board_page.dart';
 import 'package:change30/src/features/firebase/firebase_options.dart';
 import 'package:change30/src/core/constants/app_contants.dart';
 import 'package:change30/src/features/Views/calculation_page.dart';
@@ -6,11 +7,8 @@ import 'package:change30/src/features/Views/choose_gender_page.dart';
 import 'package:change30/src/features/Views/login_page.dart';
 import 'package:change30/src/features/Views/selected_challenge.dart';
 import 'package:change30/src/features/Views/sign_up_page.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:firebase_core/firebase_core.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -49,7 +47,8 @@ class MyApp extends StatelessWidget {
         '/signUpPage': (context) => const SignUpPage(),
         '/challengePage': (context) => const LevelSelectionPage(),
         '/calculationPage': (context) => const CalculationPage(),
-        '/selectedChallenge': (context) => const SelectedChallenge()
+        '/selectedChallenge': (context) => const SelectedChallenge(),
+        '/LeaderBoardScreen': (context) => const LeaderBoardScreen()
       },
     );
   }

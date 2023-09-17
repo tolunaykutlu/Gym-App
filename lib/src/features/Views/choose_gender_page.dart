@@ -22,7 +22,13 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
   @override
   Widget build(BuildContext context) {
     var userDataProvider = ref.watch(userProvider);
-    var uid = ref.watch(authProvider).fstore.getUserUuid();
+    var authPro = ref.watch(authProvider);
+    String uid = "";
+    if (authPro.fauth.isUserActive()) {
+      uid = authPro.fstore.getUserUuid();
+    } else {
+      uid = "yok";
+    }
 
     Map<String, dynamic> data = {
       "height": userDataProvider.heightController,
