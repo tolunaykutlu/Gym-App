@@ -14,15 +14,3 @@ class TimerCounter extends ChangeNotifier {
 final counterProvider = Provider<TimerCounter>((ref) {
   return TimerCounter();
 });
-
-class CounterStateNotifier extends StateNotifier<int> {
-  CounterStateNotifier() : super(0);
-
-  void increment() {
-    state++;
-  }
-
-  void decrement() {
-    state--;
-  }
-}

@@ -33,6 +33,11 @@ class _TimerTextState extends ConsumerState<TimerText> {
     var counter = ref.watch(counterProvider);
     String time = "$hour : $min : ${counter.counter}";
 
+    timerZero() {
+      _timer?.cancel();
+      counter.counter = 0;
+    }
+
     startTimer() {
       if (isStarted) {
         _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -55,25 +60,30 @@ class _TimerTextState extends ConsumerState<TimerText> {
 
     return Column(
       children: [
-        Card(
-            shape: StadiumBorder(
-                //yuvarlak
-                side: BorderSide(
-                    color: counter.counter % 2 == 0
-                        ? AppConstants.primaryColor
-                        : AppConstants.secondaryColor,
-                    strokeAlign:
-                        counter.counter % 2 == 0 ? 0 : 20, //kenarın uzaklığı
-                    width: 1)),
-            child: SizedBox(
-                width: 150,
-                height: 150,
-                child: Center(
-                    child: Text(
-                  time,
-                  style: smallTitleTextStyle(
-                      color: AppConstants.primaryColor, fsize: 25),
-                )))),
+        InkWell(
+          onTap: () {
+            timerZero();
+          },
+          child: Card(
+              shape: StadiumBorder(
+                  //yuvarlak
+                  side: BorderSide(
+                      color: counter.counter % 2 == 0
+                          ? AppConstants.primaryColor
+                          : AppConstants.secondaryColor,
+                      strokeAlign:
+                          counter.counter % 2 == 0 ? 0 : 20, //kenarın uzaklığı
+                      width: 1)),
+              child: SizedBox(
+                  width: 150,
+                  height: 150,
+                  child: Center(
+                      child: Text(
+                    time,
+                    style: smallTitleTextStyle(
+                        color: AppConstants.primaryColor, fsize: 25),
+                  )))),
+        ),
         spaceMediumH25(),
         CustomButton(
           size: context.deviceSize / 2,

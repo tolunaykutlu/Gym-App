@@ -20,7 +20,10 @@ class LeaderBoardScreen extends ConsumerWidget {
         title: const Text("SIRALAMA"),
         centerTitle: true,
       ),
-      body: SizedBox(height: context.deviceHeight * 0.7, child: leaderBoard2()),
+      body: Hero(
+          tag: Object(),
+          child: SizedBox(
+              height: context.deviceHeight * 0.7, child: leaderBoard2())),
     );
   }
 
