@@ -64,7 +64,7 @@ class LeaderBoardScreen extends ConsumerWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "${index + 1}",
-                        style: TextStyle(fontSize: 25),
+                        style: const TextStyle(fontSize: 25),
                       ),
                     ),
                     title: Text(username),
