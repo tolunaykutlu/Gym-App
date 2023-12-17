@@ -1,3 +1,4 @@
+import 'package:change30/src/core/constants/app_contants.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -52,13 +53,24 @@ class LeaderBoardScreen extends ConsumerWidget {
               final username = data[index]['username'];
               final score = data[index]['score'];
 
-              return ListTile(
-                leading: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("${index + 1}"),
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: AppConstants.secondaryColor)),
+                  child: ListTile(
+                    leading: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "${index + 1}",
+                        style: TextStyle(fontSize: 25),
+                      ),
+                    ),
+                    title: Text(username),
+                    subtitle: Text('Score: $score'),
+                  ),
                 ),
-                title: Text(username),
-                subtitle: Text('Score: $score'),
               );
             },
           );
