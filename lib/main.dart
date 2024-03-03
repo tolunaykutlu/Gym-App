@@ -1,7 +1,6 @@
 import 'package:change30/src/features/Views/leader_board_page.dart';
 import 'package:change30/src/features/firebase/firebase_options.dart';
 import 'package:change30/src/core/constants/app_contants.dart';
-import 'package:change30/src/features/Views/calculation_page.dart';
 import 'package:change30/src/features/Views/level_page.dart';
 import 'package:change30/src/features/Views/choose_gender_page.dart';
 import 'package:change30/src/features/Views/login_page.dart';
@@ -25,11 +24,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Stay Hard',
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
+            scrolledUnderElevation: 0,
             backgroundColor: Color(0xffE2E2E2),
             elevation: 0,
             foregroundColor: Colors.black),
@@ -46,7 +46,6 @@ class MyApp extends StatelessWidget {
         '/choosePage': (context) => const ChoosePage(),
         '/signUpPage': (context) => const SignUpPage(),
         '/challengePage': (context) => const LevelSelectionPage(),
-        '/calculationPage': (context) => const CalculationPage(),
         '/selectedChallenge': (context) => const SelectedChallenge(),
         '/LeaderBoardScreen': (context) => const LeaderBoardScreen()
       },

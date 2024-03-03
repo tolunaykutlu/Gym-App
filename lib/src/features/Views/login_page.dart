@@ -29,6 +29,23 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     super.dispose();
   }
 
+  /* var giris = 0;
+  String getUserId() {
+    //userId çekme methodu
+    var uid = ref.read(authProvider).fstore.getUserUuid();
+    return uid;
+  }
+
+  getUsersWantedData() {
+    var data = ref.read(authProvider).getData("users", getUserId());
+    data.then((value) {
+      //Setstate ile username içine firebaseden datasını çektiğimiz kullanıcının adını verdik
+      setState(() {
+        giris = value["giris"];
+      });
+    });
+  } */
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -131,6 +148,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               } else {
                 loginFunction();
                 Navigator.pushNamed(context, "/choosePage");
+                /* if (giris.toInt() == 1) {
+                  Navigator.pushNamed(context, "/challengePage");
+                } else {
+                  Navigator.pushNamed(context, "/choosePage");
+                } */
               }
             });
           },

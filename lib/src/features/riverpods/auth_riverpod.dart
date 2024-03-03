@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:change30/src/features/firebase/firebase_services/firestore_service.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/components/helpers/auth_error_dialog.dart';
-import '../../core/components/helpers/toast_msg.dart';
 import '../firebase/firebase_services/firebase_auth.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -71,10 +72,10 @@ class AuthProvider extends ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       String errorName = e.code;
       if (errorName == "email-already-in-use") {
-        return toastMessage("Email kullanımda");
+        //return toastMessage("E-mail kullanımda");
       }
       if (errorName == "weak-password") {
-        return toastMessage("Şifre en az 6 karakter olmalı");
+        // return toastMessage("Şifre en az 6 karakter olmalı");
       } else {
         return Future.error(e);
       }

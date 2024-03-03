@@ -31,7 +31,15 @@ class _TimerTextState extends ConsumerState<TimerText> {
   @override
   Widget build(BuildContext context) {
     var counter = ref.watch(counterProvider);
-    String time = "$hour : $min : ${counter.counter}";
+
+    String time = "";
+    if (hour == 0 && min < 10 && counter.counter < 10) {
+      time = "0$min : 0${counter.counter}";
+    } else if (counter.counter > 9) {
+      time = "0$min : ${counter.counter}";
+    } else {
+      time = "$hour : $min : ${counter.counter}";
+    }
 
     timerZero() {
       _timer?.cancel();

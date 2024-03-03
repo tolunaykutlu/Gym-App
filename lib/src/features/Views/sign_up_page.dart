@@ -1,10 +1,11 @@
 import 'package:change30/src/core/components/widgets/custom_textfield.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:change30/src/features/Controllers/user_controller.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kartal/kartal.dart';
-import '../../core/components/helpers/database_helper.dart';
 import '../../core/components/widgets/app_title_widget.dart';
 import '../../core/components/widgets/custom_button.dart';
 import '../../core/constants/app_contants.dart';
@@ -18,8 +19,6 @@ class SignUpPage extends ConsumerStatefulWidget {
 }
 
 class _SignUpPageState extends ConsumerState<SignUpPage> {
-  final DatabaseServiceHelper databaseServiceHelper =
-      DatabaseServiceHelper.instance;
   final _formKey = GlobalKey<FormState>();
   final _nameCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
@@ -38,10 +37,12 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     final authNotifier = ref.watch(authProvider);
-    final Map<String, dynamic> tableRow = {
-      "columnName": _nameCtrl.text,
-      "columnTime": 22,
-    };
+
+    /*  Map<String, dynamic> data = {
+      "name": _nameCtrl.text,
+      "email": _emailCtrl.text,
+      "password": _passwordCtrl.text,
+    }; */
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -65,8 +66,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 ref.read(userProvider).email = _emailCtrl.text;
                 ref.read(userProvider).password = _passwordCtrl.text;
 
-                databaseServiceHelper.insert(tableRow);
-
                 if (_nameCtrl.text.isEmpty ||
                     _emailCtrl.text.isEmpty ||
                     _passwordCtrl.text.isEmpty) {
@@ -80,23 +79,39 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     },
                   );
                 } else {
+                  // ignore: use_build_context_synchronously
                   await authNotifier
                       .signUpUserWithFirebase(_emailCtrl.text,
                           _passwordCtrl.text, _nameCtrl.text, context)
-                      .then((value) => showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: Text(value.user!.uid),
-                              );
-                            },
-                          ));
+                      .then((value) {
+                    showUid(context, value);
+                  }).onError((error, stackTrace) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          content: Text(error.toString()),
+                        );
+                      },
+                    );
+                  });
                 }
               },
               size: context.deviceSize,
               buttonText: "Sign Up"),
         ]),
       ),
+    );
+  }
+
+  Future<dynamic> showUid(BuildContext context, UserCredential value) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Text(value.user!.uid),
+        );
+      },
     );
   }
 

@@ -6,5 +6,6 @@ abstract class BaseFirestoreService {
 
   Future getDataFromFirebase(String collectionName, String docName);
   Future addUserToLeaderboard(String username, int score);
+
   String getUserUuid();
 }

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,26 +18,6 @@ class UserDataController extends ChangeNotifier {
   bool isMale = true;
   String bmiScore = "";
   String userId = "";
-
-  String calculateUserBMI() {
-    double result;
-
-    result = weigthController / (pow(2, (heightController / 100)));
-
-    if (result <= 18.4) {
-      bmiScore = "Underweight"; //underweight
-    }
-    if (result >= 18.5 && result <= 24.9) {
-      bmiScore = "Normal"; //Normal
-    }
-    if (result >= 25.0 && result <= 39.9) {
-      bmiScore = "Overweight"; //overweight
-    }
-    if (result >= 40) {
-      bmiScore = "Obese"; //obese
-    }
-    return bmiScore;
-  }
 
   final List<UserModel> _userData = [];
 

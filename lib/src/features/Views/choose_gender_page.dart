@@ -101,6 +101,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
                           .fstore
                           .addDataToFirestore(userInfo.toMap(), 'users', uid)
                           .then((value) {
+                        print(userInfo.toMap());
                         return Future.delayed(
                             const Duration(seconds: 1),
                             () =>

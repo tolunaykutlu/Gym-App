@@ -1,5 +1,7 @@
+import 'package:change30/src/core/components/widgets/app_title_widget.dart';
 import 'package:change30/src/core/constants/app_contants.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +20,11 @@ class LeaderBoardScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("SIRALAMA"),
+        title: const AppTitleWidget(
+          padding: 2,
+          title1: "LEADER",
+          title2: "BOARD",
+        ),
         centerTitle: true,
       ),
       body: Hero(
@@ -29,12 +35,12 @@ class LeaderBoardScreen extends ConsumerWidget {
   }
 
   SizedBox leaderBoard2() {
-    //TODO:sıralam sayfası dizayn edilcek timerdaki skoru firebase yazılcak
+    //TODO:sıralam sayfası dizayn edilcek timerdaki skoru firebase yazıldı sadece scoru
     return SizedBox(
       child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection("leaderboard")
-            .orderBy('score', descending: true)
+            .orderBy('score', descending: false)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -50,8 +56,17 @@ class LeaderBoardScreen extends ConsumerWidget {
           return ListView.builder(
             itemCount: data.length,
             itemBuilder: (context, index) {
-              final username = data[index]['username'];
-              final score = data[index]['score'];
+              String username = data[index]['username'];
+              var score = data[index]['score'];
+
+              String toplamScore() {
+                // bu fonksyion sn cinsinden gelen skoru dakika ve saniye olarak çeviriyor
+                int dakika = score ~/
+                    60; // ~/ bu operatör bölünen sayılardan kalan tam sayıyı verir.
+                int kalanSaniye = score % 60;
+                String time = "$dakika dk $kalanSaniye sn";
+                return time;
+              }
 
               return Padding(
                 padding: const EdgeInsets.only(bottom: 5),
@@ -68,7 +83,7 @@ class LeaderBoardScreen extends ConsumerWidget {
                       ),
                     ),
                     title: Text(username),
-                    subtitle: Text('Score: $score'),
+                    subtitle: Text('Score: ${toplamScore()}'),
                   ),
                 ),
               );

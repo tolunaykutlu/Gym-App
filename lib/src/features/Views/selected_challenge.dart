@@ -27,19 +27,19 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
 
   @override
   void initState() {
-    getUsersWantedData();
-    getUserId();
+    /*  getUsersWantedData(); */
+    /* getUserId(); */
 
     super.initState();
   }
 
-  String getUserId() {
+  /* String getUserId() {
     //userId çekme methodu
     var uid = ref.read(authProvider).fstore.getUserUuid();
     return uid;
-  }
+  } */
 
-  getUsersWantedData() {
+  /* getUsersWantedData() {
     var data = ref.read(authProvider).getData("users", getUserId());
     data.then((value) {
       //Setstate ile username içine firebaseden datasını çektiğimiz kullanıcının adını verdik
@@ -47,7 +47,7 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
         userName = value["name"];
       });
     });
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
             children: [
               //Text("this user id is $userId"),
               //oneTimeRead(egzersiz),
-              Text(userName),
+              userName == "" ? const Text("yok kuıllanıcı") : Text(userName),
 
               spaceSmallH15(),
               const TimerText(),
@@ -81,9 +81,17 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
                   await ref
                       .read(authProvider)
                       .fstore
-                      .addUserToLeaderboard("$userName + yeni", score);
+                      .addUserToLeaderboard(userName, score);
+                  /* int score = ref.read(counterProvider).totalScore;
+                  /* await ref
+                      .read(authProvider)
+                      .fstore
+                      .addUserToLeaderboard("$userName + yeni", score); */ */
 
-                  //ref.read(authProvider).fauth.signOutuser();
+                  /* ref
+                      .read(authProvider)
+                      .fauth
+                      .signOutuser();  */ //TODO: sign out olursa uygulama kapansın
                 },
               )
             ],
