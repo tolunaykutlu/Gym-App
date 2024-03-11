@@ -35,7 +35,6 @@ class LeaderBoardScreen extends ConsumerWidget {
   }
 
   SizedBox leaderBoard2() {
-    //TODO:sıralam sayfası dizayn edilcek timerdaki skoru firebase yazıldı sadece scoru
     return SizedBox(
       child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance

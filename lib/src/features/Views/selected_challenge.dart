@@ -91,7 +91,7 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
                   /* ref
                       .read(authProvider)
                       .fauth
-                      .signOutuser();  */ //TODO: sign out olursa uygulama kapansın
+                      .signOutuser();  */
                 },
               )
             ],

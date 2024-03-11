@@ -27,12 +27,20 @@ TextStyle smallTitleTextStyle({
 }) {
   //textStyle for only small titles like choose your age
   return GoogleFonts.orbitron(
-      fontSize: fsize, color: color, fontWeight: FontWeight.bold);
+      decoration: TextDecoration.none,
+      decorationThickness: 2,
+      fontSize: fsize,
+      color: color,
+      fontWeight: FontWeight.bold);
 }
 
 TextStyle bigtitleTextStyle(Color c, {double fsize = 30}) {
   return GoogleFonts.orbitron(
-      fontSize: fsize, color: c, fontWeight: FontWeight.bold);
+      decoration: TextDecoration.none,
+      decorationThickness: 0,
+      fontSize: fsize,
+      color: c,
+      fontWeight: FontWeight.bold);
 }
 
 SizedBox spaceSmallH15() {

@@ -37,7 +37,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         autofocus: widget.autoFocus,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: widget.validator,
-        style: GoogleFonts.orbitron(fontWeight: FontWeight.bold),
+        style: GoogleFonts.orbitron(
+          decoration: TextDecoration.none, //
+
+          fontWeight: FontWeight.bold,
+        ),
         controller: widget.control,
         obscureText: widget.secret,
         cursorColor: Colors.black,

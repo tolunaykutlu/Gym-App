@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:change30/src/features/firebase/abstracts/base_firebase_service.dart';
-import 'package:change30/src/features/firebase/firebase_exceptions.dart';
+
 import 'package:change30/src/features/firebase/firebase_services/firestore_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -28,7 +28,7 @@ class FirebaseAuthClass extends BaseFirebaseService {
     } on FirebaseAuthException catch (e) {
       throw e.code;
     } catch (e) {
-      throw CustomException(errorMessage: "Unknown Error");
+      throw e.toString();
     }
   }
 

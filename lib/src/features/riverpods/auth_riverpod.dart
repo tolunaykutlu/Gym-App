@@ -66,15 +66,17 @@ class AuthProvider extends ChangeNotifier {
     _userCredential = await fauth.signUpWithFirebase(email, password, name);
 
     //context ekledkk hataları ayıkladık
-    //setLoader(true);
+
     try {
       _userCredential = await fauth.signUpWithFirebase(email, password, name);
     } on FirebaseAuthException catch (e) {
       String errorName = e.code;
       if (errorName == "email-already-in-use") {
-        //return toastMessage("E-mail kullanımda");
+        //TODO: hata mesajlarını düzgün yönet
+        displayMessage(context, "e-mail kullanımda");
       }
       if (errorName == "weak-password") {
+        displayMessage(context, "Şifre en az 6 karakter olmalıdır");
         // return toastMessage("Şifre en az 6 karakter olmalı");
       } else {
         return Future.error(e);

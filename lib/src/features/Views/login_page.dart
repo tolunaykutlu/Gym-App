@@ -5,7 +5,6 @@ import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kartal/kartal.dart';
 import '../../core/components/widgets/custom_button.dart';
 import '../../core/components/widgets/custom_textfield.dart';
 import '../../core/constants/app_contants.dart';
@@ -116,8 +115,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           onChanged: (p0) {},
           control: _emailController,
           hintText: AppConstants.phoneAndEmailText,
-          validator: (p0) =>
-              p0.ext.isValidEmail ? null : "E-mail type is wrong",
         ),
         spaceSmallH15(),
         CustomTextFormField(
@@ -147,7 +144,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 displayMessage(context, "Empty E-mail or password");
               } else {
                 loginFunction();
-                Navigator.pushNamed(context, "/choosePage");
+                //Navigator.pushNamed(context, "/choosePage");
                 /* if (giris.toInt() == 1) {
                   Navigator.pushNamed(context, "/challengePage");
                 } else {
@@ -174,17 +171,29 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   void loginFunction() {
-    ref.read(authProvider).loginUserWithFirebase(
-        _emailController.text, _passwordController.text, context);
+    ref
+        .read(authProvider)
+        .loginUserWithFirebase(
+            _emailController.text, _passwordController.text, context)
+        .onError((error, stackTrace) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text(error.toString()),
+          );
+        },
+      );
+    });
   }
 
   Column iconAndTitle(Size size, BuildContext context) {
     return Column(
       children: [
-        /* Image.asset(
-          "images/GymPoint.png",
+        Image.asset(
+          "assets/images/GymPoint.png",
           fit: BoxFit.cover,
-        ), */
+        ),
         spaceSmallH15(),
         const AppTitleWidget(),
       ],
