@@ -72,7 +72,6 @@ class AuthProvider extends ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       String errorName = e.code;
       if (errorName == "email-already-in-use") {
-        //TODO: hata mesajlarını düzgün yönet
         displayMessage(context, "e-mail kullanımda");
       }
       if (errorName == "weak-password") {

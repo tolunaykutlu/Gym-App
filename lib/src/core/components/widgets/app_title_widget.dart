@@ -22,13 +22,13 @@ class AppTitleWidget extends StatelessWidget {
               .textTheme
               .headlineMedium
               ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold) */
-                bigtitleTextStyle(Colors.black)),
+                AppConstants.bigtitleTextStyle(Colors.black)),
         Padding(
           padding: EdgeInsets.only(left: padding),
           child: Text(title2,
               style: /* Theme.of(context).textTheme.headlineMedium?.copyWith(
                 color: Colors.amber.shade900, fontWeight: FontWeight.bold) */
-                  bigtitleTextStyle(AppConstants.primaryColor)),
+                  AppConstants.bigtitleTextStyle(AppConstants.primaryColor)),
         ),
       ],
     );

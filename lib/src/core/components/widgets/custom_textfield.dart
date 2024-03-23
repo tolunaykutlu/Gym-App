@@ -35,17 +35,18 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
         autofocus: widget.autoFocus,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
+        autovalidateMode: AutovalidateMode.disabled,
         validator: widget.validator,
         style: GoogleFonts.orbitron(
-          decoration: TextDecoration.none, //
-
+          decoration: TextDecoration.none,
           fontWeight: FontWeight.bold,
         ),
         controller: widget.control,
         obscureText: widget.secret,
         cursorColor: Colors.black,
         decoration: InputDecoration(
+            labelStyle: AppConstants.smallTitleTextStyle(
+                color: Colors.black, fsize: 20),
             labelText: widget.labeltext,
             errorStyle: Theme.of(context)
                 .textTheme

@@ -50,21 +50,21 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              spaceLargeH35(),
+              AppConstants.spaceLargeH35(),
               const AppTitleWidget(),
-              spaceSmallH15(),
+              AppConstants.spaceSmallH15(),
               GenderPickContainers(ref: ref, context: context),
-              spaceSmallH15(),
+              AppConstants.spaceSmallH15(),
               Text(
                 AppConstants.selectAgeTitle,
-                style: smallTitleTextStyle(),
+                style: AppConstants.smallTitleTextStyle(),
               ),
-              spaceSmallH15(),
+              AppConstants.spaceSmallH15(),
               selectAgeContainer(context),
-              spaceMediumH25(),
+              AppConstants.spaceMediumH25(),
               Text(AppConstants.selectWeigthTitle,
-                  style: smallTitleTextStyle()),
-              spaceSmallH15(),
+                  style: AppConstants.smallTitleTextStyle()),
+              AppConstants.spaceSmallH15(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -92,7 +92,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
                       }),
                 ],
               ),
-              spaceMediumH25(),
+              AppConstants.spaceMediumH25(),
               CustomButton(
                   onpress: () {
                     setState(() {
@@ -101,7 +101,6 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
                           .fstore
                           .addDataToFirestore(userInfo.toMap(), 'users', uid)
                           .then((value) {
-                        print(userInfo.toMap());
                         return Future.delayed(
                             const Duration(seconds: 1),
                             () =>
@@ -152,10 +151,13 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
                               ref.read(userProvider).ageController < 85
                           ? Text(
                               ref.read(userProvider).ageController.toString(),
-                              style: bigtitleTextStyle(Colors.black, fsize: 25))
+                              style: AppConstants.bigtitleTextStyle(
+                                  Colors.black,
+                                  fsize: 25))
                           : Text("${ref.read(userProvider).ageController = 18}",
-                              style:
-                                  bigtitleTextStyle(Colors.black, fsize: 25))),
+                              style: AppConstants.bigtitleTextStyle(
+                                  Colors.black,
+                                  fsize: 25))),
                   Padding(
                     padding: const EdgeInsets.only(left: 4),
                     child: Column(
@@ -214,8 +216,9 @@ class _GenderPickContainersState extends State<GenderPickContainers> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(AppConstants.chooseGender, style: smallTitleTextStyle()),
-        spaceSmallH15(),
+        Text(AppConstants.chooseGender,
+            style: AppConstants.smallTitleTextStyle()),
+        AppConstants.spaceSmallH15(),
         GenderSelectionWidget(
           border: widget.ref.read(userProvider).isMale == true
               ? Border.all(width: 2, color: AppConstants.primaryColor)
@@ -234,7 +237,7 @@ class _GenderPickContainersState extends State<GenderPickContainers> {
             color: Colors.blue,
           ),
         ),
-        spaceSmallH15(),
+        AppConstants.spaceSmallH15(),
         GenderSelectionWidget(
           border: widget.ref.read(userProvider).isMale == false
               ? Border.all(width: 2, color: AppConstants.primaryColor)
@@ -293,12 +296,14 @@ class WeightAndAgeSlider extends StatelessWidget {
               Row(
                 children: [
                   Text(controller.toString(),
-                      style: bigtitleTextStyle(Colors.black, fsize: 25)),
+                      style: AppConstants.bigtitleTextStyle(Colors.black,
+                          fsize: 25)),
                   Padding(
                     padding: const EdgeInsets.only(left: 5),
                     child: Text(
                       s,
-                      style: bigtitleTextStyle(AppConstants.primaryColor,
+                      style: AppConstants.bigtitleTextStyle(
+                          AppConstants.primaryColor,
                           fsize: 25),
                     ),
                   )
@@ -362,7 +367,7 @@ class _GenderSelectionWidgetState extends State<GenderSelectionWidget> {
               padding: const EdgeInsets.only(left: 15),
               child: Text(
                 widget.genderTitle,
-                style: bigtitleTextStyle(Colors.black, fsize: 15),
+                style: AppConstants.bigtitleTextStyle(Colors.black, fsize: 15),
               ),
             )
           ],

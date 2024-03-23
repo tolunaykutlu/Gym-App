@@ -1,9 +1,7 @@
 import 'package:change30/src/core/components/widgets/app_title_widget.dart';
 import 'package:change30/src/core/constants/app_contants.dart';
-
 import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:change30/src/features/Controllers/exercise_controller.dart';
-import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,18 +18,18 @@ class LevelSelectionPage extends ConsumerWidget {
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: Column(
             children: [
-              spaceSmallH15(),
+              AppConstants.spaceSmallH15(),
               const AppTitleWidget(
                 title1: "LEV",
                 title2: "ELS",
                 padding: 0,
               ),
-              spaceSmallH15(),
+              AppConstants.spaceSmallH15(),
               Text(
                 "Choose A level",
-                style: smallTitleTextStyle(),
+                style: AppConstants.smallTitleTextStyle(),
               ),
-              spaceMediumH25(),
+              AppConstants.spaceMediumH25(),
               SizedBox(
                 height: context.deviceHeight > 375
                     ? context.deviceHeight * 0.6
@@ -91,7 +89,7 @@ class _LevelSelectionWidgetState extends State<LevelSelectionWidget> {
     return InkWell(
       onTap: () async {
         setState(() {
-          widget.ref.read(authProvider).fauth.signOutuser();
+          //widget.ref.read(authProvider).fauth.signOutuser();
           // widget.ref.read(authProvider).addUser("tolu", "male", "22");
 
           Navigator.pushNamed(context, '/selectedChallenge');
@@ -105,7 +103,7 @@ class _LevelSelectionWidgetState extends State<LevelSelectionWidget> {
         child: Center(
           child: Text(
             widget.exProvider.difficultyList[widget.index],
-            style: smallTitleTextStyle(
+            style: AppConstants.smallTitleTextStyle(
                 fsize: 18, color: AppConstants.primaryColor),
           ),
         ),

@@ -88,11 +88,11 @@ class _TimerTextState extends ConsumerState<TimerText> {
                   child: Center(
                       child: Text(
                     time,
-                    style: smallTitleTextStyle(
+                    style: AppConstants.smallTitleTextStyle(
                         color: AppConstants.primaryColor, fsize: 25),
                   )))),
         ),
-        spaceMediumH25(),
+        AppConstants.spaceMediumH25(),
         CustomButton(
           size: context.deviceSize / 2,
           buttonText: "Başla",

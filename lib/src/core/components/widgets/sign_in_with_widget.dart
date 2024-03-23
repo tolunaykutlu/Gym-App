@@ -18,7 +18,7 @@ class SignInWithWidget extends StatelessWidget {
               .titleLarge
               ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
         ),
-        spaceMediumH25(),
+        AppConstants.spaceMediumH25(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -47,7 +47,7 @@ class SignInWithWidget extends StatelessWidget {
                 ))
           ],
         ),
-        spaceSmallH15(),
+        AppConstants.spaceSmallH15(),
       ],
     );
   }

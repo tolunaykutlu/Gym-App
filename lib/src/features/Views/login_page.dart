@@ -55,14 +55,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           child: Column(
             children: [
               iconAndTitle(context.deviceSize, context),
-              spaceSmallH15(),
+              AppConstants.spaceSmallH15(),
               if (context.deviceSize.height > 668)
                 Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: buttonSection(context.deviceSize, context))
               else
                 buttonSection(context.deviceSize, context),
-              spaceMediumH25(),
+              AppConstants.spaceMediumH25(),
               bottomSection(context),
             ],
           ),
@@ -75,7 +75,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     return Column(
       children: [
         const SignInWithWidget(),
-        spaceSmallH15(),
+        AppConstants.spaceSmallH15(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -108,15 +108,15 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Column buttonSection(Size size, BuildContext context) {
     return Column(
       children: [
-        spaceSmallH15(),
+        AppConstants.spaceSmallH15(),
         CustomTextFormField(
-          labeltext: "Email",
+          labeltext: "E-mail",
           autoFocus: true,
           onChanged: (p0) {},
           control: _emailController,
           hintText: AppConstants.phoneAndEmailText,
         ),
-        spaceSmallH15(),
+        AppConstants.spaceSmallH15(),
         CustomTextFormField(
           labeltext: "Password",
           control: _passwordController,
@@ -135,7 +135,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     : const Icon(Icons.lock_open)),
           ),
         ),
-        spaceSmallH15(),
+        AppConstants.spaceSmallH15(),
         CustomButton(
           onpress: () async {
             setState(() {
@@ -156,7 +156,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           buttonText: AppConstants.signInText,
           size: size,
         ),
-        spaceSmallH15(),
+        AppConstants.spaceSmallH15(),
         GestureDetector(
           onTap: () {
             setState(() {});
@@ -184,7 +184,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           );
         },
       );
-    });
+    }).then((value) => Navigator.pushNamed(context, "/challengePage"));
   }
 
   Column iconAndTitle(Size size, BuildContext context) {
@@ -194,7 +194,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           "assets/images/GymPoint.png",
           fit: BoxFit.cover,
         ),
-        spaceSmallH15(),
+        AppConstants.spaceSmallH15(),
         const AppTitleWidget(),
       ],
     );
