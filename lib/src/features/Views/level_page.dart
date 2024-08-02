@@ -89,10 +89,10 @@ class _LevelSelectionWidgetState extends State<LevelSelectionWidget> {
     return InkWell(
       onTap: () async {
         setState(() {
-          //widget.ref.read(authProvider).fauth.signOutuser();
-          // widget.ref.read(authProvider).addUser("tolu", "male", "22");
-
-          Navigator.pushNamed(context, '/selectedChallenge');
+          Navigator.pushNamed(
+            context,
+            '/selectedChallenge',
+          );
         });
       },
       child: Container(

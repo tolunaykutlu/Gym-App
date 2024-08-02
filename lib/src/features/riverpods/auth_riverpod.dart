@@ -18,24 +18,31 @@ class AuthProvider extends ChangeNotifier {
   UserCredential? get userCredential => _userCredential;
   Map<String, dynamic> get userData => _userData;
 
-  Future loginUserWithFirebase(
+  Future<User?> loginUserWithFirebase(
       String email, String password, BuildContext context) async {
+    User? user;
     try {
       final userCredential = await fauth.loginUserWithFirebase(email, password);
-
-      return userCredential;
+      user = userCredential.user;
+      // If login is successful, return the userCredential
+      if (user!.uid != "") {
+        return user;
+      }
     } on FirebaseAuthException catch (e) {
-      // exceptionlara göre olayları düzenlicez
+      // Handle different types of exceptions
       if (e.code == 'user-not-found') {
-        displayMessage(context, "böyle bi kullanıcı yok");
+        displayMessage(context, "There is no user with this email");
+      } else if (e.code == "invalid-email") {
+        displayMessage(context, "Invalid email format");
+      } else if (e.code == "wrong-password") {
+        displayMessage(context, "Incorrect password");
+      } else {
+        // For other errors, return null
+        displayMessage(context, "An error occurred. Please try again later.");
+        return null;
       }
-      if (e.code == "invalid-email") {
-        displayMessage(context, "email hatalı");
-      }
-      if (e.code == "wrong-password") {
-        displayMessage(context, "Şifre yanlış");
-      } else {}
     }
+    return user;
   }
 
   /* /*  Future<void> addUser(String name, String gender, String age) {
@@ -82,7 +89,7 @@ class AuthProvider extends ChangeNotifier {
       }
     }
 
-    return _userCredential!;
+    return userCredential!;
   }
 
   Future<bool> addUserToDatabase(

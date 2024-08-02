@@ -1,13 +1,13 @@
 import 'dart:async';
-
 import 'package:change30/src/features/firebase/abstracts/base_firebase_service.dart';
-
 import 'package:change30/src/features/firebase/firebase_services/firestore_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthClass extends BaseFirebaseService {
   FirebaseAuth firestoreAuth = FirebaseAuth.instance;
   FirestoreService firestoreService = FirestoreService();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
   bool isUserLoggedIn() {
@@ -24,11 +24,51 @@ class FirebaseAuthClass extends BaseFirebaseService {
     try {
       final userCredentials = firestoreAuth.signInWithEmailAndPassword(
           email: email, password: password);
+
+      return userCredentials;
+    } on FirebaseAuthException catch (e) {
+      throw 'Error logging in: ${e.code}';
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<UserCredential> loginWithApple() {
+    try {
+      final userCredentials = FirebaseAuthClass().loginWithApple();
       return userCredentials;
     } on FirebaseAuthException catch (e) {
       throw e.code;
     } catch (e) {
       throw e.toString();
+    }
+  }
+
+  Future<User?> signInWithGoogle() async {
+    try {
+      // Google ile giriş yapmayı başlat
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
+
+      // Google hesabından kimlik doğrulama bilgilerini al
+      final GoogleSignInAuthentication? googleSignInAuthentication =
+          await googleSignInAccount?.authentication;
+
+      // Firebase kimlik doğrulama sağlayıcısını oluştur
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication?.accessToken,
+        idToken: googleSignInAuthentication?.idToken,
+      );
+
+      // Firebase ile oturum aç
+      final UserCredential userCredential =
+          await firestoreAuth.signInWithCredential(credential);
+
+      // Kullanıcıyı döndür
+      return userCredential.user;
+    } catch (e) {
+      print(e);
+      return null;
     }
   }
 

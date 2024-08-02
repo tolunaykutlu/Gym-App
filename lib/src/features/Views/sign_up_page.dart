@@ -1,11 +1,9 @@
 import 'package:change30/src/core/components/widgets/custom_textfield.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:change30/src/features/Controllers/user_controller.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kartal/kartal.dart';
 import '../../core/components/widgets/app_title_widget.dart';
 import '../../core/components/widgets/custom_button.dart';
 import '../../core/constants/app_contants.dart';
@@ -38,12 +36,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   Widget build(BuildContext context) {
     final authNotifier = ref.watch(authProvider);
 
-    /*  Map<String, dynamic> data = {
-      "name": _nameCtrl.text,
-      "email": _emailCtrl.text,
-      "password": _passwordCtrl.text,
-    }; */
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -52,7 +44,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          const AppTitleWidget(),
+          iconAndTitle(context.deviceSize, context),
           if (context.deviceHeight > 668)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 40),
@@ -104,6 +96,19 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     );
   }
 
+  Column iconAndTitle(Size size, BuildContext context) {
+    return Column(
+      children: [
+        Image.asset(
+          "assets/images/GymPoint.png",
+          fit: BoxFit.cover,
+        ),
+        AppConstants.spaceSmallH15(),
+        const AppTitleWidget(),
+      ],
+    );
+  }
+
   Future<dynamic> showUid(BuildContext context, UserCredential value) {
     return showDialog(
       context: context,
@@ -121,26 +126,24 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
         Form(
           key: _formKey,
           child: CustomTextFormField(
+            labeltext: "Name",
+            autoFocus: true,
             control: _nameCtrl,
-            hintText: "User name",
+            hintText: "John",
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: CustomTextFormField(
+            labeltext: "e-mail",
             control: _emailCtrl,
-            hintText: "Email",
-            validator: (p0) {
-              return p0.ext.isValidEmail ? null : "E-mail type is wrong";
-            },
+            hintText: "Johndoe@gmail.com",
           ),
         ),
         CustomTextFormField(
-          validator: (p0) => p0.ext.isValidPassword
-              ? null
-              : "Password must be at least 6 character",
+          labeltext: "password",
           control: _passwordCtrl,
-          hintText: "Password",
+          hintText: "",
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,

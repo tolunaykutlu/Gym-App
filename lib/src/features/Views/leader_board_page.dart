@@ -20,6 +20,11 @@ class LeaderBoardScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_ios)),
         title: const AppTitleWidget(
           padding: 2,
           title1: "LEADER",
@@ -27,10 +32,7 @@ class LeaderBoardScreen extends ConsumerWidget {
         ),
         centerTitle: true,
       ),
-      body: Hero(
-          tag: Object(),
-          child: SizedBox(
-              height: context.deviceHeight * 0.7, child: leaderBoard2())),
+      body: SizedBox(height: context.deviceHeight * 0.7, child: leaderBoard2()),
     );
   }
 

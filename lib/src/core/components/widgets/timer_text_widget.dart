@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'package:change30/src/core/constants/app_contants.dart';
-import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../features/riverpods/timer_riverpod.dart';
-import 'custom_button.dart';
 
 class TimerText extends ConsumerStatefulWidget {
   const TimerText({
@@ -21,6 +19,7 @@ class _TimerTextState extends ConsumerState<TimerText> {
   bool isStarted = false;
   int hour = 0;
   int min = 0;
+  String start = "START";
 
   @override
   void dispose() {
@@ -69,8 +68,17 @@ class _TimerTextState extends ConsumerState<TimerText> {
     return Column(
       children: [
         InkWell(
+          onDoubleTap: () {
+            setState(() {
+              timerZero();
+            });
+          },
           onTap: () {
-            timerZero();
+            setState(() {
+              isStarted = !isStarted;
+
+              startTimer();
+            });
           },
           child: Card(
               shape: StadiumBorder(
@@ -87,22 +95,12 @@ class _TimerTextState extends ConsumerState<TimerText> {
                   height: 150,
                   child: Center(
                       child: Text(
-                    time,
+                    counter.counter > 0 ? time : start,
                     style: AppConstants.smallTitleTextStyle(
-                        color: AppConstants.primaryColor, fsize: 25),
+                        color: Colors.black, fsize: 25),
                   )))),
         ),
         AppConstants.spaceMediumH25(),
-        CustomButton(
-          size: context.deviceSize / 2,
-          buttonText: "Başla",
-          onpress: () {
-            setState(() {
-              isStarted = !isStarted;
-              startTimer();
-            });
-          },
-        ),
       ],
     );
   }

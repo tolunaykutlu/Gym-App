@@ -29,7 +29,7 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
   @override
   void initState() {
     getUsersWantedData();
-    /* getUserId(); */
+    getUserId();
 
     super.initState();
   }
@@ -49,8 +49,6 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
     if (FirebaseAuth.instance.currentUser != null) {
       var data = ref.read(authProvider).getData("users", getUserId());
       data.then((value) {
-        //Setstate ile username içine firebaseden datasını çektiğimiz kullanıcının adını verdik
-
         userName = value["name"];
       });
     }
@@ -60,6 +58,11 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_ios)),
         centerTitle: true,
         title: Text(
           "Welcome  ${userName.toUpperCase()}",
@@ -84,14 +87,11 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
               AppConstants.spaceMediumH25(),
               CustomButton(
                 size: context.deviceSize / 2,
-                buttonText: "getir",
+                buttonText: "Send Score",
                 onpress: () async {
-                  int score = ref.read(counterProvider).totalScore;
-                  await ref
-                      .read(authProvider)
-                      .fstore
-                      .addUserToLeaderboard(userName, score);
-                  //TODO: her seviye için 30 günlük antreman programı yazılcak
+                  sendYourResult();
+
+                  //TODO: her seviye için 30 günlük antreman programı yazılcak her gün için farklı challenge ve gün sonunda leaderboard silinir
                   //ve seviyeye göre leaderboard yapılcak
                   /* int score = ref.read(counterProvider).totalScore;
                   /* await ref
@@ -105,6 +105,35 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
         ),
       ),
     );
+  }
+
+  void sendYourResult() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("You want to send your score to Leaderboard ?"),
+            actions: [
+              CustomButton(
+                size: context.deviceSize,
+                buttonText: "Yes",
+                onpress: () async {
+                  int score = ref.read(counterProvider).totalScore;
+                  await ref
+                      .read(authProvider)
+                      .fstore
+                      .addUserToLeaderboard(userName, score);
+                },
+              ),
+              AppConstants.spaceSmallH15(),
+              CustomButton(
+                onpress: () => ref.read(authProvider).fauth.signOutuser(),
+                size: context.deviceSize,
+                buttonText: "No",
+              )
+            ],
+          );
+        });
   }
 
   SizedBox oneTimeRead(CollectionReference<Object?> collection) {
@@ -128,13 +157,21 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
             return SizedBox(
               height: context.deviceHeight / 3,
               child: ListView.builder(
-                itemCount: 3,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: data["egzersiz1"].length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Center(
-                      child: Text(data["egzersiz1"]["$index"].toString(),
-                          style: AppConstants.bigtitleTextStyle(
-                              AppConstants.primaryColor)),
+                  return Container(
+                    padding: const EdgeInsets.all(5),
+                    margin: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: AppConstants.secondaryColor)),
+                    child: ListTile(
+                      title: Center(
+                        child: Text(data["egzersiz1"]["$index"].toString(),
+                            style: AppConstants.bigtitleTextStyle(
+                                AppConstants.primaryColor)),
+                      ),
                     ),
                   );
                 },

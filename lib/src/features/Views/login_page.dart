@@ -1,4 +1,3 @@
-import 'package:change30/src/core/components/helpers/auth_error_dialog.dart';
 import 'package:change30/src/core/components/widgets/app_title_widget.dart';
 import 'package:change30/src/core/components/widgets/sign_in_with_widget.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
@@ -19,6 +18,9 @@ class LoginPage extends ConsumerStatefulWidget {
 class _LoginPageState extends ConsumerState<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  bool dataError = false;
+
   bool secretPassword = true;
 
   @override
@@ -27,23 +29,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     _passwordController.dispose();
     super.dispose();
   }
-
-  /* var giris = 0;
-  String getUserId() {
-    //userId çekme methodu
-    var uid = ref.read(authProvider).fstore.getUserUuid();
-    return uid;
-  }
-
-  getUsersWantedData() {
-    var data = ref.read(authProvider).getData("users", getUserId());
-    data.then((value) {
-      //Setstate ile username içine firebaseden datasını çektiğimiz kullanıcının adını verdik
-      setState(() {
-        giris = value["giris"];
-      });
-    });
-  } */
 
   @override
   Widget build(BuildContext context) {
@@ -141,16 +126,43 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             setState(() {
               if (_emailController.text.isEmpty ||
                   _passwordController.text.isEmpty) {
-                displayMessage(context, "Empty E-mail or password");
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const AlertDialog(
+                      actions: [],
+                      content: Text("Fill The necessary boxes"),
+                    );
+                  },
+                );
               } else {
-                loginFunction();
-                //Navigator.pushNamed(context, "/choosePage");
-                /* if (giris.toInt() == 1) {
+                ref
+                    .read(authProvider)
+                    .loginUserWithFirebase(_emailController.text,
+                        _passwordController.text, context)
+                    .then((value) {
+                  if (value == null) {
+                  } else {
+                    Navigator.of(context).pushNamed('/choosePage');
+                  }
+                }).catchError((error, stackTrace) {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        content: Text(error.toString()),
+                      );
+                    },
+                  );
+                });
+              }
+
+              //Navigator.pushNamed(context, "/choosePage");
+              /* if (giris.toInt() == 1) {
                   Navigator.pushNamed(context, "/challengePage");
                 } else {
                   Navigator.pushNamed(context, "/choosePage");
                 } */
-              }
             });
           },
           buttonText: AppConstants.signInText,
@@ -168,23 +180,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         ),
       ],
     );
-  }
-
-  void loginFunction() {
-    ref
-        .read(authProvider)
-        .loginUserWithFirebase(
-            _emailController.text, _passwordController.text, context)
-        .onError((error, stackTrace) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: Text(error.toString()),
-          );
-        },
-      );
-    }).then((value) => Navigator.pushNamed(context, "/challengePage"));
   }
 
   Column iconAndTitle(Size size, BuildContext context) {

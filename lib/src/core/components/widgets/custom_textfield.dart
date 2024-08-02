@@ -46,7 +46,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         cursorColor: Colors.black,
         decoration: InputDecoration(
             labelStyle: AppConstants.smallTitleTextStyle(
-                color: Colors.black, fsize: 20),
+                color: Colors.white, fsize: 17),
             labelText: widget.labeltext,
             errorStyle: Theme.of(context)
                 .textTheme
