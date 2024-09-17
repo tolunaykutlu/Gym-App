@@ -71,16 +71,22 @@ class AuthProvider extends ChangeNotifier {
 
   Future<UserCredential> signUpUserWithFirebase(
       String email, String password, String name, BuildContext context) async {
+<<<<<<< Updated upstream
 
     _userCredential = await fauth.signUpWithFirebase(email, password, name);
 =======
     //context ekledkk hataları ayıkladık
     //setLoader(true);
+=======
+>>>>>>> Stashed changes
     try {
-      _userCredential = await fauth.signUpWithFirebase(email, password, name);
+      final userCredential =
+          await fauth.signUpWithFirebase(email, password, name);
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       String errorName = e.code;
       if (errorName == "email-already-in-use") {
+<<<<<<< Updated upstream
         return await showDialog(
             context: context,
             builder: (context) {
@@ -89,13 +95,24 @@ class AuthProvider extends ChangeNotifier {
                 content: Text("E-mail kullanımda"),
               );
             });
+=======
+        displayMessage(context, "e-mail kullanımda");
+      } else if (errorName == "weak-password") {
+        displayMessage(context, "Şifre en az 6 karakter olmalıdır");
+>>>>>>> Stashed changes
       } else {
-        return Future.error(e);
+        // Handle other errors or rethrow
+        rethrow;
       }
+      // Return null or a specific error object if needed
+      return userCredential!;
     }
+<<<<<<< Updated upstream
 
 
     return _userCredential!;
+=======
+>>>>>>> Stashed changes
   }
 
   //data getirme

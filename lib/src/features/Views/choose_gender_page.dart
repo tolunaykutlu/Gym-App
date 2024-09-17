@@ -20,20 +20,32 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
   @override
   Widget build(BuildContext context) {
     var userDataProvider = ref.watch(userProvider);
+<<<<<<< Updated upstream
     var uid = ref.watch(authProvider).fstore.getUserUuid();
+=======
+    var authPro = ref.watch(authProvider);
+    String uid = "";
+    if (authPro.fauth.isUserLoggedIn() == true) {
+      uid = authPro.fauth.firestoreAuth.currentUser!.uid;
+    } else {
+      uid = "yok";
+    }
+>>>>>>> Stashed changes
 
     Map<String, dynamic> data = {
       "height": userDataProvider.heightController,
       "weight": userDataProvider.weigthController,
       "gender": userDataProvider.isMale ? "Male" : userDataProvider.gender,
       "age": userDataProvider.ageController,
-      "userId": uid,
       "giris": 1,
     };
+<<<<<<< Updated upstream
     //var userInfo = UserModel.fromMap(data);
     /* void addDataToUserModel() {
       userDataProvider.addUserData(UserModel.fromMap(data));
     }  */
+=======
+>>>>>>> Stashed changes
 
 
     return SafeArea(
@@ -94,7 +106,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
                       ref
                           .read(authProvider)
                           .fstore
-                          .addDataToFirestore(userInfo.toMap(), 'users', uid)
+                          .updateDataToFirestore(data, 'usersNew', uid)
                           .then((value) {
                         return Future.delayed(
                             const Duration(seconds: 2),

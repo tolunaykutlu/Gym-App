@@ -103,6 +103,33 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     );
   }
 
+<<<<<<< Updated upstream
+=======
+  Column iconAndTitle(Size size, BuildContext context) {
+    return Column(
+      children: [
+        Image.asset(
+          "assets/images/GymPoint.png",
+          fit: BoxFit.cover,
+        ),
+        AppConstants.spaceSmallH15(),
+        const AppTitleWidget(),
+      ],
+    );
+  }
+
+  Future<dynamic> showUid(BuildContext context, UserCredential value) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          content: Text("Kayıt oluşturuldu"),
+        );
+      },
+    );
+  }
+
+>>>>>>> Stashed changes
   Column signUpPageTextFields(BuildContext context) {
     return Column(
       children: [
@@ -129,26 +156,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
               : "Password must be at least 6 character",
           control: _passwordCtrl,
           hintText: "Password",
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Checkbox.adaptive(
-              activeColor: AppConstants.primaryColor,
-              checkColor: Colors.white,
-              value: isChecked,
-              onChanged: (value) {
-                setState(() {
-                  isChecked = !isChecked;
-                });
-              },
-            ),
-            Text(
-              "By clicking you accept our Privacy Policy",
-              style: TextStyle(
-                  color: Colors.grey.shade700, fontWeight: FontWeight.bold),
-            )
-          ],
         ),
       ],
     );

@@ -31,12 +31,21 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: ThemeData(
+        dialogTheme: DialogTheme(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15))),
         appBarTheme: const AppBarTheme(
+<<<<<<< Updated upstream
             backgroundColor: Color(0xffE2E2E2),
+=======
+            scrolledUnderElevation: 0,
+            backgroundColor: Colors.white,
+>>>>>>> Stashed changes
             elevation: 0,
             foregroundColor: Colors.black),
         textTheme: const TextTheme(titleLarge: TextStyle(color: Colors.white)),
-        scaffoldBackgroundColor: const Color.fromARGB(255, 226, 226, 226),
+        scaffoldBackgroundColor: Colors.white,
         colorScheme: ColorScheme.fromSeed(seedColor: AppConstants.primaryColor),
       ),
       initialRoute: "/",

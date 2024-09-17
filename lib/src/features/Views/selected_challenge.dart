@@ -7,10 +7,18 @@ import 'package:change30/src/features/Controllers/exercise_controller.dart';
 import 'package:change30/src/features/Views/login_page.dart';
 import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+<<<<<<< Updated upstream
+=======
+import '../../core/components/widgets/timer_text_widget.dart';
+import '../../core/constants/app_contants.dart';
+>>>>>>> Stashed changes
 
 class SelectedChallenge extends ConsumerStatefulWidget {
   const SelectedChallenge({super.key});
@@ -20,6 +28,7 @@ class SelectedChallenge extends ConsumerStatefulWidget {
 }
 
 class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
+<<<<<<< Updated upstream
   @override
   void initState() {
     super.initState();
@@ -71,10 +80,48 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
               },
               child: const Text("Çıkış"))
         ],
+=======
+  final CollectionReference egzersizler =
+      FirebaseFirestore.instance.collection('egzersizler');
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_ios)),
+        actions: [
+          IconButton(
+              onPressed: () {
+                infoDialog(context);
+              },
+              icon: const Icon(Icons.info_outline))
+        ],
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Center(
+          child: Column(
+            children: [
+              //TODO: egzersizler değişecek bilgiler düzgün bir şekilde firebase aktarılcak
+              //egzersizlerin yapıldığı süreler local olarak saklanacak ve istendiğinde gösterilecek
+              oneTimeRead(egzersizler),
+              AppConstants.spaceSmallH15(),
+              const TimerText(),
+              AppConstants.spaceMediumH25(),
+            ],
+          ),
+        ),
+>>>>>>> Stashed changes
       ),
     );
   }
 
+<<<<<<< Updated upstream
   int startTimer() {
     int counter = 1;
     Timer.periodic(const Duration(seconds: 1000), (timer) {
@@ -83,6 +130,16 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
       });
     });
     return counter;
+=======
+  Future<dynamic> infoDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: Text("- TAP FOR PAUSE\n- DOUBLE TAP FOR RESET TİME",
+            style: AppConstants.smallTitleTextStyle()),
+      ),
+    );
+>>>>>>> Stashed changes
   }
 
   SizedBox oneTimeRead(CollectionReference<Object?> collection) {
@@ -113,7 +170,7 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
             ); //Text("Full Name: ${data['pushup']} ${data['squat']}");
           }
 
-          return const Text("loading");
+          return const CircularProgressIndicator();
         },
       ),
     );

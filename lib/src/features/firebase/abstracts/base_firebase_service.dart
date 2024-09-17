@@ -7,5 +7,4 @@ abstract class BaseFirebaseService {
 
   void signOutuser();
   bool isUserLoggedIn();
-  bool isUserActive();
 }

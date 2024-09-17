@@ -42,6 +42,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         obscureText: widget.secret,
         cursorColor: Colors.black,
         decoration: InputDecoration(
+<<<<<<< Updated upstream
+=======
+            labelStyle: AppConstants.smallTitleTextStyle(
+                color: Colors.black, fsize: 17),
+>>>>>>> Stashed changes
             labelText: widget.labeltext,
             errorStyle: Theme.of(context)
                 .textTheme

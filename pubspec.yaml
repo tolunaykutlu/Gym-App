@@ -56,8 +56,15 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
+<<<<<<< Updated upstream
 assets:
   - assets/images/
+=======
+  assets:
+    - assets/images/SplashScreen.png
+    - assets/images/GymPoint.png
+    - assets/logos/google_logo.png
+>>>>>>> Stashed changes
 
 # An image asset can refer to one or more resolution-specific "variants", see
 # https://flutter.dev/assets-and-images/#resolution-aware

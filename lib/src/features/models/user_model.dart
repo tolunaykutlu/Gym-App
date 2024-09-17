@@ -75,6 +75,7 @@ class UserModel {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
+<<<<<<< Updated upstream
       name: map['name'] != null ? map['name'] as String : null,
       gender: map['gender'] != null ? map['gender'] as String : null,
       email: map['email'] != null ? map['email'] as String : null,
@@ -87,6 +88,17 @@ class UserModel {
 
       userId: map['userId'] as String,
     );
+=======
+        name: map['name'] != null ? map['name'] as String : null,
+        gender: map['gender'] != null ? map['gender'] as String : null,
+        email: map['email'] != null ? map['email'] as String : null,
+        password: map['password'] != null ? map['password'] as String : null,
+        age: map['age'] != null ? map['age'] as int : null,
+        weight: map['weight'] != null ? map['weight'] as int : null,
+        height: map['height'] != null ? map['height'] as int : null,
+        giris: map['giris'] != null ? map['giris'] as int : null,
+        userId: map['userId'] != null ? map["userId"] as String : null);
+>>>>>>> Stashed changes
   }
 
   String toJson() => json.encode(toMap());
