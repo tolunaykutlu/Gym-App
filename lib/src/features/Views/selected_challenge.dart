@@ -35,8 +35,8 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
 
     final CollectionReference egzersiz =
         FirebaseFirestore.instance.collection('egzersizler');
-    final Stream<QuerySnapshot> usersStream =
-        FirebaseFirestore.instance.collection('egzersiz').snapshots();
+    /* final Stream<QuerySnapshot> usersStream =
+        FirebaseFirestore.instance.collection('egzersiz').snapshots(); */
 
     //final CollectionReference users =
     FirebaseFirestore.instance.collection('users');
@@ -49,7 +49,8 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
         children: [
           Center(
               child: Text("${exercisePro.exerciseList[0].name} x 10 ",
-                  style: bigtitleTextStyle(AppConstants.primaryColor))),
+                  style: AppConstants.bigtitleTextStyle(
+                      AppConstants.primaryColor))),
           Text("this user id is $userId"),
           SizedBox(height: 200, child: oneTimeRead(egzersiz)),
 
@@ -110,7 +111,8 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(data["egzersiz1"]["$index"].toString(),
-                      style: bigtitleTextStyle(AppConstants.primaryColor)),
+                      style: AppConstants.bigtitleTextStyle(
+                          AppConstants.primaryColor)),
                 );
               },
             ); //Text("Full Name: ${data['pushup']} ${data['squat']}");
@@ -144,7 +146,8 @@ class _SelectedChallengeState extends ConsumerState<SelectedChallenge> {
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(data["egzersiz2"]["$index"].toString(),
-                      style: bigtitleTextStyle(AppConstants.primaryColor)),
+                      style: AppConstants.bigtitleTextStyle(
+                          AppConstants.primaryColor)),
                 );
               },
             ); //Text("Full Name: ${data['pushup']} ${data['squat']}");

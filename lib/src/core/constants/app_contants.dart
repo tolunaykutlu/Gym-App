@@ -19,36 +19,36 @@ abstract class AppConstants {
   static const String donthaveAccText = "Don't have an Account?";
   static const Color primaryColor = Color(0xffF54242);
   static const Color secondaryColor = Color.fromRGBO(189, 189, 189, 1);
-}
 
-TextStyle smallTitleTextStyle({
-  double fsize = 20,
-  color = Colors.black,
-}) {
-  //textStyle for only small titles like choose your age
-  return GoogleFonts.orbitron(
-      fontSize: fsize, color: color, fontWeight: FontWeight.bold);
-}
+  static TextStyle smallTitleTextStyle({
+    double fsize = 20,
+    color = Colors.black,
+  }) {
+    //textStyle for only small titles like choose your age
+    return GoogleFonts.orbitron(
+        fontSize: fsize, color: color, fontWeight: FontWeight.bold);
+  }
 
-TextStyle bigtitleTextStyle(Color c, {double fsize = 30}) {
-  return GoogleFonts.orbitron(
-      fontSize: fsize, color: c, fontWeight: FontWeight.bold);
-}
+  static TextStyle bigtitleTextStyle(Color c, {double fsize = 30}) {
+    return GoogleFonts.orbitron(
+        fontSize: fsize, color: c, fontWeight: FontWeight.bold);
+  }
 
-SizedBox spaceSmallH15() {
-  return const SizedBox(
-    height: 15,
-  );
-}
+  static SizedBox spaceSmallH15() {
+    return const SizedBox(
+      height: 15,
+    );
+  }
 
-SizedBox spaceMediumH25() {
-  return const SizedBox(
-    height: 25,
-  );
-}
+  static SizedBox spaceMediumH25() {
+    return const SizedBox(
+      height: 25,
+    );
+  }
 
-SizedBox spaceLargeH35() {
-  return const SizedBox(
-    height: 35,
-  );
+  static SizedBox spaceLargeH35() {
+    return const SizedBox(
+      height: 35,
+    );
+  }
 }

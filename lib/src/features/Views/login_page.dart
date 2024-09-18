@@ -2,15 +2,11 @@ import 'package:change30/src/core/components/helpers/auth_error_dialog.dart';
 import 'package:change30/src/core/components/widgets/app_title_widget.dart';
 import 'package:change30/src/core/components/widgets/sign_in_with_widget.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
-
 import 'package:change30/src/features/Views/sign_up_page.dart';
-
 import 'package:change30/src/features/riverpods/auth_riverpod.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kartal/kartal.dart';
-
 import '../../core/components/widgets/custom_button.dart';
 import '../../core/components/widgets/custom_textfield.dart';
 import '../../core/constants/app_contants.dart';
@@ -44,14 +40,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           child: Column(
             children: [
               iconAndTitle(context.deviceSize, context),
-              spaceSmallH15(),
+              AppConstants.spaceSmallH15(),
               if (context.deviceSize.height > 668)
                 Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: buttonSection(context.deviceSize, context))
               else
                 buttonSection(context.deviceSize, context),
-              spaceMediumH25(),
+              AppConstants.spaceMediumH25(),
               bottomSection(context),
             ],
           ),
@@ -64,7 +60,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     return Column(
       children: [
         const SignInWithWidget(),
-        spaceSmallH15(),
+        AppConstants.spaceSmallH15(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -99,7 +95,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Column buttonSection(Size size, BuildContext context) {
     return Column(
       children: [
-        spaceSmallH15(),
+        AppConstants.spaceSmallH15(),
         CustomTextFormField(
           labeltext: "Email",
           autoFocus: true,
@@ -109,7 +105,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           validator: (p0) =>
               p0.ext.isValidEmail ? null : "E-mail type is wrong",
         ),
-        spaceSmallH15(),
+        AppConstants.spaceSmallH15(),
         CustomTextFormField(
           labeltext: "Password",
           control: _passwordController,
@@ -128,7 +124,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     : const Icon(Icons.lock_open)),
           ),
         ),
-        spaceSmallH15(),
+        AppConstants.spaceSmallH15(),
         CustomButton(
           onpress: () async {
             setState(() {
@@ -143,7 +139,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           buttonText: AppConstants.signInText,
           size: size,
         ),
-        spaceSmallH15(),
+        AppConstants.spaceSmallH15(),
         GestureDetector(
           onTap: () {
             setState(() {});
@@ -169,7 +165,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           "images/GymPoint.png",
           fit: BoxFit.cover,
         ), */
-        spaceSmallH15(),
+        AppConstants.spaceSmallH15(),
         const AppTitleWidget(),
       ],
     );

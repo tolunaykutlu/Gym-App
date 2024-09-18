@@ -18,17 +18,16 @@ class AppTitleWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(title1,
-            style: /* Theme.of(context)
-              .textTheme
-              .headlineMedium
-              ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold) */
-                bigtitleTextStyle(Colors.black)),
+            style: Theme.of(context)
+                .textTheme
+                .headlineMedium
+                ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold)),
         Padding(
           padding: EdgeInsets.only(left: padding),
           child: Text(title2,
               style: /* Theme.of(context).textTheme.headlineMedium?.copyWith(
                 color: Colors.amber.shade900, fontWeight: FontWeight.bold) */
-                  bigtitleTextStyle(AppConstants.primaryColor)),
+                  const TextStyle(color: AppConstants.primaryColor)),
         ),
       ],
     );

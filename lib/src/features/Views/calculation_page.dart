@@ -45,11 +45,11 @@ class CalculationPage extends ConsumerWidget {
             children: [
               Text(
                 userDataProvider.weigthController.toString(),
-                style: smallTitleTextStyle(fsize: 30),
+                style: AppConstants.smallTitleTextStyle(fsize: 30),
               ),
               Text(
                 "YOUR BMI SCORE",
-                style: smallTitleTextStyle(fsize: 20),
+                style: AppConstants.smallTitleTextStyle(fsize: 20),
               ),
               if (calculateUserBMI() == 1)
                 const BmiResultContainer(
@@ -97,7 +97,7 @@ class BmiResultContainer extends StatelessWidget {
       child: Center(
           child: Text(
         text,
-        style: smallTitleTextStyle(fsize: 20, color: Colors.black),
+        style: AppConstants.smallTitleTextStyle(fsize: 20, color: Colors.black),
       )),
     );
   }

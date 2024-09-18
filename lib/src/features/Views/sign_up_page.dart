@@ -1,6 +1,7 @@
 import 'package:change30/src/core/components/widgets/custom_textfield.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:change30/src/features/Controllers/user_controller.dart';
+import 'package:change30/src/features/riverpods/auth_riverpod.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +10,6 @@ import 'package:kartal/kartal.dart';
 import '../../core/components/widgets/app_title_widget.dart';
 import '../../core/components/widgets/custom_button.dart';
 import '../../core/constants/app_contants.dart';
-import '../riverpods/auth_riverpod.dart';
 
 class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
