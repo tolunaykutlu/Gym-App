@@ -8,7 +8,6 @@ import 'package:kartal/kartal.dart';
 
 import '../../core/components/widgets/app_title_widget.dart';
 import '../../core/components/widgets/custom_button.dart';
-import '../../core/constants/app_contants.dart';
 import '../riverpods/auth_riverpod.dart';
 
 class SignUpPage extends ConsumerStatefulWidget {
@@ -74,17 +73,21 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     },
                   );
                 } else {
-                  await authNotifier
-                      .signUpUserWithFirebase(_emailCtrl.text,
-                          _passwordCtrl.text, _nameCtrl.text, context)
-                      .then((value) => showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: Text(value.user!.uid),
-                              );
-                            },
-                          ));
+                  final credential = await authNotifier.signUpUserWithFirebase(
+                      _emailCtrl.text,
+                      _passwordCtrl.text,
+                      _nameCtrl.text,
+                      context);
+                  if (credential != null) {
+                    await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const AlertDialog(
+                          content: Text("Kayıt oluşturuldu"),
+                        );
+                      },
+                    );
+                  }
                   /* .onError((error, stackTrace) => showDialog(
                             context: context,
                             builder: (context) {
@@ -102,34 +105,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
       ),
     );
   }
-
-<<<<<<< Updated upstream
-=======
-  Column iconAndTitle(Size size, BuildContext context) {
-    return Column(
-      children: [
-        Image.asset(
-          "assets/images/GymPoint.png",
-          fit: BoxFit.cover,
-        ),
-        AppConstants.spaceSmallH15(),
-        const AppTitleWidget(),
-      ],
-    );
-  }
-
-  Future<dynamic> showUid(BuildContext context, UserCredential value) {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return const AlertDialog(
-          content: Text("Kayıt oluşturuldu"),
-        );
-      },
-    );
-  }
-
->>>>>>> Stashed changes
   Column signUpPageTextFields(BuildContext context) {
     return Column(
       children: [

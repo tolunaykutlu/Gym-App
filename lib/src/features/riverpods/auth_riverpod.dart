@@ -15,7 +15,7 @@ class AuthProvider extends ChangeNotifier {
   UserCredential? get userCredential => _userCredential;
   Map<String, dynamic> get userData => _userData;
 
-  Future<UserCredential> loginUserWithFirebase(
+  Future<UserCredential?> loginUserWithFirebase(
       String email, String password, BuildContext context) async {
     try {
       final userCredential = await fauth.loginUserWithFirebase(email, password);
@@ -26,7 +26,7 @@ class AuthProvider extends ChangeNotifier {
 
       String errorName = e.code;
       if (errorName == "user-not-found") {
-        return await showDialog(
+        await showDialog(
             context: context,
             builder: (context) {
               return const AlertDialog(
@@ -34,9 +34,10 @@ class AuthProvider extends ChangeNotifier {
                 content: Text("Kullanıcı adı veya şifre yanlış"),
               );
             });
+        return null;
       }
       if (errorName == "wrong-password") {
-        return await showDialog(
+        await showDialog(
             context: context,
             builder: (context) {
               return const AlertDialog(
@@ -44,10 +45,10 @@ class AuthProvider extends ChangeNotifier {
                 content: Text("Yanlış şifre"),
               );
             });
+        return null;
       } else {
         return Future.error(e);
       }
-
     }
   }
 
@@ -69,25 +70,15 @@ class AuthProvider extends ChangeNotifier {
     return id;
   }
 
-  Future<UserCredential> signUpUserWithFirebase(
+  Future<UserCredential?> signUpUserWithFirebase(
       String email, String password, String name, BuildContext context) async {
-<<<<<<< Updated upstream
-
-    _userCredential = await fauth.signUpWithFirebase(email, password, name);
-=======
-    //context ekledkk hataları ayıkladık
-    //setLoader(true);
-=======
->>>>>>> Stashed changes
     try {
-      final userCredential =
-          await fauth.signUpWithFirebase(email, password, name);
-      return userCredential;
+      _userCredential = await fauth.signUpWithFirebase(email, password, name);
+      return _userCredential!;
     } on FirebaseAuthException catch (e) {
       String errorName = e.code;
       if (errorName == "email-already-in-use") {
-<<<<<<< Updated upstream
-        return await showDialog(
+        await showDialog(
             context: context,
             builder: (context) {
               return const AlertDialog(
@@ -95,24 +86,25 @@ class AuthProvider extends ChangeNotifier {
                 content: Text("E-mail kullanımda"),
               );
             });
-=======
-        displayMessage(context, "e-mail kullanımda");
-      } else if (errorName == "weak-password") {
-        displayMessage(context, "Şifre en az 6 karakter olmalıdır");
->>>>>>> Stashed changes
+        return null;
+      }
+      if (errorName == "weak-password") {
+        await showDialog(
+            context: context,
+            builder: (context) {
+              return const AlertDialog(
+                actions: [],
+                content: Text("Şifre en az 6 karakter olmalıdır"),
+              );
+            });
+        return null;
       } else {
         // Handle other errors or rethrow
         rethrow;
       }
       // Return null or a specific error object if needed
-      return userCredential!;
+      return _userCredential;
     }
-<<<<<<< Updated upstream
-
-
-    return _userCredential!;
-=======
->>>>>>> Stashed changes
   }
 
   //data getirme
