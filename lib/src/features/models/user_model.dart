@@ -12,7 +12,6 @@ class UserModel {
 
   int? giris;
 
-
   String userId;
   UserModel({
     this.name,
@@ -22,9 +21,7 @@ class UserModel {
     this.age,
     this.weight,
     this.height,
-
     this.giris,
-
     required this.userId,
   });
 // new fields are going to be added.
@@ -37,9 +34,7 @@ class UserModel {
     int? age,
     int? weight,
     int? height,
-
     int? giris,
-
     String? userId,
   }) {
     return UserModel(
@@ -50,9 +45,7 @@ class UserModel {
       age: age ?? this.age,
       weight: weight ?? this.weight,
       height: height ?? this.height,
-
       giris: giris ?? this.giris,
-
       userId: userId ?? this.userId,
     );
   }
@@ -66,16 +59,13 @@ class UserModel {
       'age': age,
       'weight': weight,
       'height': height,
-
       'giris': giris,
-
       'userId': userId,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-<<<<<<< Updated upstream
       name: map['name'] != null ? map['name'] as String : null,
       gender: map['gender'] != null ? map['gender'] as String : null,
       email: map['email'] != null ? map['email'] as String : null,
@@ -83,22 +73,9 @@ class UserModel {
       age: map['age'] != null ? map['age'] as int : null,
       weight: map['weight'] != null ? map['weight'] as int : null,
       height: map['height'] != null ? map['height'] as int : null,
-
       giris: map['giris'] != null ? map['giris'] as int : null,
-
       userId: map['userId'] as String,
     );
-=======
-        name: map['name'] != null ? map['name'] as String : null,
-        gender: map['gender'] != null ? map['gender'] as String : null,
-        email: map['email'] != null ? map['email'] as String : null,
-        password: map['password'] != null ? map['password'] as String : null,
-        age: map['age'] != null ? map['age'] as int : null,
-        weight: map['weight'] != null ? map['weight'] as int : null,
-        height: map['height'] != null ? map['height'] as int : null,
-        giris: map['giris'] != null ? map['giris'] as int : null,
-        userId: map['userId'] != null ? map["userId"] as String : null);
->>>>>>> Stashed changes
   }
 
   String toJson() => json.encode(toMap());
@@ -108,11 +85,7 @@ class UserModel {
 
   @override
   String toString() {
-
     return 'UserModel(name: $name, gender: $gender, email: $email, password: $password, age: $age, weight: $weight, height: $height, giris: $giris, userId: $userId)';
-
-    
-
   }
 
   @override
@@ -126,9 +99,7 @@ class UserModel {
         other.age == age &&
         other.weight == weight &&
         other.height == height &&
-
         other.giris == giris &&
-
         other.userId == userId;
   }
 
@@ -141,9 +112,7 @@ class UserModel {
         age.hashCode ^
         weight.hashCode ^
         height.hashCode ^
-
         giris.hashCode ^
-
         userId.hashCode;
   }
 }

@@ -153,12 +153,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     );
   }
 
-  void loginFunction() {
-    ref
-        .read(authProvider)
-        .loginUserWithFirebase(
-            _emailController.text, _passwordController.text, context)
-        .then((value) => Navigator.pushNamed(context, '/choosePage'));
+  Future<void> loginFunction() async {
+    final credential = await ref.read(authProvider).loginUserWithFirebase(
+        _emailController.text, _passwordController.text, context);
+    if (credential != null) {
+      Navigator.pushNamed(context, '/choosePage');
+    }
   }
 
   Column iconAndTitle(Size size, BuildContext context) {

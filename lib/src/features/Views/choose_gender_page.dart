@@ -20,17 +20,7 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
   @override
   Widget build(BuildContext context) {
     var userDataProvider = ref.watch(userProvider);
-<<<<<<< Updated upstream
     var uid = ref.watch(authProvider).fstore.getUserUuid();
-=======
-    var authPro = ref.watch(authProvider);
-    String uid = "";
-    if (authPro.fauth.isUserLoggedIn() == true) {
-      uid = authPro.fauth.firestoreAuth.currentUser!.uid;
-    } else {
-      uid = "yok";
-    }
->>>>>>> Stashed changes
 
     Map<String, dynamic> data = {
       "height": userDataProvider.heightController,
@@ -39,13 +29,10 @@ class _ChoosePageState extends ConsumerState<ChoosePage> {
       "age": userDataProvider.ageController,
       "giris": 1,
     };
-<<<<<<< Updated upstream
     //var userInfo = UserModel.fromMap(data);
     /* void addDataToUserModel() {
       userDataProvider.addUserData(UserModel.fromMap(data));
     }  */
-=======
->>>>>>> Stashed changes
 
 
     return SafeArea(

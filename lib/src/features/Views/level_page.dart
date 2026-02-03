@@ -4,8 +4,6 @@ import 'package:change30/src/core/constants/app_contants.dart';
 import 'package:change30/src/core/extension/size_extension.dart';
 import 'package:change30/src/features/Controllers/exercise_controller.dart';
 
-import 'package:change30/src/features/riverpods/auth_riverpod.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -90,7 +88,6 @@ class _LevelSelectionWidgetState extends State<LevelSelectionWidget> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< Updated upstream
     return InkWell(
       onTap: () async {
         setState(() {
@@ -110,35 +107,8 @@ class _LevelSelectionWidgetState extends State<LevelSelectionWidget> {
             widget.exProvider.difficultyList[widget.index],
             style: smallTitleTextStyle(
                 fsize: 18, color: AppConstants.primaryColor),
-=======
-    return Consumer(
-      builder: (context, ref, child) {
-        return InkWell(
-          onTap: () async {
-            setState(() {
-              //ref.read(authProvider).fauth.signOutuser();
-              Navigator.pushNamed(
-                context,
-                '/selectedChallenge',
-              );
-            });
-          },
-          child: Container(
-            decoration: BoxDecoration(
-                color: isClicked ? AppConstants.secondaryColor : Colors.white70,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.black, width: 2)),
-            child: Center(
-              child: Text(
-                widget.exProvider.difficultyList[widget.index],
-                style: AppConstants.smallTitleTextStyle(
-                    fsize: 18, color: AppConstants.primaryColor),
-              ),
-            ),
->>>>>>> Stashed changes
           ),
         );
       },
-    );
   }
 }
